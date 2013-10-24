@@ -6,12 +6,23 @@ class User extends CI_Controller{
 		parent::__construct();
 		$this->load->model("user/user_model");
 	}
-	function index(){
-		$this->display();
+	function index($offset = 0){
+		$this->display($offset);
 	}
-	function display(){
-		$data['user'] = $this->user_model->get_all();
-		$this->template->load('template','user/user_list',$data);
+	function display($offset = 0){
+		if($this->users->is_admin()) {
+			$this->load->library('pagination');
+            $config['base_url'] = base_url().'user/display';
+            $config['total_rows'] = $this->user_model->count_all();
+            $config['per_page'] = 2;
+            $this->pagination->initialize($config);
+			
+			$data['user'] = $this->user_model->get_all($offset,$config['per_page']);
+			$this->template->load('template','user/user_list',$data);
+		} else {
+			$this->session->set_flashdata('error','NO_ACCESS');
+            redirect();
+		}
 	}
 	function create() {
 		if(!empty($_POST)){
@@ -60,22 +71,57 @@ class User extends CI_Controller{
 	}
 	function login(){
 		$data['user'] = $this->user_model->get_single($this->input->post('username'),true);
-		if(md5($this->input->post('password')) == $data['user']->password) {
-			$data = array(
-				'username'=>$this->input->post('username'),
-				'user_id'=>$data['user']->user_id,
-				'type'=>'login',
-				'response'=>'login success'
-			);
+		if($data['user']) {
+			if(md5($this->input->post('password')) == $data['user']->password) {
+				$logs = array(
+					'username'=>$this->input->post('username'),
+					'user_id'=>$data['user']->user_id,
+					'type'=>'login',
+					'response'=>'login success',
+					'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+				);
+				$user = array(
+					'username'=>$this->input->post('username'),
+					'user_id'=>$data['user']->user_id,
+					'role_id'=>$data['user']->role_id
+				);
+				$this->session->set_userdata($user);
+				$this->logs->add($logs);
+                redirect('dashboard');
+			} else {
+				$logs = array(
+					'username'=>$this->input->post('username'),
+					'type'=>'login',
+					'response'=>'login Failed - incorrect password',
+					'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+				);
+				$this->session->set_flashdata('error','Invalid Password!');
+				$this->logs->add($logs);
+				redirect();
+			}
 		} else {
-			$data = array(
+			$logs = array(
 				'username'=>$this->input->post('username'),
 				'type'=>'login',
-				'response'=>'login Failed'
+				'response'=>'login Failed - invalid username',
+				'fingerprint'=>$_SERVER['REMOTE_ADDR'],
 			);
-			echo 'error';
+			$this->session->set_flashdata('error','Invalid Username!');
+			$this->logs->add($logs);
+			redirect();
 		}
-		$this->logs->add($data);
+	}
+	function logout(){
+        $logs = array(
+			'username'=>$this->session->userdata('username'),
+			'user_id'=>$this->session->userdata('user_id'),
+			'type'=>'login',
+			'response'=>'logout user',
+			'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+		);
+        $this->logs->add($logs);
+		$this->session->sess_destroy();
+		redirect();
 	}
 }
 ?>

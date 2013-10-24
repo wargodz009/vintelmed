@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="span12">
-		<h1>List All Crud</h1>
-		<h5><a href="<?php echo base_url();?>crud/create" class="button">Add new crud</a></h5>
+		<h1>List All Supplier</h1>
+		<h5><a href="<?php echo base_url();?>supplier/create" class="button">Add new supplier</a></h5>
 		<div class="well">
 			<table class="datatable">
 				<thead>
@@ -13,13 +13,13 @@
 				</thead>
 				<tbody>
 					<?php
-					if(isset($crud) && !empty($crud)) {
-						foreach($crud as $c) {
+					if(isset($supplier) && !empty($supplier)) {
+						foreach($supplier as $c) {
 					?>
 					<tr>
-						<td><?php echo $c->crud_id;?></td>
+						<td><?php echo $c->supplier_id;?></td>
 						<td><?php echo $c->name;?></td>
-						<td><a href="<?php echo base_url();?>crud/edit/<?php echo $c->crud_id;?>">Edit</a> | <a href="<?php echo base_url();?>crud/delete/<?php echo $c->crud_id;?>" class="confirm" rel="Are you sure you want to delete <?php echo $c->name;?>?">Delete</a></td>
+						<td><a href="<?php echo base_url();?>supplier/edit/<?php echo $c->supplier_id;?>">Edit</a> | <a href="<?php echo base_url();?>supplier/delete/<?php echo $c->supplier_id;?>" class="confirm" rel="Are you sure you want to delete <?php echo $c->name;?>?">Delete</a></td>
 					</tr>
 					<?php
 						}

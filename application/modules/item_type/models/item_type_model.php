@@ -1,23 +1,19 @@
 <?php
 
-class User_model extends CI_Model{
-var $table = 'users';
+class Item_type_model extends CI_Model{
+var $table = 'item_types';
 	function get_all($offset = 0,$limit = 0) {
-		if($offset != 0){
+	    if($offset != 0){
             $this->db->offset($offset);
 	    }
         if($limit != 0){
 	        $this->db->limit($limit);
-	    } 
+	    }   
 		$q = $this->db->get($this->table);
 		return $q->result();
 	}
-	function get_single($id,$in_username = false) {
-		if($in_username === true) {
-			$this->db->where('username',$id);
-		} else {
-			$this->db->where('user_id',$id);
-		}
+	function get_single($id) {
+		$this->db->where('item_type_id',$id);
 		$q = $this->db->get($this->table);
 		return $q->row();
 	}
@@ -33,7 +29,7 @@ var $table = 'users';
 		}
 	}
 	function update($id,$data) {
-		$this->db->where('user_id',$id);
+		$this->db->where('item_type_id',$id);
 		$this->db->update($this->table,$data);
 		if($this->db->affected_rows()>0) {
 			return true;
@@ -42,7 +38,7 @@ var $table = 'users';
 		}
 	}
 	function delete($id) {
-		$this->db->where('user_id',$id);
+		$this->db->where('item_type_id',$id);
 		$this->db->delete($this->table);
 		if($this->db->affected_rows()>0) {
 			return true;

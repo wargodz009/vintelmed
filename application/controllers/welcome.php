@@ -4,7 +4,11 @@ class Welcome extends CI_Controller {
 
 	public function index()
 	{
-		$this->template->load('template','login_page');
+		if($this->users->is_logged_in() === false) {
+			$this->template->load('template','login_page');
+		} else {
+			redirect('dashboard');
+		}
 	}
 }
 

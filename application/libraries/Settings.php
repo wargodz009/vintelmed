@@ -9,7 +9,11 @@ class Settings {
 		//$type : value:all
 		$CI =& get_instance();
 		$CI->db->from('system_setting');
-		$Q = $CI->db->where('name',$name);
+		if(is_numeric($name)) {
+			$Q = $CI->db->where('setting_id',$name);
+		} else {
+			$Q = $CI->db->where('name',$name);
+		}
 		return ($type=='value'?$Q->get()->row()->value:$Q->get()->row());
 	}
 }
