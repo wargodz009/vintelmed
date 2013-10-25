@@ -17,9 +17,9 @@
 						foreach($items as $c) {
 					?>
 					<tr>
-						<td><?php echo $c->items_id;?></td>
+						<td><?php echo $c->item_id;?></td>
 						<td><?php echo $c->name;?></td>
-						<td><a href="<?php echo base_url();?>items/edit/<?php echo $c->items_id;?>">Edit</a> | <a href="<?php echo base_url();?>items/delete/<?php echo $c->items_id;?>" class="confirm" rel="Are you sure you want to delete <?php echo $c->name;?>?">Delete</a></td>
+						<td><a href="<?php echo base_url();?>items/edit/<?php echo $c->item_id;?>">Edit</a> | <a href="<?php echo base_url();?>items/delete/<?php echo $c->item_id;?>" class="confirm" rel="Are you sure you want to delete <?php echo $c->name;?>?">Delete</a></td>
 					</tr>
 					<?php
 						}

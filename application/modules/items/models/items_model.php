@@ -13,7 +13,7 @@ var $table = 'items';
 		return $q->result();
 	}
 	function get_single($id) {
-		$this->db->where('items_id',$id);
+		$this->db->where('item_id',$id);
 		$q = $this->db->get($this->table);
 		return $q->row();
 	}
@@ -29,7 +29,7 @@ var $table = 'items';
 		}
 	}
 	function update($id,$data) {
-		$this->db->where('items_id',$id);
+		$this->db->where('item_id',$id);
 		$this->db->update($this->table,$data);
 		if($this->db->affected_rows()>0) {
 			return true;
@@ -38,7 +38,7 @@ var $table = 'items';
 		}
 	}
 	function delete($id) {
-		$this->db->where('items_id',$id);
+		$this->db->where('item_id',$id);
 		$this->db->delete($this->table);
 		if($this->db->affected_rows()>0) {
 			return true;
