@@ -1,15 +1,16 @@
 <?php
 
-class User extends CI_Controller{
+class Warehouseman extends CI_Controller{
 	
 	function __construct(){
 		parent::__construct();
 		$this->load->model("user/user_model");
+		$this->load->model("user/warehouseman_model");
 	}
 	function index($offset = 0){
 		$this->display($offset);
 	}
-	function display($offset = 0){
+	function display($offset = 0) {
 		if($this->users->is_admin()) {
 			$this->load->library('pagination');
             $config['base_url'] = base_url().'user/display';

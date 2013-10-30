@@ -1,10 +1,11 @@
 <?php
 
-class User extends CI_Controller{
+class Medrep extends CI_Controller{
 	
 	function __construct(){
 		parent::__construct();
 		$this->load->model("user/user_model");
+		$this->load->model("user/medrep_model");
 	}
 	function index($offset = 0){
 		$this->display($offset);
