@@ -7,7 +7,7 @@
 				<div class="control-group">
 					<label class="control-label" for="">user value</label>
 					<div class="controls">
-						<input class=":required" type="text" id="" value="<?php echo $user->username;?>" name="username">
+						<input class=":required" type="password" id="" value="<?php echo $user->username;?>" name="username">
 					</div>
 				</div>
 				<div class="control-group">
