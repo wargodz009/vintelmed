@@ -13,7 +13,7 @@ class Role extends CI_Controller{
 		$this->load->library('pagination');
 		$config['base_url'] = base_url().'role/display';
 		$config['total_rows'] = $this->role_model->count_all();
-		$config['per_page'] = 2;
+		$config['per_page'] = 15;
 		$this->pagination->initialize($config);
 		
 		$data['role'] = $this->role_model->get_all($offset,$config['per_page']);

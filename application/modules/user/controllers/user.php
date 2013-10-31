@@ -1,7 +1,6 @@
 <?php
 
 class User extends CI_Controller{
-	
 	function __construct(){
 		parent::__construct();
 		$this->load->model("user/user_model");
@@ -14,7 +13,7 @@ class User extends CI_Controller{
 			$this->load->library('pagination');
             $config['base_url'] = base_url().'user/display';
             $config['total_rows'] = $this->user_model->count_all();
-            $config['per_page'] = 2;
+            $config['per_page'] = 15;
             $this->pagination->initialize($config);
 			
 			$data['user'] = $this->user_model->get_all($offset,$config['per_page']);
@@ -25,7 +24,7 @@ class User extends CI_Controller{
 		}
 	}
 	function create() {
-		if(!empty($_POST)){
+		if(isset($_POST['role_id']) && isset($_POST['username']) && isset($_POST['password']) && $_POST['role_id'] != ''){
 			$_POST['password'] = md5($_POST['password']);
 			$id = $this->user_model->create($_POST);
 			if($id) {
@@ -43,6 +42,9 @@ class User extends CI_Controller{
 			}
 			redirect('user');
 		} else {
+			if(isset($_POST['role_id']) && $_POST['role_id'] == '') {
+				$this->session->set_flashdata('error','Please select user role!');	
+			}
 			$this->template->load('template','user/user_create');
 		}
 	}
@@ -94,25 +96,61 @@ class User extends CI_Controller{
 		}
 		redirect('user');
 	}
+	function activate($id) {
+		if(!empty($id)) {
+			if($this->user_model->activate($id)){
+				$logs = array(
+					'user_id'=>$this->session->userdata('user_id'),
+					'type'=>'user',
+					'action'=>'activate',
+					'response'=>$id,
+					'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+				);
+				$this->logs->add($logs);
+				$this->session->set_flashdata('error','user activated!');	
+			} else {
+				$this->session->set_flashdata('error','user not activated!');	
+			}
+		}
+		redirect('user');
+	}
 	function login(){
 		$data['user'] = $this->user_model->get_single($this->input->post('username'),true);
 		if($data['user']) {
 			if(md5($this->input->post('password')) == $data['user']->password) {
-				$logs = array(
-					'username'=>$this->input->post('username'),
-					'user_id'=>$data['user']->user_id,
-					'type'=>'login',
-					'response'=>'login success',
-					'fingerprint'=>$_SERVER['REMOTE_ADDR'],
-				);
-				$user = array(
-					'username'=>$this->input->post('username'),
-					'user_id'=>$data['user']->user_id,
-					'role_id'=>$data['user']->role_id
-				);
-				$this->session->set_userdata($user);
-				$this->logs->add($logs);
-                redirect('dashboard');
+				if($data['user']->status == 'enabled') {
+					$logs = array(
+						'username'=>$this->input->post('username'),
+						'user_id'=>$data['user']->user_id,
+						'type'=>'login',
+						'response'=>'login success',
+						'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+					);
+					$user = array(
+						'username'=>$this->input->post('username'),
+						'user_id'=>$data['user']->user_id,
+						'role_id'=>$data['user']->role_id
+					);
+					$this->session->set_userdata($user);
+					$this->logs->add($logs);
+					redirect('dashboard');
+				} else {
+					$logs = array(
+						'username'=>$this->input->post('username'),
+						'user_id'=>$data['user']->user_id,
+						'type'=>'login',
+						'response'=>'login failed. user disabled',
+						'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+					);
+					$user = array(
+						'username'=>$this->input->post('username'),
+						'user_id'=>$data['user']->user_id,
+						'role_id'=>$data['user']->role_id
+					);
+					$this->session->set_flashdata('error','Login failed! user account disabled. this transaction is recorded.');
+					$this->logs->add($logs);
+					redirect();
+				}
 			} else {
 				$logs = array(
 					'username'=>$this->input->post('username'),
@@ -147,6 +185,45 @@ class User extends CI_Controller{
         $this->logs->add($logs);
 		$this->session->sess_destroy();
 		redirect();
+	}
+	function manage($user_id = '') {
+		$data['user'] = $this->user_model->get_single($user_id);
+		if($data['user']) {
+			$this->load->helper('form');
+			$this->load->helper('array');
+			$this->load->model('client_model');
+			$this->load->model('medrep_model');
+			if($data['user']->role_id == 2) {
+				$data['all_medrep'] = $this->client_model->get_medreps($user_id);
+				$data['medrep'] = $this->medrep_model->get_all();
+				$this->template->load('template','user/manage_client_view',$data);
+			} else if($data['user']->role_id == 3) {
+				$data['client'] = $this->client_model->get_all();
+				$data['all_clients'] = $this->medrep_model->get_clients($user_id);
+				$this->template->load('template','user/manage_medrep_view',$data);
+			} else {
+				$this->template->load('template','user/manage_default_view',$data);
+			}
+		} else {
+			$this->session->set_flashdata('error','Invalid User!');
+			redirect();
+		}
+	}
+	function add_client($msr_id,$client_id){
+		if($this->user_model->assign($msr_id,$client_id)){
+			$this->session->set_flashdata('error','Successfull Assigned!!');
+		} else {
+			$this->session->set_flashdata('error','Error While Trying to Assign!!');
+		}
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+	function del_client($msr_id,$client_id){
+		if($this->user_model->unassign($msr_id,$client_id)){
+			$this->session->set_flashdata('error','Unssigned!!');
+		} else {
+			$this->session->set_flashdata('error','Error While Trying to Unassign!!');
+		}
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 }
 ?>

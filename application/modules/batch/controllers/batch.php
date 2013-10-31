@@ -13,7 +13,7 @@ class Batch extends CI_Controller{
             $this->load->library('pagination');
             $config['base_url'] = base_url().'batch/display';
             $config['total_rows'] = $this->batch_model->count_all();
-            $config['per_page'] = 2;
+            $config['per_page'] = 15;
             $this->pagination->initialize($config); 
             
             $data['batch'] = $this->batch_model->get_all($offset,$config['per_page']);

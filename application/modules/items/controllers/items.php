@@ -13,7 +13,7 @@ class Items extends CI_Controller{
             $this->load->library('pagination');
             $config['base_url'] = base_url().'items/display';
             $config['total_rows'] = $this->items_model->count_all();
-            $config['per_page'] = 2;
+            $config['per_page'] = 15;
             $this->pagination->initialize($config); 
             
             $data['items'] = $this->items_model->get_all($offset,$config['per_page']);

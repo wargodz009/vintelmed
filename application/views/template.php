@@ -139,10 +139,11 @@ $(function() {
 	</div>
 	<div id="leftcolumn">
 		<div class="innertube">
-			<a href="items">items</a> <br/>
-			<a href="user">users</a> <br/>
-			<a href="batch">batch</a> <br/>
-			<a href="supplier">supplier</a> <br/>
+			<a href="<?=base_url();?>items">items</a> <br/>
+			<a href="<?=base_url();?>user">users</a> <br/>
+			<a href="<?=base_url();?>batch">batch</a> <br/>
+			<a href="<?=base_url();?>supplier">supplier</a> <br/>
+			<a href="<?=base_url();?>district">district</a> <br/>
 		</div>
 	</div>
 	<div id="footer"><a href="">Vintelmed System &copy; 2013</a></div>

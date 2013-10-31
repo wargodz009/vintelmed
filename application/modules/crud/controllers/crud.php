@@ -13,7 +13,7 @@ class Crud extends CI_Controller{
             $this->load->library('pagination');
             $config['base_url'] = base_url().'crud/display';
             $config['total_rows'] = $this->crud_model->count_all();
-            $config['per_page'] = 2;
+            $config['per_page'] = 15;
             $this->pagination->initialize($config); 
             
             $data['crud'] = $this->crud_model->get_all($offset,$config['per_page']);
