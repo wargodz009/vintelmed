@@ -97,5 +97,21 @@ class Items extends CI_Controller{
 		}
 		redirect('items');
 	}
+	function search(){
+		$res = $this->items_model->search($this->input->get('term'),true);
+		$q = array();
+		if(!empty($res)) {
+			foreach($res as $k) {
+				$q[$k['item_id']] = array(
+					'value'=>$k['item_id'],
+					'label'=>$k['name'].' - '.$k['description']
+					);
+			}
+		}
+		echo json_encode($q);
+	}
+	function is_valid(){
+		echo urldecode($this->input->get('value'));
+	}
 }
 ?>

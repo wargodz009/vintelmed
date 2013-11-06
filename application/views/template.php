@@ -139,11 +139,29 @@ $(function() {
 	</div>
 	<div id="leftcolumn">
 		<div class="innertube">
+			<?php if($this->users->is_admin()) { ?>
 			<a href="<?=base_url();?>items">items</a> <br/>
 			<a href="<?=base_url();?>user">users</a> <br/>
 			<a href="<?=base_url();?>batch">batch</a> <br/>
 			<a href="<?=base_url();?>supplier">supplier</a> <br/>
 			<a href="<?=base_url();?>district">district</a> <br/>
+			<a href="<?=base_url();?>log">log</a> <br/>
+			<?php if($this->users->is_logged_in()) { ?>
+			<a href="<?=base_url();?>user/logout">logout</a> <br/>
+			<?php } else {?>
+			<a href="<?=base_url();?>user/login">login</a> <br/>
+			<?php }
+			} ?>
+			<?php if($this->users->is_warehouseman()) { ?>
+			<a href="<?=base_url();?>items">items</a> <br/>
+			<a href="<?=base_url();?>batch">batch</a> <br/>
+			<a href="<?=base_url();?>supplier">supplier</a> <br/>
+			<?php if($this->users->is_logged_in()) { ?>
+			<a href="<?=base_url();?>user/logout">logout</a> <br/>
+			<?php } else {?>
+			<a href="<?=base_url();?>user/login">login</a> <br/>
+			<?php }
+			} ?>
 		</div>
 	</div>
 	<div id="footer"><a href="">Vintelmed System &copy; 2013</a></div>

@@ -6,8 +6,7 @@
 			<table class="datatable">
 				<thead>
 					<tr>
-						<th>Id</th>
-						<th>Value</th>
+						<th>Supplier</th>
 						<th>Options</th>
 					</tr>
 				</thead>
@@ -17,9 +16,12 @@
 						foreach($supplier as $c) {
 					?>
 					<tr>
-						<td><?php echo $c->supplier_id;?></td>
-						<td><?php echo $c->name;?></td>
-						<td><a href="<?php echo base_url();?>supplier/edit/<?php echo $c->supplier_id;?>">Edit</a> | <a href="<?php echo base_url();?>supplier/delete/<?php echo $c->supplier_id;?>" class="confirm" rel="Are you sure you want to delete <?php echo $c->name;?>?">Delete</a></td>
+						<td><?php echo '<a href="'.base_url().'supplier/view/'.$c->supplier_id.'"></a>'.$c->name.'</a>';?></td>
+						<td><a href="<?php echo base_url();?>supplier/edit/<?php echo $c->supplier_id;?>">Edit</a> 
+						<?php if($this->users->is_admin()) { ?>
+						| <a href="<?php echo base_url();?>supplier/delete/<?php echo $c->supplier_id;?>" class="confirm" rel="Are you sure you want to delete <?php echo $c->name;?>?">Delete</a>
+						<?php } ?>
+						</td>
 					</tr>
 					<?php
 						}

@@ -12,10 +12,14 @@ var $table = 'items';
 		$q = $this->db->get($this->table);
 		return $q->result();
 	}
-	function get_single($id) {
+	function get_single($id,$row = '') {
 		$this->db->where('item_id',$id);
 		$q = $this->db->get($this->table);
-		return $q->row();
+		if($row != '') {
+			return $q->row()->$row;
+		} else {
+			return $q->row();
+		}
 	}
 	function count_all() {
 		return $this->db->count_all($this->table);
@@ -44,6 +48,15 @@ var $table = 'items';
 			return true;
 		} else {
 			return false;
+		}
+	}
+	function search($term,$toArray = false) {
+        $this->db->like('name',$term);
+		$q = $this->db->get($this->table);
+		if($toArray === false) {
+			return $q->result();
+		} else {
+			return $q->result_array();
 		}
 	}
 }

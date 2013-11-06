@@ -1,7 +1,7 @@
 <?php
 
-class Supplier_model extends CI_Model{
-var $table = 'suppliers';
+class Reports_inventory_model extends CI_Model{
+var $table = 'reports_inventory';
 	function get_all($offset = 0,$limit = 0) {
 	    if($offset != 0){
             $this->db->offset($offset);
@@ -13,7 +13,7 @@ var $table = 'suppliers';
 		return $q->result();
 	}
 	function get_single($id,$row = '') {
-		$this->db->where('supplier_id',$id);
+		$this->db->where('reports_inventory_id',$id);
 		$q = $this->db->get($this->table);
 		if($row != '') {
 			return $q->row()->$row;
@@ -33,7 +33,7 @@ var $table = 'suppliers';
 		}
 	}
 	function update($id,$data) {
-		$this->db->where('supplier_id',$id);
+		$this->db->where('reports_inventory_id',$id);
 		$this->db->update($this->table,$data);
 		if($this->db->affected_rows()>0) {
 			return true;
@@ -42,21 +42,12 @@ var $table = 'suppliers';
 		}
 	}
 	function delete($id) {
-		$this->db->where('supplier_id',$id);
+		$this->db->where('reports_inventory_id',$id);
 		$this->db->delete($this->table);
 		if($this->db->affected_rows()>0) {
 			return true;
 		} else {
 			return false;
-		}
-	}
-	function search($term,$toArray = false) {
-        $this->db->like('name',$term);
-		$q = $this->db->get($this->table);
-		if($toArray === false) {
-			return $q->result();
-		} else {
-			return $q->result_array();
 		}
 	}
 }

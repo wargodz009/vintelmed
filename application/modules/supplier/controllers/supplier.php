@@ -9,7 +9,7 @@ class Supplier extends CI_Controller{
 		$this->display($offset);
 	}
 	function display($offset = 0) {
-        if($this->users->is_admin()) {
+        if($this->users->is_admin() || $this->users->is_warehouseman()) {
             $this->load->library('pagination');
             $config['base_url'] = base_url().'supplier/display';
             $config['total_rows'] = $this->supplier_model->count_all();
@@ -24,7 +24,7 @@ class Supplier extends CI_Controller{
         }
 	}
 	function create() {
-        if($this->users->is_admin()) {
+        if($this->users->is_admin() || $this->users->is_warehouseman()) {
     		if(!empty($_POST)){
     			if($this->supplier_model->create($_POST)){
     				$this->session->set_flashdata('error','supplier saved!');	
@@ -64,13 +64,31 @@ class Supplier extends CI_Controller{
 	}
 	function delete($id) {
 		if(!empty($id)) {
-			if($this->supplier_model->delete($id)) {
-				$this->session->set_flashdata('error','supplier removed!');	
+			if($this->users->is_admin()) {
+				if($this->supplier_model->delete($id)) {
+					$this->session->set_flashdata('error','supplier removed!');	
+				} else {
+					$this->session->set_flashdata('error','supplier not removed!');	
+				}
 			} else {
-				$this->session->set_flashdata('error','supplier not removed!');	
+				$this->session->set_flashdata('error','NO_ACCESS');
+				redirect();
 			}
 		}
 		redirect('supplier');
+	}
+	function search(){
+		$res = $this->supplier_model->search($this->input->get('term'),true);
+		$q = array();
+		if(!empty($res)) {
+			foreach($res as $k) {
+				$q[$k['supplier_id']] = array(
+					'value'=>$k['supplier_id'],
+					'label'=>$k['name']
+					);
+			}
+		}
+		echo json_encode($q);
 	}
 }
 ?>

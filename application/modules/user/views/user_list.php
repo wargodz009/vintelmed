@@ -20,7 +20,7 @@ $this->load->model('role/role_model');
 						foreach($user as $c) {
 					?>
 					<tr>
-						<td><?php echo $c->username;?></td>
+						<td><?php echo '<a target="_new" href="'.base_url().'user/view/'.$c->user_id.'">'.$c->username.'</a>';?></td>
 						<td><?php
 						$role = $this->role_model->get_single($c->role_id);
 						echo $role->role_name;?></td>

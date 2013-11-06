@@ -9,7 +9,7 @@ class Batch extends CI_Controller{
 		$this->display($offset);
 	}
 	function display($offset = 0) {
-        if($this->users->is_admin()) {
+        if($this->users->is_admin() || $this->users->is_warehouseman()) {
             $this->load->library('pagination');
             $config['base_url'] = base_url().'batch/display';
             $config['total_rows'] = $this->batch_model->count_all();
@@ -24,7 +24,7 @@ class Batch extends CI_Controller{
         }
 	}
 	function create() {
-        if($this->users->is_admin()) {
+        if($this->users->is_admin() || $this->users->is_warehouseman()) {
     		if(!empty($_POST)){
     			if($this->batch_model->create($_POST)){
     				$this->session->set_flashdata('error','batch saved!');	
@@ -42,9 +42,14 @@ class Batch extends CI_Controller{
 	}
 	function edit($id) {
 		if(!empty($_POST)) {
-			$this->batch_model->update($id,$_POST);
-			$this->session->set_flashdata('error','batch updated!');	
-			redirect('batch');
+			if($this->users->is_admin() || $this->users->is_warehouseman()) {
+				$this->batch_model->update($id,$_POST);
+				$this->session->set_flashdata('error','batch updated!');	
+				redirect('batch');
+			} else {
+				$this->session->set_flashdata('error','NO_ACCESS');
+				redirect();
+			}
 		} else {
 			$data['batch'] = $this->batch_model->get_single($id);
 			if(!$data['batch']) {
@@ -64,10 +69,15 @@ class Batch extends CI_Controller{
 	}
 	function delete($id) {
 		if(!empty($id)) {
-			if($this->batch_model->delete($id)) {
-				$this->session->set_flashdata('error','batch removed!');	
+			if($this->users->is_admin()) {
+				if($this->batch_model->delete($id)) {
+					$this->session->set_flashdata('error','batch removed!');	
+				} else {
+					$this->session->set_flashdata('error','batch not removed!');	
+				}
 			} else {
-				$this->session->set_flashdata('error','batch not removed!');	
+				$this->session->set_flashdata('error','NO_ACCESS');
+				redirect();
 			}
 		}
 		redirect('batch');
