@@ -1,3 +1,7 @@
+<?php
+$this->load->model('user/user_model');
+$this->load->model('items/items_model');
+?>
 <div class="row">
 	<div class="span12">
 		<h1>List All Log</h1>
@@ -5,33 +9,66 @@
 			<table class="datatable">
 				<thead>
 					<tr>
-						<th>Id</th>
+						<th>User</th>
+						<th>Notification</th>
+						<th>type</th>
 						<th>Date</th>
-						<th>Options</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php
 					if(isset($log) && !empty($log)) {
 						foreach($log as $c) {
-					?>
-					<tr>
-						<td><?php echo $c->user_id;?></td>
-						<td><?php echo $c->date;?></td>
-						<td><a href="<?php echo base_url();?>log/edit/<?php echo $c->log_id;?>">Edit</a> | <a href="<?php echo base_url();?>log/delete/<?php echo $c->log_id;?>" class="confirm" rel="Are you sure you want to delete <?php echo $c->log_id;?>?">Delete</a></td>
-					</tr>
-					<?php
+							if($c->type == 'login') {
+							?>
+							<tr>
+								<td><?php 
+								$user_id = $this->user_model->get_single($c->username,true,'user_id');
+								echo '<a href="'.base_url().'user/view/'.$user_id.'">'.$c->username.'</a>';?></td>
+								<td><?php echo $c->response;?></td>
+								<td><?php echo $c->type;?></td>
+								<td><?php echo $c->date;?></td>
+							</tr>
+							<?php
+							} else if($c->type == 'user') {
+							?>
+							<tr>
+								<td><?php echo '<a href="'.base_url().'user/view/'.$c->user_id.'">'.$this->user_model->get_single($c->user_id,false,'username').'</a>';?></td>
+								<td><?php echo $c->action.' user: <a href="'.base_url().'user/view/'.$c->response.'">'.$this->user_model->get_single($c->response,false,'username').'</a>'; ?></td>
+								<td><?php echo $c->type;?></td>
+								<td><?php echo $c->date;?></td>
+							</tr>
+							<?php
+							} else if($c->type == 'inventory') {
+							?>
+							<tr>
+								<td><?php echo '<a href="'.base_url().'user/view/'.$c->user_id.'">'.$this->user_model->get_single($c->user_id,false,'username').'</a>';?></td>
+								<td><?php echo $c->action.' item: <a href="'.base_url().'items/view/'.$c->response.'">'.$this->items_model->get_single($c->response,'name').'</a>'; ?></td>
+								<td><?php echo $c->type;?></td>
+								<td><?php echo $c->date;?></td>
+							</tr>
+							<?php
+							} else {
+							?>
+							<tr>
+								<td><?php echo $c->user_id;?></td>
+								<td><?php echo $c->response;?></td>
+								<td><?php echo $c->type;?></td>
+								<td><?php echo $c->date;?></td>
+							</tr>
+							<?php
+							}
 						}
 					} else {
 					?>
-					<tr>
-						<td>No items yet!</td>
-						<td></td>
-						<td></td>
-					</tr>
-					<?php
-					}
-					?>
+				<tr>
+					<td>No items yet!</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<?php
+				}
+				?>
 				</tbody>
 			</table>
             <?php

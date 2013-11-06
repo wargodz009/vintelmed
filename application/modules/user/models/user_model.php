@@ -13,14 +13,18 @@ var $msr_tbl = 'msr_clients';
 		$q = $this->db->get($this->table);
 		return $q->result();
 	}
-	function get_single($id,$in_username = false) {
+	function get_single($id,$in_username = false,$row = false) {
 		if($in_username === true) {
 			$this->db->where('username',$id);
 		} else {
 			$this->db->where('user_id',$id);
 		}
 		$q = $this->db->get($this->table);
-		return $q->row();
+		if($row == true) {
+			return (@$q->row()->$row?$q->row()->$row:'Invalid user');
+		} else {
+			return $q->row();
+		}
 	}
 	function count_all() {
 		return $this->db->count_all($this->table);

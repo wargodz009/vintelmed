@@ -16,7 +16,7 @@ var $table = 'items';
 		$this->db->where('item_id',$id);
 		$q = $this->db->get($this->table);
 		if($row != '') {
-			return $q->row()->$row;
+			return (@$q->row()->$row?$q->row()->$row:'Invalid Item');
 		} else {
 			return $q->row();
 		}

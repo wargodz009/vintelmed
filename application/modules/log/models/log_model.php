@@ -9,6 +9,7 @@ var $table = 'system_logs';
         if($limit != 0){
 	        $this->db->limit($limit);
 	    }   
+		$this->db->order_by('date','desc');
 		$q = $this->db->get($this->table);
 		return $q->result();
 	}
