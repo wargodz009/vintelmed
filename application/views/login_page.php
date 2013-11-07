@@ -12,6 +12,6 @@ if($this->system->is_open()) {
 } else {
 ?>
 <br/>
-System Closed
+System Closed <a href="">Turn on system</a>
 <?php
 }

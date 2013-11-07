@@ -149,5 +149,8 @@ class Client extends CI_Controller{
 		$this->session->sess_destroy();
 		redirect();
 	}
+	function orders(){
+		$this->template->load('template','user/client/order_list');
+	}
 }
 ?>

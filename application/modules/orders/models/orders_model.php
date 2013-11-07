@@ -1,7 +1,7 @@
 <?php
 
-class Crud_model extends CI_Model{
-var $table = 'cruds';
+class Orders_model extends CI_Model{
+var $table = 'orders';
 	function get_all($offset = 0,$limit = 0) {
 	    if($offset != 0){
             $this->db->offset($offset);
@@ -13,10 +13,10 @@ var $table = 'cruds';
 		return $q->result();
 	}
 	function get_single($id,$row = '') {
-		$this->db->where('crud_id',$id);
+		$this->db->where('order_id',$id);
 		$q = $this->db->get($this->table);
 		if($row != '') {
-			return (@$q->row()->$row?$q->row()->$row:'Invalid cruds');
+			return $q->row()->$row;
 		} else {
 			return $q->row();
 		}
@@ -33,7 +33,7 @@ var $table = 'cruds';
 		}
 	}
 	function update($id,$data) {
-		$this->db->where('crud_id',$id);
+		$this->db->where('order_id',$id);
 		$this->db->update($this->table,$data);
 		if($this->db->affected_rows()>0) {
 			return true;
@@ -42,7 +42,7 @@ var $table = 'cruds';
 		}
 	}
 	function delete($id) {
-		$this->db->where('crud_id',$id);
+		$this->db->where('order_id',$id);
 		$this->db->delete($this->table);
 		if($this->db->affected_rows()>0) {
 			return true;

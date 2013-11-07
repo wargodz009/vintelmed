@@ -6,7 +6,11 @@ class User extends CI_Controller{
 		$this->load->model("user/user_model");
 	}
 	function index($offset = 0){
-		$this->display($offset);
+		if($this->users->is_admin()) {
+			$this->display($offset);
+		} else {
+			$this->view();
+		}
 	}
 	function display($offset = 0){
 		if($this->users->is_admin()) {
@@ -48,7 +52,10 @@ class User extends CI_Controller{
 			$this->template->load('template','user/user_create');
 		}
 	}
-	function edit($id) {
+	function edit($id = false) {
+		if($id === false) {
+			$id = $this->session->userdata('user_id');
+		}
 		if(!empty($_POST)) {
 			$this->user_model->update($id,$_POST);
 			$logs = array(
@@ -70,7 +77,10 @@ class User extends CI_Controller{
 			$this->template->load('template','user/user_edit',$data);
 		}
 	}
-	function view($id) {
+	function view($id = false) {
+		if($id === false) {
+			$id = $this->session->userdata('user_id');
+		}
 		$data['user'] = $this->user_model->get_single($id);
 		if(!$data['user']) {
 			$this->session->set_flashdata('error','not a valid user!');	

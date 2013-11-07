@@ -101,7 +101,7 @@ $(function() {
 <div id="maincontainer">
 	<div id="topsection">
 		<div class="innertube">
-			<h1>SITE NAME - LOGO</h1>
+			<a href="<?=base_url();?>"><h1>SITE NAME - LOGO</h1></a>
 		</div>
 	</div>
 	<div id="contentwrapper">
@@ -139,6 +139,9 @@ $(function() {
 	</div>
 	<div id="leftcolumn">
 		<div class="innertube">
+			<?php if($this->users->is_logged_in()) { ?>
+			<a href="<?=base_url();?>user/view">My Profile</a> <br/>
+			<?php } ?>
 			<?php if($this->users->is_admin()) { ?>
 			<a href="<?=base_url();?>items">items</a> <br/>
 			<a href="<?=base_url();?>user">users</a> <br/>
@@ -162,9 +165,35 @@ $(function() {
 			<a href="<?=base_url();?>user/login">login</a> <br/>
 			<?php }
 			} ?>
+			<?php if($this->users->is_msr()) { ?>
+			<a href="<?=base_url();?>clients">clients</a> <br/>
+			<a href="<?=base_url();?>supplier">orders</a> <br/>
+			<?php if($this->users->is_logged_in()) { ?>
+			<a href="<?=base_url();?>user/logout">logout</a> <br/>
+			<?php } else {?>
+			<a href="<?=base_url();?>user/login">login</a> <br/>
+			<?php }
+			} ?>
+			<?php if($this->users->is_client()) { ?>
+			<a href="<?=base_url();?>user/client/orders">My Orders</a> <br/>
+			<?php if($this->users->is_logged_in()) { ?>
+			<a href="<?=base_url();?>user/logout">logout</a> <br/>
+			<?php } else {?>
+			<a href="<?=base_url();?>user/login">login</a> <br/>
+			<?php }
+			} ?>
+			<?php if($this->users->is_accountant()) { ?>
+			<a href="<?=base_url();?>orders">Orders</a> <br/>
+			<a href="<?=base_url();?>reports">reports</a> <br/>
+			<?php if($this->users->is_logged_in()) { ?>
+			<a href="<?=base_url();?>user/logout">logout</a> <br/>
+			<?php } else {?>
+			<a href="<?=base_url();?>user/login">login</a> <br/>
+			<?php }
+			} ?>
 		</div>
 	</div>
-	<div id="footer"><a href="">Vintelmed System &copy; 2013</a></div>
+	<div id="footer"><a href="<?=base_url();?>">Vintelmed System &copy; 2013</a></div>
 </div>
 </body>
 </html>

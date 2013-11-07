@@ -10,11 +10,28 @@ $this->load->model('district/district_model');
 		<div class="well">
 			<form class="form-horizontal" method="post" action="<?php echo base_url().'user/edit/'.$user->user_id; ?>">
 				<div class="control-group">
-					<label class="control-label" for="">user value</label>
+					<label class="control-label" for="">First name</label>
 					<div class="controls">
-						<input class=":required" type="password" id="" value="<?php echo $user->username;?>" name="username">
+						<input class=":required" type="text" id="" value="<?php echo $user->first_name;?>" name="first_name">
 					</div>
 				</div> <br/>
+				<div class="control-group">
+					<label class="control-label" for="">Last name</label>
+					<div class="controls">
+						<input class=":required" type="text" id="" value="<?php echo $user->last_name;?>" name="last_name">
+					</div>
+				</div> <br/>
+				<div class="control-group">
+					<label class="control-label" for="">E-mail</label>
+					<div class="controls">
+						<input class=":required :email" type="text" id="" value="<?php echo $user->email;?>" name="email">
+					</div>
+				</div> <br/>
+				<?php
+					if($this->users->is_client($user->role_id)) {
+						$this->load->view('user/client_profile_edit');
+					}
+				?>
 				<?php if(in_array($user->role_id,array(2,3,5))) {  ?>
 				<div class="controls" id="div_district_id">
 					<label class="control-label" for="">District</label>
