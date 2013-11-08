@@ -12,18 +12,22 @@ class Orders extends CI_Controller{
         if($this->users->is_admin() || $this->users->is_msr()) {
             $this->load->library('pagination');
             $config['base_url'] = base_url().'orders/display';
-            $config['total_rows'] = $this->orders_model->count_all();
             $config['per_page'] = 15;
-            $this->pagination->initialize($config); 
-            
-            $data['orders'] = $this->orders_model->get_all($offset,$config['per_page']);
+			if($this->users->is_admin()) {
+				$config['total_rows'] = $this->orders_model->count_all();
+				$data['orders'] = $this->orders_model->get_all($offset,$config['per_page']);
+			} else {
+				$config['total_rows'] = $this->orders_model->count_all($this->session->userdata('user_id'));
+				$data['orders'] = $this->orders_model->get_all($offset,$config['per_page'],$this->session->userdata('user_id'));
+			}
+			$this->pagination->initialize($config); 
 		    $this->template->load('template','orders/orders_list',$data);
         } else {
             $this->session->set_flashdata('error','NO_ACCESS');
             redirect();
         }
 	}
-	function create() {
+	function create($user_id = false) {
         if($this->users->is_admin() || $this->users->is_msr()) {
     		if(!empty($_POST)){
     			if($this->orders_model->create($_POST)){
@@ -33,7 +37,12 @@ class Orders extends CI_Controller{
     			}
     			redirect('orders');
     		} else {
-    			$this->template->load('template','orders/orders_create');
+				if($user_id != false) {
+					$data['user_id'] = $user_id;
+ 					$this->template->load('template','orders/orders_create',$data);	
+				} else {
+					$this->template->load('template','orders/orders_create');
+				}
     		}
         } else {
             $this->session->set_flashdata('error','NO_ACCESS');
@@ -68,6 +77,16 @@ class Orders extends CI_Controller{
 				$this->session->set_flashdata('error','orders removed!');	
 			} else {
 				$this->session->set_flashdata('error','orders not removed!');	
+			}
+		}
+		redirect('orders');
+	}
+	function cancel($id) {
+		if(!empty($id)) {
+			if($this->orders_model->cancel($id)) {
+				$this->session->set_flashdata('error','orders cancelled!');	
+			} else {
+				$this->session->set_flashdata('error','error cancelling order!');	
 			}
 		}
 		redirect('orders');

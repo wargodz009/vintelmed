@@ -13,4 +13,16 @@ var $msr_tbl = 'msr_clients';
 		$q = $this->db->get($this->msr_tbl);
 		return $q->result();
 	}
+	function get_msr_client_id($msr_id,$client_id){
+		$this->db->where('msr_id',$msr_id);
+		$this->db->where('client_id',$client_id);
+		$q = $this->db->get($this->msr_tbl);
+		return ($q->row()->msr_client_id?$q->row()->msr_client_id:'Invalid ID');
+	}
+	function get_msr_id($client_id,$msr_client_id){
+		$this->db->where('client_id',$client_id);
+		$this->db->where('msr_client_id',$msr_client_id);
+		$q = $this->db->get($this->msr_tbl);
+		return ($q->row()->msr_id?$q->row()->msr_id:'Invalid ID');
+	}
 }

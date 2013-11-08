@@ -113,5 +113,8 @@ class Items extends CI_Controller{
 	function is_valid(){
 		echo urldecode($this->input->get('value'));
 	}
+	function get_price($item_id){
+		echo $this->items_model->get_single($item_id,'price_standard');
+	}
 }
 ?>

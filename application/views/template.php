@@ -149,48 +149,28 @@ $(function() {
 			<a href="<?=base_url();?>supplier">supplier</a> <br/>
 			<a href="<?=base_url();?>district">district</a> <br/>
 			<a href="<?=base_url();?>log">log</a> <br/>
-			<?php if($this->users->is_logged_in()) { ?>
-			<a href="<?=base_url();?>user/logout">logout</a> <br/>
-			<?php } else {?>
-			<a href="<?=base_url();?>user/login">login</a> <br/>
-			<?php }
-			} ?>
+			<?php } ?>
 			<?php if($this->users->is_warehouseman()) { ?>
 			<a href="<?=base_url();?>items">items</a> <br/>
 			<a href="<?=base_url();?>batch">batch</a> <br/>
 			<a href="<?=base_url();?>supplier">supplier</a> <br/>
-			<?php if($this->users->is_logged_in()) { ?>
-			<a href="<?=base_url();?>user/logout">logout</a> <br/>
-			<?php } else {?>
-			<a href="<?=base_url();?>user/login">login</a> <br/>
-			<?php }
-			} ?>
+			<?php } ?>
 			<?php if($this->users->is_msr()) { ?>
 			<a href="<?=base_url();?>clients">clients</a> <br/>
-			<a href="<?=base_url();?>supplier">orders</a> <br/>
-			<?php if($this->users->is_logged_in()) { ?>
-			<a href="<?=base_url();?>user/logout">logout</a> <br/>
-			<?php } else {?>
-			<a href="<?=base_url();?>user/login">login</a> <br/>
-			<?php }
-			} ?>
+			<a href="<?=base_url();?>orders">orders</a> <br/>
+			<?php } ?>
 			<?php if($this->users->is_client()) { ?>
 			<a href="<?=base_url();?>user/client/orders">My Orders</a> <br/>
-			<?php if($this->users->is_logged_in()) { ?>
-			<a href="<?=base_url();?>user/logout">logout</a> <br/>
-			<?php } else {?>
-			<a href="<?=base_url();?>user/login">login</a> <br/>
-			<?php }
-			} ?>
+			<?php } ?>
 			<?php if($this->users->is_accountant()) { ?>
 			<a href="<?=base_url();?>orders">Orders</a> <br/>
 			<a href="<?=base_url();?>reports">reports</a> <br/>
+			<?php } ?>
 			<?php if($this->users->is_logged_in()) { ?>
 			<a href="<?=base_url();?>user/logout">logout</a> <br/>
 			<?php } else {?>
 			<a href="<?=base_url();?>user/login">login</a> <br/>
-			<?php }
-			} ?>
+			<?php } ?>
 		</div>
 	</div>
 	<div id="footer"><a href="<?=base_url();?>">Vintelmed System &copy; 2013</a></div>

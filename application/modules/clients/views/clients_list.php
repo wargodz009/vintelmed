@@ -9,7 +9,6 @@ $this->load->model('user/user_model');
 			<table class="datatable">
 				<thead>
 					<tr>
-						<th>Id</th>
 						<th>Name</th>
 						<th>Options</th>
 					</tr>
@@ -20,9 +19,8 @@ $this->load->model('user/user_model');
 						foreach($client as $c) {
 					?>
 					<tr>
-						<td><?php echo $c->client_id;?></td>
 						<td><?php echo '<a target="_new" href="'.base_url().'user/view/'.$c->client_id.'">'.$this->user_model->get_single($c->client_id,false,'username').'</a>';?></td>
-						<td><a href="<?php echo base_url();?>orders/create/<?php echo $c->client_id;?>">Add Order</a></td>
+						<td><a href="<?php echo base_url();?>orders/create/<?php echo $c->client_id; ?>">Add Order</a></td>
 					</tr>
 					<?php
 						}

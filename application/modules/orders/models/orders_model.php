@@ -2,13 +2,16 @@
 
 class Orders_model extends CI_Model{
 var $table = 'orders';
-	function get_all($offset = 0,$limit = 0) {
+	function get_all($offset = 0,$limit = 0,$is_admin = true) {
 	    if($offset != 0){
             $this->db->offset($offset);
 	    }
         if($limit != 0){
 	        $this->db->limit($limit);
 	    }   
+		if($is_admin !== true) {
+			$this->db->where('msr_id',$is_admin);
+		}
 		$q = $this->db->get($this->table);
 		return $q->result();
 	}
@@ -21,8 +24,11 @@ var $table = 'orders';
 			return $q->row();
 		}
 	}
-	function count_all() {
-		return $this->db->count_all($this->table);
+	function count_all($msr_id = false) {
+		if($msr_id !== false) {
+			$this->db->where('msr_id',$msr_id);
+		}
+		return $this->db->get($this->table)->num_rows();
 	}
 	function create($data) {
 		$this->db->insert($this->table,$data);
@@ -44,6 +50,16 @@ var $table = 'orders';
 	function delete($id) {
 		$this->db->where('order_id',$id);
 		$this->db->delete($this->table);
+		if($this->db->affected_rows()>0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	function cancel($id) {
+		$this->db->set('status','cancelled');
+		$this->db->where('order_id',$id);
+		$this->db->update($this->table);
 		if($this->db->affected_rows()>0) {
 			return true;
 		} else {
