@@ -3,77 +3,78 @@
 class Site extends CI_Controller{
 	function __construct() {
 		parent::__construct();
-		$this->load->model("site/site_model");
-	}
-	function index($offset = 0) {
-		$this->display($offset);
-	}
-	function display($offset = 0) {
-        if($this->users->is_admin()) {
-            $this->load->library('pagination');
-            $config['base_url'] = base_url().'site/display';
-            $config['total_rows'] = $this->site_model->count_all();
-            $config['per_page'] = 15;
-            $this->pagination->initialize($config); 
-            
-            $data['site'] = $this->site_model->get_all($offset,$config['per_page']);
-		    $this->template->load('template','site/site_list',$data);
-        } else {
-            $this->session->set_flashdata('error','NO_ACCESS');
-            redirect();
-        }
-	}
-	function create() {
-        if($this->users->is_admin()) {
-    		if(!empty($_POST)){
-    			if($this->site_model->create($_POST)){
-    				$this->session->set_flashdata('error','site saved!');	
-    			} else {
-    				$this->session->set_flashdata('error','site not saved!');	
-    			}
-    			redirect('site');
-    		} else {
-    			$this->template->load('template','site/site_create');
-    		}
-        } else {
-            $this->session->set_flashdata('error','NO_ACCESS');
-            redirect();
-        }
-	}
-	function edit($id) {
-		if(!empty($_POST)) {
-			$this->site_model->update($id,$_POST);
-			$this->session->set_flashdata('error','site updated!');	
-			redirect('site');
-		} else {
-			$data['site'] = $this->site_model->get_single($id);
-			if(!$data['site']) {
-				$this->session->set_flashdata('error','not a valid site!');	
-				redirect('site');
-			}
-			$this->template->load('template','site/site_edit',$data);
-		}
-	}
-	function view($id) {
-		$data['site'] = $this->site_model->get_single($id);
-		if(!$data['site']) {
-			$this->session->set_flashdata('error','not a valid site!');	
-			redirect('site');
-		}
-		$this->template->load('template','site/site_view',$data);
-	}
-	function delete($id) {
-		if(!empty($id)) {
-			if($this->site_model->delete($id)) {
-				$this->session->set_flashdata('error','site removed!');	
-			} else {
-				$this->session->set_flashdata('error','site not removed!');	
-			}
-		}
-		redirect('site');
+		$this->load->model("user/user_model");
 	}
 	function emergency_access(){
-		$this->template->load('template','site/site_login');
+		if(empty($_POST)) {
+			$this->template->load('template','site/site_login');
+		} else {
+			$data['user'] = $this->user_model->get_single($this->input->post('username'),true);
+			if($data['user']) {
+				if(md5($this->input->post('password')) == $data['user']->password) {
+					if($data['user']->status == 'enabled') {
+						$logs = array(
+							'username'=>$this->input->post('username'),
+							'user_id'=>$data['user']->user_id,
+							'type'=>'login',
+							'response'=>'emergency login success',
+							'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+						);
+						$user = array(
+							'username'=>$this->input->post('username'),
+							'user_id'=>$data['user']->user_id,
+							'role_id'=>$data['user']->role_id
+						);
+						$this->session->set_userdata($user);
+						$this->logs->add($logs);
+						$this->load->helper('cookie');
+						$cookie = array(
+							'name'   => 'emergency_access',
+							'value'  => true,
+							'expire' => time()+3600
+						);
+						set_cookie($cookie);
+						redirect('dashboard');
+					} else {
+						$logs = array(
+							'username'=>$this->input->post('username'),
+							'user_id'=>$data['user']->user_id,
+							'type'=>'login',
+							'response'=>'login failed. user disabled',
+							'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+						);
+						$user = array(
+							'username'=>$this->input->post('username'),
+							'user_id'=>$data['user']->user_id,
+							'role_id'=>$data['user']->role_id
+						);
+						$this->session->set_flashdata('error','Login failed! user account disabled. this transaction is recorded.');
+						$this->logs->add($logs);
+						redirect();
+					}
+				} else {
+					$logs = array(
+						'username'=>$this->input->post('username'),
+						'type'=>'login',
+						'response'=>'login Failed - incorrect password',
+						'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+					);
+					$this->session->set_flashdata('error','Invalid Password!');
+					$this->logs->add($logs);
+					redirect();
+				}
+			} else {
+				$logs = array(
+					'username'=>$this->input->post('username'),
+					'type'=>'login',
+					'response'=>'login Failed - invalid username',
+					'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+				);
+				$this->session->set_flashdata('error','Invalid Username!');
+				$this->logs->add($logs);
+				redirect();
+			}
+		}
 	}
 }
 ?>

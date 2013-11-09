@@ -125,39 +125,51 @@ class User extends CI_Controller{
 		redirect('user');
 	}
 	function login(){
-		$data['user'] = $this->user_model->get_single($this->input->post('username'),true);
-		if($data['user']) {
-			if(md5($this->input->post('password')) == $data['user']->password) {
-				if($data['user']->status == 'enabled') {
-					$logs = array(
-						'username'=>$this->input->post('username'),
-						'user_id'=>$data['user']->user_id,
-						'type'=>'login',
-						'response'=>'login success',
-						'fingerprint'=>$_SERVER['REMOTE_ADDR'],
-					);
-					$user = array(
-						'username'=>$this->input->post('username'),
-						'user_id'=>$data['user']->user_id,
-						'role_id'=>$data['user']->role_id
-					);
-					$this->session->set_userdata($user);
-					$this->logs->add($logs);
-					redirect('dashboard');
+		if(!empty($_POST)) {
+			$data['user'] = $this->user_model->get_single($this->input->post('username'),true);
+			if($data['user']) {
+				if(md5($this->input->post('password')) == $data['user']->password) {
+					if($data['user']->status == 'enabled') {
+						$logs = array(
+							'username'=>$this->input->post('username'),
+							'user_id'=>$data['user']->user_id,
+							'type'=>'login',
+							'response'=>'login success',
+							'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+						);
+						$user = array(
+							'username'=>$this->input->post('username'),
+							'user_id'=>$data['user']->user_id,
+							'role_id'=>$data['user']->role_id
+						);
+						$this->session->set_userdata($user);
+						$this->logs->add($logs);
+						redirect('dashboard');
+					} else {
+						$logs = array(
+							'username'=>$this->input->post('username'),
+							'user_id'=>$data['user']->user_id,
+							'type'=>'login',
+							'response'=>'login failed. user disabled',
+							'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+						);
+						$user = array(
+							'username'=>$this->input->post('username'),
+							'user_id'=>$data['user']->user_id,
+							'role_id'=>$data['user']->role_id
+						);
+						$this->session->set_flashdata('error','Login failed! user account disabled. this transaction is recorded.');
+						$this->logs->add($logs);
+						redirect();
+					}
 				} else {
 					$logs = array(
 						'username'=>$this->input->post('username'),
-						'user_id'=>$data['user']->user_id,
 						'type'=>'login',
-						'response'=>'login failed. user disabled',
+						'response'=>'login Failed - incorrect password',
 						'fingerprint'=>$_SERVER['REMOTE_ADDR'],
 					);
-					$user = array(
-						'username'=>$this->input->post('username'),
-						'user_id'=>$data['user']->user_id,
-						'role_id'=>$data['user']->role_id
-					);
-					$this->session->set_flashdata('error','Login failed! user account disabled. this transaction is recorded.');
+					$this->session->set_flashdata('error','Invalid Password!');
 					$this->logs->add($logs);
 					redirect();
 				}
@@ -165,23 +177,15 @@ class User extends CI_Controller{
 				$logs = array(
 					'username'=>$this->input->post('username'),
 					'type'=>'login',
-					'response'=>'login Failed - incorrect password',
+					'response'=>'login Failed - invalid username',
 					'fingerprint'=>$_SERVER['REMOTE_ADDR'],
 				);
-				$this->session->set_flashdata('error','Invalid Password!');
+				$this->session->set_flashdata('error','Invalid Username!');
 				$this->logs->add($logs);
 				redirect();
 			}
 		} else {
-			$logs = array(
-				'username'=>$this->input->post('username'),
-				'type'=>'login',
-				'response'=>'login Failed - invalid username',
-				'fingerprint'=>$_SERVER['REMOTE_ADDR'],
-			);
-			$this->session->set_flashdata('error','Invalid Username!');
-			$this->logs->add($logs);
-			redirect();
+			$this->template->load('template','login_page');
 		}
 	}
 	function logout(){
@@ -194,6 +198,11 @@ class User extends CI_Controller{
 		);
         $this->logs->add($logs);
 		$this->session->sess_destroy();
+		$this->load->helper('cookie');
+		$cookie = get_cookie('emergency_access');
+		if(isset($cookie)) {
+			delete_cookie('emergency_access');
+		}
 		redirect();
 	}
 	function manage($user_id = '') {
