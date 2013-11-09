@@ -1,0 +1,153 @@
+/* RESET
+--------------------------------------------------------------*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td { margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%; vertical-align: baseline; background: transparent; }
+
+body { line-height:1; }
+ol, ul { list-style:none; }
+blockquote, q { quotes:none; }
+blockquote:before, blockquote:after,
+q:before, q:after { content:''; content:none; }
+
+/* remember to define focus styles! */
+:focus { outline:0; }
+
+/* remember to highlight inserts somehow! */
+ins { text-decoration:none; }
+del { ext-decoration:line-through; }
+
+/* tables still need 'cellspacing="0"' in the markup */
+table { border-collapse:collapse; border-spacing:0; }
+
+.clear { clear:both; }
+.clear0 { clear:both; height:5px; }
+.clear1 { clear:both; height:10px; }
+.clear2 { clear:both; height:20px; }
+.clear3 { clear:both; height:30px; }
+.clear4 { clear:both; height:40px; }
+
+/*enable this code to view div border*/
+.jabee { border:1px #FF0000 solid; }
+
+ 
+
+
+/*MAIN
+--------------------------------------------------------------*/
+body { background:#e2bb91 url(../images/bg.png) repeat; font-family:Arial, Helvetica, sans-serif; font-size:12px; }
+.wrapper { width:1114px; margin:0 auto; }
+
+#vmehldr { background-color:#FFF; width:100%; -webkit-box-shadow: 0px 1px 7px rgba(50, 50, 50, 0.22); -moz-box-shadow:0px 1px 7px rgba(50, 50, 50, 0.22); box-shadow:0px 1px 7px rgba(50, 50, 50, 0.22); float:left; margin-top:18px; -webkit-border-top-left-radius:7px; -webkit-border-top-right-radius:7px; -moz-border-radius-topleft:7px; -moz-border-radius-topright:7px; border-top-left-radius:7px; border-top-right-radius:7px; }
+
+
+
+/*TOP
+--------------------------------------------------------------*/
+#top { position:relative; }
+#top .tp1 { height:36px; background:#026dc7 url(../images/img1.png) repeat-x; border-bottom:1px solid #004c90; -webkit-border-top-left-radius:7px; -webkit-border-top-right-radius:7px; -moz-border-radius-topleft:7px; -moz-border-radius-topright:7px; border-top-left-radius:7px; border-top-right-radius:7px; }
+#top .tp2 { height:32px; line-height:32px; border-top:1px solid #006ac3; border-bottom:1px solid #004177; background-color:#005ca9; color:#5b9eda; text-shadow:1px 1px #00307e; }
+#top .tp2 .lbl { min-width:20px; float:left; margin-left:15px; margin-right:11px; font-size:10px; text-transform:uppercase; }
+#top .tp2 .srchbx { width:1013px;  height:24px; float:left;line-height:24px; background:url(../images/img2.png) no-repeat; border:none; margin:4px 0 0 0; }
+#top .tp2 .srchbx input[type="text"] { width:97%; height:14px; line-height:14px; background:none; border:none; font-size:11px; color:#8e8e8e; margin:4px 0 0 10px; float:left; }
+#top .tp2 .srchbx input[type="button"] { width:15px; height:14px; border:none; background:none; float:left; margin:4px 0 0 0; cursor:pointer; text-indent:-999px; overflow:hidden; }
+#top .tp2 .dropmenu { width:14px; height:14px; float:left; background:url(../images/img3.png) no-repeat; margin:9px 0 0 8px; }
+
+#top .logo { width:203px; height:31px; background:url(../images/vintelmed-logo.png) no-repeat; float:left; margin:4px 0 0 7px; }
+#top .logo a { display:block; width:203px; height:31px; text-indent:-999px; overflow:hidden; cursor:pointer; }
+#top .timedate { min-width:10px; line-height:36px; float:right; margin-right:15px; font-size:11px; color:#89ccff; text-align:right; }
+#top .prflnk { min-width:10px; line-height:36px; float:right; margin-right:10px; font-size:11px; color:#ffcd47; text-align:right; }
+#top .prflnk a { text-decoration:none; color:#ffcd47; }
+#top .prflnk a:hover { text-decoration:underline; }
+
+
+
+/*MID
+--------------------------------------------------------------*/
+#mid { width:100%; min-height:100px; background:url(../images/img4.png) top left repeat-y; }
+
+/*Sidebar*/
+#sidebar { width:76px; float:left; color:#9d9c9a; border-left:1px solid #181818; border-right:1px solid #181818; font-size:10px; text-align:center; margin-bottom:100px; }
+#sidebar ul { list-style:none; margin:0; padding:0; }
+#sidebar li { height:67px; border-bottom:1px solid #181818; border-top:1px solid #49515b; position:relative; }
+#sidebar li:first-child { border-top:none; }
+#sidebar li:hover { background-color:#49515b; }
+#sidebar li a { text-decoration:none; color:#9d9c9a; }
+#sidebar li a:hover { color:#ddd9d2; }
+#sidebar li img { border:none; }
+#sidebar li .lgt { display:none; width:7px; height:67px; background:url(../images/img5.png) no-repeat; position:absolute; top:0; left:0; }
+#sidebar li:hover .lgt { display:block; }
+
+#sidebar .active { background-color:#49515b; }
+#sidebar .active { position:relative; }
+#sidebar .active a { color:#ddd9d2; }
+#sidebar .active .lgt { display:block; }
+
+#sidebar li .icn { width:100%; height:38px; margin-bottom:7px; }
+#sidebar li .bg1 { background:url(../images/dashboard-icon.png) center bottom no-repeat; }
+#sidebar li .bg2 { background:url(../images/inventory-icon.png) center bottom no-repeat; }
+#sidebar li .bg3 { background:url(../images/clients-icon.png) center bottom no-repeat; }
+#sidebar li .bg4 { background:url(../images/employees-icon.png) center bottom no-repeat; }
+#sidebar li .bg5 { background:url(../images/reports-icon.png) center bottom no-repeat; }
+
+/*Content*/
+#cntnt { width:1036px; float:left; }
+
+#cntnt .tbl { min-height:100px; background-color:#FFF; border:1px solid #d0d8df; -webkit-border-radius:4px; -webkit-border-bottom-left-radius:0; -moz-border-radius:4px; -moz-border-radius-bottomleft: 0; border-radius:4px; border-bottom-left-radius:0; -webkit-box-shadow: 0px 1px 1px rgba(50, 50, 50, 0.11); -moz-box-shadow:0px 1px 1px rgba(50, 50, 50, 0.11); box-shadow:0px 1px 1px rgba(50, 50, 50, 0.11); }
+#cntnt .tbl .title { height:33px; line-height:33px;  font-size:14px; color:#7e858c; font-weight:bold; padding:0 14px 0 14px; text-transform:uppercase; text-shadow:1px 1px #fbfcfd; -webkit-border-radius:4px; -webkit-border-bottom-left-radius:0; -moz-border-radius:4px; -moz-border-radius-bottomleft: 0; border-radius:4px; border-bottom-left-radius:0; background:#eff3f7 url(../images/img6.png) center top repeat-x; border-bottom:1px solid #d0d8df; }
+
+.sbtle { height:34px; background:#eff3f7 url(../images/img7.png) repeat-x; border-bottom:1px solid #d0d8df; position:relative; }
+.sbtle .shdw { width:100%; height:3px; position:absolute; left:0; bottom:-3px; background:url(../images/img8.png) repeat-x; }
+.sbtle ul { list-style:none; margin:0; }
+.sbtle table { width:100%; margin:0; padding:0; }
+.sbtle table td:first-child { border-left:none; }
+.sbtle td { height:34px; border-left:1px solid #d0d8df; font-size:10px; text-align:center; color:#96a2ac; text-transform:uppercase; }
+
+.sbtle .ln1 { width:107px; line-height:34px; }
+.sbtle .ln2 { width:113px; line-height:34px; }
+.sbtle .ln3 { width:99px; line-height:34px; }
+.sbtle .ln4 { width:128px; line-height:34px; }
+.sbtle .ln5 { width:75px; }
+.sbtle .ln6 { width:81px; }
+
+
+/*Tables*/
+.slimScrollDiv { height:800!important; }
+.tblist { min-height:100px; }
+.tblist table { width:100%; margin:0; padding:0; }
+.tblist table td:first-child { border-left:none; }
+.tblist td { border-left:1px solid #d0d8df; border-top:1px solid #d0d8df; padding:13px 5px 13px 5px; font-size:10px; color:#96a2ac; text-transform:uppercase; }
+.tblist tr:nth-child(odd) { background-color:#fff; }
+.tblist tr:nth-child(even) { background-color:#fffdf6; }
+.tblist .lnkicn { width:8px; height:8px; margin:2px 0 0 13px; }
+
+/*Column Width*/
+.clmn1 { width:104px; }
+.clmn2 { width:114px; }
+.clmn3 { width:98px; }
+.clmn4 { width:129px; }
+.clmn5 { width:74px; text-align:right; }
+.clmn6 { width:82px; text-align:right; }
+.clmn7 { width:82px; text-align:right; }
+.clmn8 { width:87px; }
+.clmn9 { width:25px; text-align:right; }
+.clmn10 { width:87px; text-align:right; }
+.clmn11 { width:60px; text-align:right; }
+.clmn12 { width:38px; }
+
+
+/*Table Boxes*/
+#cntnt .tbl1 { width:1014px; margin:10px 0 0 10px; }
+
+
+
+
+/*OTHERS
+--------------------------------------------------------------*/
+

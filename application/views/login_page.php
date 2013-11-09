@@ -12,6 +12,6 @@ if($this->system->is_open()) {
 } else {
 ?>
 <br/>
-System Closed <a href="">Turn on system</a>
+System Closed <a href="<?=base_url().'site/emergency_access';?>">Turn on system</a>
 <?php
 }

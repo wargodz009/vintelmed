@@ -2,7 +2,13 @@
 
 class System {
 	function is_open(){
+		$CI =& get_instance();
 		if(strtotime($this->get_time()) >= strtotime($this->get('time_open')) && strtotime($this->get_time()) <= strtotime($this->get('time_close'))) {
+			return true;
+		}
+		$CI->load->helper('cookie');
+		$emergency_cookie = get_cookie('emergency_access');
+		if(!empty($emergency_cookie)) {
 			return true;
 		}
 		return false;
