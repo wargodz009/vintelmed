@@ -2,6 +2,7 @@
 
 class Orders_model extends CI_Model{
 var $table = 'orders';
+var $batch = 'item_batch';
 	function get_all($offset = 0,$limit = 0,$is_admin = true) {
 	    if($offset != 0){
             $this->db->offset($offset);
@@ -12,6 +13,7 @@ var $table = 'orders';
 		if($is_admin !== true) {
 			$this->db->where('msr_id',$is_admin);
 		}
+		$this->db->order_by('status','asc');
 		$q = $this->db->get($this->table);
 		return $q->result();
 	}

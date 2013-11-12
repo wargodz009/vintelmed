@@ -10,6 +10,7 @@ var $msr_tbl = 'msr_clients';
         if($limit != 0){
 	        $this->db->limit($limit);
 	    } 
+		$this->db->where('role_id !=',2);
 		$q = $this->db->get($this->table);
 		return $q->result();
 	}
@@ -27,7 +28,8 @@ var $msr_tbl = 'msr_clients';
 		}
 	}
 	function count_all() {
-		return $this->db->count_all($this->table);
+		$this->db->where('role_id !=',2);
+		return $this->db->get($this->table)->num_rows();
 	}
 	function create($data) {
 		$this->db->insert($this->table,$data);

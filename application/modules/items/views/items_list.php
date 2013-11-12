@@ -21,7 +21,7 @@
 						<td><?php echo $c->description;?></td>
 						<td>
 							<a href="<?php echo base_url();?>items/edit/<?php echo $c->item_id;?>">Edit</a>
-							<?php if($this->users->is_admin() || $this->users->is_warehouseman()) { ?>| 
+							<?php if($this->users->is_admin()) { ?>| 
 							<a href="<?php echo base_url();?>items/delete/<?php echo $c->item_id;?>" class="confirm" rel="Are you sure you want to delete <?php echo $c->name;?>?">Delete</a>
 							<?php } ?>
 						</td>

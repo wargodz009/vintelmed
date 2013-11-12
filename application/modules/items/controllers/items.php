@@ -9,7 +9,7 @@ class Items extends CI_Controller{
 		$this->display($offset);
 	}
 	function display($offset = 0) {
-        if($this->users->is_admin()) {
+        if($this->users->is_admin() || $this->users->is_warehouseman()) {
             $this->load->library('pagination');
             $config['base_url'] = base_url().'items/display';
             $config['total_rows'] = $this->items_model->count_all();
@@ -24,7 +24,7 @@ class Items extends CI_Controller{
         }
 	}
 	function create() {
-        if($this->users->is_admin()) {
+        if($this->users->is_admin() || $this->users->is_warehouseman()) {
     		if(!empty($_POST)){
 				$id = $this->items_model->create($_POST);
     			if($id){

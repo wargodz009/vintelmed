@@ -15,6 +15,15 @@ $this->load->model('items/items_model');
 					</div>
 				</div>
 				<div class="control-group">
+					<label class="control-label" for="">Status</label>
+					<div class="controls">
+						<select name="status" id="">
+							<option value="ordered" <?=($batch->status == 'ordered'?'selected':''); ?>>Ordered</option>
+							<option value="recieved" <?=($batch->status == 'recieved'?'selected':''); ?> >Recieved</option>
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
 					<label class="control-label" for="">item count</label>
 					<div class="controls">
 						<input class=":required" type="text" id="" value="<?=$batch->item_count; ?>" name="item_count">
@@ -47,13 +56,13 @@ $this->load->model('items/items_model');
 				<div class="control-group">
 					<label class="control-label" for="">recieve date</label>
 					<div class="controls">
-						<input class=":required datepicker_from" type="text" id="" value="<?=$batch->recieve_date; ?>" name="recieve_date" readonly>
+						<input class="datepicker_from" type="text" id="" value="<?=$batch->recieve_date; ?>" name="recieve_date" readonly>
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="">expiry date</label>
 					<div class="controls">
-						<input class=":required datepicker_to" type="text" id="" value="<?=$batch->expire; ?>" name="expire" readonly>
+						<input class="datepicker_to" type="text" id="" value="<?=$batch->expire; ?>" name="expire" readonly>
 					</div>
 				</div>
 				<div class="control-group">
@@ -87,7 +96,7 @@ jQuery(function(){
 	});
 	$(".autocomplete_items").autocomplete({
 		source: "<?=base_url();?>items/search/",
-		minLength: 2,
+		minLength: 1,
 		change: function( event, ui ) {
 			if(! ui.item){
 				this.value = '';
@@ -99,7 +108,7 @@ jQuery(function(){
 	});
 	$(".autocomplete_suppliers").autocomplete({
 		source: "<?=base_url();?>supplier/search/",
-		minLength: 2,
+		minLength: 1,
 		change: function( event, ui ) {
 			if(! ui.item){
 				this.value = '';

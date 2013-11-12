@@ -19,6 +19,7 @@ var $msr_tbl = 'msr_clients';
 	}
 	function get_clients($msr_id,$count = false,$offset = 0,$limit = false){
 		$this->db->where('msr_id',$msr_id);
+		$this->db->join('users', $this->table.'.user_id = '.$this->msr_tbl.'.client_id');
 		if($count == true) {
 			$q = $this->db->get($this->msr_tbl);
 			return $q->num_rows();

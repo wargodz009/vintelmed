@@ -9,6 +9,7 @@ var $table = 'suppliers';
         if($limit != 0){
 	        $this->db->limit($limit);
 	    }   
+		$this->db->where('status',1);
 		$q = $this->db->get($this->table);
 		return $q->result();
 	}
@@ -16,7 +17,7 @@ var $table = 'suppliers';
 		$this->db->where('supplier_id',$id);
 		$q = $this->db->get($this->table);
 		if($row != '') {
-			return $q->row()->$row;
+			return (@$q->row()->$row?$q->row()->$row:'Invalid Item');
 		} else {
 			return $q->row();
 		}
@@ -42,8 +43,9 @@ var $table = 'suppliers';
 		}
 	}
 	function delete($id) {
+		$this->db->set('status','0');
 		$this->db->where('supplier_id',$id);
-		$this->db->delete($this->table);
+		$this->db->update($this->table);
 		if($this->db->affected_rows()>0) {
 			return true;
 		} else {
@@ -52,6 +54,7 @@ var $table = 'suppliers';
 	}
 	function search($term,$toArray = false) {
         $this->db->like('name',$term);
+		$this->db->where('status',1);
 		$q = $this->db->get($this->table);
 		if($toArray === false) {
 			return $q->result();

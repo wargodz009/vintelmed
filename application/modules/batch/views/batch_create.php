@@ -8,6 +8,16 @@
 					<label class="control-label" for="">batch name</label>
 					<div class="controls">
 						<input class=":required" type="text" id="" value="" name="batch_id">
+						<input class=":required" type="hidden" id="" value="<?php echo $this->session->userdata('user_id'); ?>" name="user_id">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="">Status</label>
+					<div class="controls">
+						<select name="status" id="">
+							<option value="ordered">Ordered</option>
+							<option value="recieved">Recieved</option>
+						</select>
 					</div>
 				</div>
 				<div class="control-group">
@@ -19,10 +29,13 @@
 				<div class="control-group">
 					<label class="control-label" for="">item id</label>
 					<div class="controls">
-						<input class=":required autocomplete_items" rel="item_name" type="text" id="items" value="" name="item_id">
+						<input class=":required autocomplete_items" rel="item_name" type="text" id="items" value="<?php echo (isset($item_id)?$item_id:''); ?>" name="item_id" <?php echo (isset($item_id)?'readonly':''); ?>>
 					</div>
 				</div>
-				<div class="control-group" id="item_name"></div><br/><br/>
+				<div class="control-group" id="item_name"><?php if(isset($item_id)) {
+					$this->load->model('items/items_model');
+					echo $this->items_model->get_single($item_id,'name').' '.$this->items_model->get_single($item_id,'description');
+				} ?></div><br/><br/>
 				<div class="control-group">
 					<label class="control-label" for="">Supplier id</label>
 					<div class="controls">
@@ -33,13 +46,13 @@
 				<div class="control-group">
 					<label class="control-label" for="">recieve date</label>
 					<div class="controls">
-						<input class=":required datepicker_from" type="text" id="" value="" name="recieve_date" readonly>
+						<input class="datepicker_from" type="text" id="" value="" name="recieve_date" readonly>
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="">expiry date</label>
 					<div class="controls">
-						<input class=":required datepicker_to" type="text" id="" value="" name="expire" readonly>
+						<input class="datepicker_to" type="text" id="" value="" name="expire" readonly>
 					</div>
 				</div>
 				<div class="control-group">
@@ -54,7 +67,7 @@
 </div>
 <script type="text/javascript">
 jQuery(function(){
-	 function log( message ) {
+	function log( message ) {
 		$( "<div>" ).text( message ).prependTo( "#log" );
 		$( "#log" ).scrollTop( 0 );
 		}
@@ -74,7 +87,7 @@ jQuery(function(){
 	});
 	$(".autocomplete_items").autocomplete({
 		source: "<?=base_url();?>items/search/",
-		minLength: 2,
+		minLength: 1,
 		change: function( event, ui ) {
 			if(! ui.item){
 				this.value = '';
@@ -86,7 +99,7 @@ jQuery(function(){
 	});
 	$(".autocomplete_suppliers").autocomplete({
 		source: "<?=base_url();?>supplier/search/",
-		minLength: 2,
+		minLength: 1,
 		change: function( event, ui ) {
 			if(! ui.item) {
 				this.value = '';

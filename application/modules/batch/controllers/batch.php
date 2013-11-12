@@ -23,17 +23,31 @@ class Batch extends CI_Controller{
             redirect();
         }
 	}
-	function create() {
+	function create($item_id = '') {
         if($this->users->is_admin() || $this->users->is_warehouseman()) {
     		if(!empty($_POST)){
-    			if($this->batch_model->create($_POST)){
+				$id = $this->batch_model->create($_POST);
+    			if($id){
+					$logs = array(
+						'user_id'=>$this->session->userdata('user_id'),
+						'type'=>'inventory item',
+						'action'=>'create',
+						'response'=>$id,
+						'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+					);
+					$this->logs->add($logs);
     				$this->session->set_flashdata('error','batch saved!');	
     			} else {
     				$this->session->set_flashdata('error','batch not saved!');	
     			}
     			redirect('batch');
     		} else {
-    			$this->template->load('template','batch/batch_create');
+				if($item_id != '') {
+					$data['item_id'] = $item_id;
+					$this->template->load('template','batch/batch_create',$data);
+				} else {
+					$this->template->load('template','batch/batch_create');
+				}
     		}
         } else {
             $this->session->set_flashdata('error','NO_ACCESS');
@@ -44,6 +58,14 @@ class Batch extends CI_Controller{
 		if(!empty($_POST)) {
 			if($this->users->is_admin() || $this->users->is_warehouseman()) {
 				$this->batch_model->update($id,$_POST);
+				$logs = array(
+					'user_id'=>$this->session->userdata('user_id'),
+					'type'=>'inventory item',
+					'action'=>'update',
+					'response'=>$id,
+					'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+				);
+				$this->logs->add($logs);
 				$this->session->set_flashdata('error','batch updated!');	
 				redirect('batch');
 			} else {
@@ -71,6 +93,14 @@ class Batch extends CI_Controller{
 		if(!empty($id)) {
 			if($this->users->is_admin()) {
 				if($this->batch_model->delete($id)) {
+					$logs = array(
+						'user_id'=>$this->session->userdata('user_id'),
+						'type'=>'inventory item',
+						'action'=>'delete',
+						'response'=>$id,
+						'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+					);
+					$this->logs->add($logs);
 					$this->session->set_flashdata('error','batch removed!');	
 				} else {
 					$this->session->set_flashdata('error','batch not removed!');	

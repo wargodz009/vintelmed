@@ -4,7 +4,6 @@ $this->load->model('role/role_model');
 <div class="row">
 	<div class="span12">
 		<h1>List All User</h1>
-		<h5><a href="<?php echo base_url();?>user/create" class="button">Add new user</a></h5>
 		<div class="well">
 			<table class="datatable">
 				<thead>

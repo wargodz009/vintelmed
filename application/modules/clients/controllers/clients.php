@@ -4,21 +4,30 @@ class Clients extends CI_Controller{
 	function __construct() {
 		parent::__construct();
 		$this->load->model("user/client_model");
+		$this->load->model("clients/clients_model");
 	}
 	function index($offset = 0) {
 		$this->display($offset);
 	}
 	function display($offset = 0) {
         if($this->users->is_admin() || $this->users->is_msr()) {
-            $this->load->library('pagination');
-			$msr_id = $this->session->userdata('user_id');
-            $config['base_url'] = base_url().'clients/display';
-            $config['total_rows'] = $this->client_model->get_clients($msr_id,true);
-            $config['per_page'] = 15;
-            $this->pagination->initialize($config); 
-            
-            $data['client'] = $this->client_model->get_clients($msr_id,false,$offset,$config['per_page']);
-		    $this->template->load('template','clients/clients_list',$data);
+			$this->load->library('pagination');
+            if($this->users->is_admin()) {
+				$config['base_url'] = base_url().'clients/display';
+				$config['total_rows'] = $this->clients_model->count_all();
+				$config['per_page'] = 15;
+				$this->pagination->initialize($config); 
+				$data['client'] = $this->clients_model->get_all($offset,$config['per_page']);
+				$this->template->load('template','clients/clients_list',$data);
+			} else {
+				$msr_id = $this->session->userdata('user_id');
+				$config['base_url'] = base_url().'clients/display';
+				$config['total_rows'] = $this->client_model->get_clients($msr_id,true);
+				$config['per_page'] = 15;
+				$this->pagination->initialize($config); 
+				$data['client'] = $this->client_model->get_clients($msr_id,false,$offset,$config['per_page']);
+				$this->template->load('template','clients/clients_list',$data);
+			}
         } else {
             $this->session->set_flashdata('error','NO_ACCESS');
             redirect();

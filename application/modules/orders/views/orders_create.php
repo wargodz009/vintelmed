@@ -11,24 +11,19 @@ $this->load->model('user/client_model');
 					<label class="control-label" for="">SO #:</label>
 					<div class="controls">
 						<input class=":required" type="text" id="" value="" name="form_number">
+						<input class=":required" type="hidden" id="" value="<?=$this->session->userdata('user_id');?>" name="msr_id">
+						<?php if(isset($user_id)) { ?>
+							<input class=":required" type="hidden" id="" value="<?php echo $this->client_model->get_msr_client_id($this->session->userdata('user_id'),$user_id);?>" name="msr_client_id">
+						<?php } ?>
 					</div>
 				</div> <br/>
 				<div class="control-group">
-					<label class="control-label" for="">Msr id</label>
 					<div class="controls">
-						<input class=":required" type="text" id="" value="<?=$this->session->userdata('user_id');?>" name="msr_id">
+
 					</div>
 				</div> <br/>
-				<?php if(isset($user_id)) { ?>
 				<div class="control-group">
-					<label class="control-label" for="">msr client id</label>
-					<div class="controls">
-						<input class=":required" type="text" id="" value="<?php echo $this->client_model->get_msr_client_id($this->session->userdata('user_id'),$user_id);?>" name="msr_client_id">
-					</div>
-				</div> <br/>
-				<?php } ?>
-				<div class="control-group">
-					<label class="control-label" for="">item id</label>
+					<label class="control-label" for="">item</label>
 					<div class="controls">
 						<input class=":required autocomplete_items" rel="item_name" type="text" id="items" value="" name="item_id">
 					</div>
@@ -60,7 +55,7 @@ $this->load->model('user/client_model');
 jQuery(function(){
 	$(".autocomplete_items").autocomplete({
 		source: "<?=base_url();?>items/search/",
-		minLength: 2,
+		minLength: 1,
 		change: function( event, ui ) {
 			if(! ui.item){
 				this.value = '';

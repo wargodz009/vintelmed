@@ -2,6 +2,9 @@
 
 class Items_model extends CI_Model{
 var $table = 'items';
+var $batch = 'item_batch';
+var $order = 'orders';
+
 	function get_all($offset = 0,$limit = 0) {
 	    if($offset != 0){
             $this->db->offset($offset);
@@ -58,5 +61,13 @@ var $table = 'items';
 		} else {
 			return $q->result_array();
 		}
+	}
+	function count_sold($item_id,$item_batch_id) {
+		$this->db->select_sum('quantity');
+		$this->db->where('item_id',$item_id);
+		$this->db->where('item_batch_id',$item_batch_id);
+		$this->db->where('status','completed');
+		$q = $this->db->get($this->order);
+		return ($q->row()->quantity?$q->row()->quantity:0);
 	}
 }

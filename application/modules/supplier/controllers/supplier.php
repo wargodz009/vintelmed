@@ -26,7 +26,16 @@ class Supplier extends CI_Controller{
 	function create() {
         if($this->users->is_admin() || $this->users->is_warehouseman()) {
     		if(!empty($_POST)){
-    			if($this->supplier_model->create($_POST)){
+				$id = $this->supplier_model->create($_POST);
+    			if($id) {
+					$logs = array(
+						'user_id'=>$this->session->userdata('user_id'),
+						'type'=>'supplier',
+						'action'=>'create',
+						'response'=>$id,
+						'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+					);
+					$this->logs->add($logs);
     				$this->session->set_flashdata('error','supplier saved!');	
     			} else {
     				$this->session->set_flashdata('error','supplier not saved!');	
@@ -43,6 +52,14 @@ class Supplier extends CI_Controller{
 	function edit($id) {
 		if(!empty($_POST)) {
 			$this->supplier_model->update($id,$_POST);
+			$logs = array(
+				'user_id'=>$this->session->userdata('user_id'),
+				'type'=>'supplier',
+				'action'=>'edit',
+				'response'=>$id,
+				'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+			);
+			$this->logs->add($logs);
 			$this->session->set_flashdata('error','supplier updated!');	
 			redirect('supplier');
 		} else {
@@ -66,6 +83,14 @@ class Supplier extends CI_Controller{
 		if(!empty($id)) {
 			if($this->users->is_admin()) {
 				if($this->supplier_model->delete($id)) {
+					$logs = array(
+						'user_id'=>$this->session->userdata('user_id'),
+						'type'=>'supplier',
+						'action'=>'delete',
+						'response'=>$id,
+						'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+					);
+					$this->logs->add($logs);
 					$this->session->set_flashdata('error','supplier removed!');	
 				} else {
 					$this->session->set_flashdata('error','supplier not removed!');	

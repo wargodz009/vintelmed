@@ -91,5 +91,19 @@ class Orders extends CI_Controller{
 		}
 		redirect('orders');
 	}
+	function manage($id) {
+		if(!empty($_POST)) {
+			$this->orders_model->update($id,$_POST);
+			$this->session->set_flashdata('error','orders updated!');	
+			redirect('orders');
+		} else {
+			$data['orders'] = $this->orders_model->get_single($id);
+			if(!$data['orders']) {
+				$this->session->set_flashdata('error','not a valid orders!');	
+				redirect('orders');
+			}
+			$this->template->load('template','orders/orders_manage',$data);
+		}
+	}
 }
 ?>

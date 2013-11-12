@@ -37,7 +37,11 @@ $this->load->model('user/client_model');
 						<td><?php echo $c->price * $c->quantity;?></td>
 						<td><?php echo $c->status;?></td>
 						<?php if($this->users->is_admin()) { ?>
-						<td><a href="<?php echo base_url();?>orders/edit/<?php echo $c->order_id;?>">Edit</a> | <a href="<?php echo base_url();?>orders/delete/<?php echo $c->order_id;?>" class="confirm" rel="Are you sure you want to delete <?php echo $c->form_number;?>?">Delete</a></td>
+						<td>
+						<?php if($c->status != 'completed' && $c->status != 'cancelled') { ?>
+						<a href="<?php echo base_url();?>orders/manage/<?php echo $c->order_id;?>">Manage</a> | 
+						<?php } ?>
+						<a href="<?php echo base_url();?>orders/delete/<?php echo $c->order_id;?>" class="confirm" rel="Are you sure you want to delete <?php echo $c->form_number;?>?">Delete</a></td>
 						<?php } else {
 						?>
 						<td>
