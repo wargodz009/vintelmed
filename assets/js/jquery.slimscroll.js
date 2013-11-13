@@ -16,7 +16,7 @@
         width : 'auto',
 
         // height in pixels of the visible scroll area
-        height : '288px',
+        //height : '288px',
 
         // width in pixels of the scrollbar and rail
         size : '7px',

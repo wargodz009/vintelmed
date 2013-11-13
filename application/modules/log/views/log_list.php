@@ -3,6 +3,7 @@ $this->load->model('user/user_model');
 $this->load->model('items/items_model');
 $this->load->model('supplier/supplier_model');
 $this->load->model('batch/batch_model');
+$this->load->model('setting/setting_model');
 ?>
 <div class="row">
 	<div class="span12">
@@ -69,6 +70,15 @@ $this->load->model('batch/batch_model');
 								<td><?php echo $c->date;?></td>
 							</tr>
 							<!-- to here -->
+							<?php
+							} else if($c->type == 'setting') {
+							?>
+							<tr>
+								<td><?php echo '<a href="'.base_url().'user/view/'.$c->user_id.'">'.$this->user_model->get_single($c->user_id,false,'username').'</a>';?></td>
+								<td><?php echo $c->action.' update: <a href="'.base_url().'setting/view/'.$c->response.'">'.$this->setting_model->get_single($c->response,'display_name').'</a>'; ?></td>
+								<td><?php echo $c->type;?></td>
+								<td><?php echo $c->date;?></td>
+							</tr>
 							<?php
 							} else {
 							?>

@@ -96,7 +96,7 @@ body { background:#e2bb91 url(../images/bg.png) repeat; font-family:Arial, Helve
 #sidebar li .bg4 { background:url(../images/employees-icon.png) center bottom no-repeat; }
 #sidebar li .bg5 { background:url(../images/reports-icon.png) center bottom no-repeat; }
 #sidebar li .bg6 { background:url(../images/settings-icon.png) center bottom no-repeat; }
-
+#sidebar li .bg7 { background:url(../images/orders-icon.png) center bottom no-repeat; }
 
 /*Content*/
 #cntnt { width:1036px; float:left; padding-bottom:10px; }
@@ -134,12 +134,16 @@ body { background:#e2bb91 url(../images/bg.png) repeat; font-family:Arial, Helve
 .slct { width:94px; height:19px; background:#fff url(../images/img9.png) center top repeat-x; float:right; margin:7px 7px 0 0; border:1px solid #c4cdd5; color:#9d9d9d; font-size:10px; text-transform:none; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; }
 .slct2 { width:52px; height:19px; background:#fff url(../images/img9.png) center top repeat-x; float:right; margin:7px 7px 0 0; border:1px solid #c4cdd5; color:#9d9d9d; font-size:11px; text-transform:none; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; }
 
+
 /*Table List*/
-.slimScrollDiv { height:800!important; }
+.scrl-1 { height:288px; }
+.scrl-2 { height:217px; }
+.scrl-3 { height:200px; }
+
 .tblist { min-height:100px; }
 .tblist table { table-layout:fixed; margin:0; padding:0; }
 .tblist table td:first-child { border-left:none; }
-.tblist td { border-left:1px solid #d0d8df; border-top:1px solid #d0d8df; padding:13px 5px 13px 5px; font-size:10px; color:#88949e; text-transform:uppercase; break-word:word-wrap; }
+.tblist td { border-left:1px solid #d0d8df; border-bottom:1px solid #d0d8df; padding:13px 5px 13px 5px; font-size:10px; color:#88949e; text-transform:uppercase; break-word:word-wrap; }
 .tblist tr:nth-child(odd) { background-color:#fff; }
 .tblist tr:nth-child(even) { background-color:#fffdf6; }
 .tblist .lnkicn { width:8px; height:8px; margin:2px 0 0 13px; }
@@ -199,6 +203,10 @@ body { background:#e2bb91 url(../images/bg.png) repeat; font-family:Arial, Helve
 /*Table Boxes*/
 #cntnt .tbl1 { width:1014px; margin:10px 0 0 10px; }
 #cntnt .tbl2 { width:501px; margin:10px 0 0 10px; float:left; }
+#cntnt .tbl3 { width:1004px; height:500px; margin:10px 0 0 10px; background-color:#FFF; border:1px solid #d0d8df; box-shadow:0px 1px 1px rgba(50, 50, 50, 0.11); }
+
+#divscroll { width: 1004px; height: 100px; }
+#divscroll .overview { width: 1900px; }
 
 
 
