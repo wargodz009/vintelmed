@@ -12,10 +12,14 @@ var $table = 'item_types';
 		$q = $this->db->get($this->table);
 		return $q->result();
 	}
-	function get_single($id) {
+	function get_single($id,$row = '') {
 		$this->db->where('item_type_id',$id);
 		$q = $this->db->get($this->table);
-		return $q->row();
+		if($row != '') {
+			return (@$q->row()->$row?$q->row()->$row:'Invalid Item');
+		} else {
+			return $q->row();
+		}
 	}
 	function count_all() {
 		return $this->db->count_all($this->table);

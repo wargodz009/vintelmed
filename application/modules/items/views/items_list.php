@@ -1,3 +1,6 @@
+<?php
+$this->load->model('item_type/item_type_model');
+?>
 <div class="row">
 	<div class="span12">
 		<h1>List All Items</h1>
@@ -8,6 +11,7 @@
 					<tr>
 						<th>Item</th>
 						<th>Description</th>
+						<th>Type</th>
 						<th>Options</th>
 					</tr>
 				</thead>
@@ -19,6 +23,7 @@
 					<tr>
 						<td><?php echo '<a target="_new" href="'.base_url().'items/view/'.$c->item_id.'">'.$c->name.'</a>';?></td>
 						<td><?php echo $c->description;?></td>
+						<td><?php echo $this->item_type_model->get_single($c->item_type_id,'name');?></td>
 						<td>
 							<a href="<?php echo base_url();?>items/edit/<?php echo $c->item_id;?>">Edit</a>
 							<?php if($this->users->is_admin()) { ?>| 

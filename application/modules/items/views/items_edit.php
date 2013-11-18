@@ -21,7 +21,7 @@ $this->load->model('item_type/item_type_model');
 						<?php 
 							$others = 'class=":required"';
 							$options = $this->item_type_model->get_all(0,0,true);
-							$types = to_select($options,'name','item_type_id');	
+							$types = to_select($options,'name','item_type_id',false);	
 							echo form_dropdown('item_type_id', $types,$items->item_type_id,$others);
 						?>
 					</div>

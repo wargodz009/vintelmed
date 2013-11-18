@@ -1,5 +1,6 @@
 <?php
 $this->load->model('role/role_model');
+$this->load->model('user/client_model');
 ?>
 <div class="row">
 	<div class="span12">
@@ -32,7 +33,10 @@ $this->load->model('role/role_model');
 							<?php } ?>
 						</td>
 						<?php } else { ?>
-							<td><a href="<?php echo base_url();?>orders/create/<?php echo $c->user_id;?>">Add Order</a></td>
+							<td>
+							<a href="<?php echo base_url();?>orders/create/<?php echo $c->user_id;?>">Add Order</a>
+							| <a href="<?php echo base_url();?>orders/user/<?php echo $this->client_model->get_msr_client_id($this->session->userdata('user_id'),$c->user_id);?>">Orders</a>
+							</td>
 						<?php } ?>
 					</tr>
 					<?php

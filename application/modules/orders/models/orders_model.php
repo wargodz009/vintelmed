@@ -32,6 +32,26 @@ var $batch = 'item_batch';
 		}
 		return $this->db->get($this->table)->num_rows();
 	}
+	function get_all_user($offset = 0,$limit = 0,$is_admin = true) {
+	    if($offset != 0) {
+            $this->db->offset($offset);
+	    }
+        if($limit != 0){
+	        $this->db->limit($limit);
+	    }  
+		if($is_admin !== true) {
+			$this->db->where('msr_client_id',$is_admin);
+		}
+		$this->db->order_by('status','asc');
+		$q = $this->db->get($this->table);
+		return $q->result();
+	}
+	function count_all_user($msr_id = false) {
+		if($msr_id !== false) {
+			$this->db->where('msr_client_id',$msr_id);
+		}
+		return $this->db->get($this->table)->num_rows();
+	}
 	function create($data) {
 		$this->db->insert($this->table,$data);
 		if($this->db->affected_rows()>0) {

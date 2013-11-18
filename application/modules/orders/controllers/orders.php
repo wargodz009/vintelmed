@@ -27,6 +27,20 @@ class Orders extends CI_Controller{
             redirect();
         }
 	}
+	function user($id,$offset = 0) {
+        if($this->users->is_admin() || $this->users->is_msr()) {
+            $this->load->library('pagination');
+            $config['base_url'] = base_url().'orders/user';
+            $config['per_page'] = 15;
+			$config['total_rows'] = $this->orders_model->count_all_user($id);
+			$data['orders'] = $this->orders_model->get_all_user($offset,$config['per_page'],$id);
+			$this->pagination->initialize($config); 
+		    $this->template->load('template','orders/orders_list',$data);
+        } else {
+            $this->session->set_flashdata('error','NO_ACCESS');
+            redirect();
+        }
+	}
 	function create($user_id = false) {
         if($this->users->is_admin() || $this->users->is_msr()) {
     		if(!empty($_POST)){

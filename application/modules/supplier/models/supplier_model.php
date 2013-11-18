@@ -2,6 +2,7 @@
 
 class Supplier_model extends CI_Model{
 var $table = 'suppliers';
+var $table_users = 'users';
 	function get_all($offset = 0,$limit = 0) {
 	    if($offset != 0){
             $this->db->offset($offset);

@@ -5,9 +5,9 @@
 		<div class="well">
 			<form class="form-horizontal" method="post" action="<?php echo base_url().'supplier/edit/'.$supplier->supplier_id; ?>">
 				<div class="control-group">
-					<label class="control-label" for="">supplier value</label>
+					<label class="control-label" for="">supplier name</label>
 					<div class="controls">
-						<input class=":required" type="text" id="" value="<?php echo $supplier->name;?>" name="name">
+						<input class=":required" type="text" id="" value="<?php echo ($supplier->name?$supplier->name:'');?>" name="name">
 					</div>
 				</div>
 				<div class="control-group">
