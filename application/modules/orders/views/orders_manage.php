@@ -65,6 +65,7 @@ jQuery(function(){
 			alert('TOTAL AMOUNT is greater than the ORDER!');
 		}
 		if($(this).val() > item_count) {
+			$(this).val('0');
 			alert('AMOUNT is greater than the ITEMS AVAILABLE!');
 		}
 	});

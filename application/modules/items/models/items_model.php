@@ -12,6 +12,7 @@ var $order = 'orders';
         if($limit != 0){
 	        $this->db->limit($limit);
 	    }   
+		$this->db->where('status','enabled');
 		$q = $this->db->get($this->table);
 		return $q->result();
 	}
@@ -25,7 +26,8 @@ var $order = 'orders';
 		}
 	}
 	function count_all() {
-		return $this->db->count_all($this->table);
+		$this->db->where('status','enabled');
+		return $this->db->get($this->table)->num_rows();
 	}
 	function create($data) {
 		$this->db->insert($this->table,$data);
@@ -45,8 +47,9 @@ var $order = 'orders';
 		}
 	}
 	function delete($id) {
+		$this->db->set('status','disabled');
 		$this->db->where('item_id',$id);
-		$this->db->delete($this->table);
+		$this->db->update($this->table);
 		if($this->db->affected_rows()>0) {
 			return true;
 		} else {
@@ -54,6 +57,7 @@ var $order = 'orders';
 		}
 	}
 	function search($term,$toArray = false) {
+		$this->db->where('status','enabled');
         $this->db->like('name',$term);
 		$q = $this->db->get($this->table);
 		if($toArray === false) {
