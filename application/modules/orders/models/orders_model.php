@@ -3,6 +3,7 @@
 class Orders_model extends CI_Model{
 var $table = 'orders';
 var $batch = 'item_batch';
+var $order_details = 'order_details';
 	function get_all($offset = 0,$limit = 0,$is_admin = true) {
 	    if($offset != 0){
             $this->db->offset($offset);
@@ -21,7 +22,7 @@ var $batch = 'item_batch';
 		$this->db->where('order_id',$id);
 		$q = $this->db->get($this->table);
 		if($row != '') {
-			return $q->row()->$row;
+			return (@$q->row()->$row?$q->row()->$row:'Invalid Item');
 		} else {
 			return $q->row();
 		}
@@ -87,5 +88,19 @@ var $batch = 'item_batch';
 		} else {
 			return false;
 		}
+	}
+	function add($data) {
+		$this->db->insert($this->order_details,$data);
+		if($this->db->affected_rows()>0) {
+			return $this->db->insert_id();
+		} else {
+			return false;
+		}
+	}
+	function get_details($id){
+		$this->db->order_by('status','asc');
+		$this->db->where('order_id',$id);
+		$q = $this->db->get($this->order_details);
+		return $q->result();
 	}
 }

@@ -57,4 +57,24 @@ var $table = 'item_batch';
 		$q = $this->db->get($this->table);
 		return $q->result();
 	}
+	function increment($item_batch_id,$items){
+		$this->db->where('item_batch_id', $item_batch_id);
+		$this->db->set('sold_count', 'sold_count+'.$items, FALSE);
+		$this->db->update($this->table);
+		if($this->db->affected_rows()>0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	function decrement($item_batch_id,$items){
+		$this->db->where('item_batch_id', $item_batch_id);
+		$this->db->set('sold_count', 'sold_count-'.$items, FALSE);
+		$this->db->update($this->table);
+		if($this->db->affected_rows()>0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

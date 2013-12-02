@@ -107,8 +107,25 @@ class Orders extends CI_Controller{
 	}
 	function manage($id) {
 		if(!empty($_POST)) {
-			$this->orders_model->update($id,$_POST);
+			$data1 = array(
+				'status'=>$this->input->post('status'),
+			);
+			$this->orders_model->update($id,$data1);
 			$this->session->set_flashdata('error','orders updated!');	
+			$items = $_POST['items'];
+			$piece = $_POST['piece'];
+			$item_batch_id = $_POST['item_batch_id'];
+			if(!empty($items)) {
+				foreach($items as $k=>$v) {
+						$data = array(
+							'order_id'=>$id,
+							'item_id'=>$v,
+							'item_batch_id'=>$item_batch_id[$k],
+							'quantity'=>$piece[$k],
+						);
+						$this->orders_model->add($data);
+				}
+			}
 			redirect('orders');
 		} else {
 			$data['orders'] = $this->orders_model->get_single($id);
@@ -117,6 +134,54 @@ class Orders extends CI_Controller{
 				redirect('orders');
 			}
 			$this->template->load('template','orders/orders_manage',$data);
+		}
+	}
+	function complete($id) {
+		$this->load->model('batch/batch_model');
+		if($this->orders_model->get_single($id,'status') == 'approved') {
+			$data1 = array(
+				'status'=>'completed',
+			);
+			$this->orders_model->update($id,$data1);
+			$order_details = $this->orders_model->get_details($id);
+			if(!empty($order_details)) {
+				foreach($order_details as $x) {
+					$this->batch_model->increment($x->item_batch_id,$x->quantity);
+				}
+			}
+			$this->session->set_flashdata('error','order completed!');	
+		} else {
+			$this->session->set_flashdata('error','invalid item!');	
+		}
+		redirect('orders');
+	}
+	function upload($id){
+		$this->load->helper('form');
+		$this->load->model('order_files/order_files_model');
+		if(!empty($_POST)) {
+			$config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|doc|docx|pdf|xls|xlsx';
+			$this->load->library('upload', $config);
+			if ( ! $this->upload->do_upload())
+			{
+				$error = array('error' => $this->upload->display_errors(),'id'=>$id);
+				$this->template->load('template','orders/upload_files',$error);
+			}
+			else
+			{
+				$data = array('upload_data' => $this->upload->data(),'id'=>$id,'error'=>'Upload Success!');
+				$info = array(
+					'order_id'=>$id,
+					'description'=>$this->input->post('description'),
+					'file_name'=>$data['upload_data']['file_name'],
+				);
+				$this->order_files_model->create($info);
+				$this->template->load('template','orders/upload_files',$data);
+			}
+		} else {
+			$data['error'] = '';
+			$data['id'] = $id;
+			$this->template->load('template','orders/upload_files',$data);
 		}
 	}
 }

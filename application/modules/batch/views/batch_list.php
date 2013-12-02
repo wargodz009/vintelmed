@@ -30,7 +30,7 @@ $this->load->model('user/user_model');
 						<td><?php echo '<a target="new" href="'.base_url().'items/view/'.$c->item_id.'">'.$this->items_model->get_single($c->item_id,'name').' - '.$this->items_model->get_single($c->item_id,'description').'</a>';?></td>
 						<td><?php echo '<a target="new" href="'.base_url().'batch/view/'.$c->item_batch_id .'">'.$c->batch_id.'</a>';?></td>
 						<td><?php 
-						echo $this->items_model->count_sold($c->item_id,$c->item_batch_id).'/'.$c->item_count;
+						echo $c->sold_count.'/'.$c->item_count;
 						?>
 						</td>
 						<td><?php echo '<a target="new" href="'.base_url().'supplier/view/'.$c->supplier_id.'">'.$this->supplier_model->get_single($c->supplier_id,'name').'</a>';?></td>

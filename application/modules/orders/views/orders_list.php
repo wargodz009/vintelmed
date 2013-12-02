@@ -38,10 +38,19 @@ $this->load->model('user/client_model');
 						<td><?php echo $c->status;?></td>
 						<?php if($this->users->is_admin()) { ?>
 						<td>
-						<?php if($c->status != 'completed' && $c->status != 'cancelled') { ?>
-						<a href="<?php echo base_url();?>orders/manage/<?php echo $c->order_id;?>">Manage</a> | 
-						<?php } ?>
-						<a href="<?php echo base_url();?>orders/delete/<?php echo $c->order_id;?>" class="confirm" rel="Are you sure you want to delete <?php echo $c->form_number;?>?">Delete</a></td>
+							<?php if($c->status == 'pending') { ?>
+							<a href="<?php echo base_url();?>orders/manage/<?php echo $c->order_id;?>">Manage</a> | 
+							<?php } ?>
+							<?php if($c->status == 'approved') { ?>
+							<a href="<?php echo base_url();?>orders/complete/<?php echo $c->order_id;?>">Complete</a> | 
+							<?php } ?>
+							<?php if($c->status == 'completed') { ?>
+							<a href="<?php echo base_url();?>orders/upload/<?php echo $c->order_id;?>">Upload Files</a> | 
+							<a href="<?php echo base_url();?>order_files/list_all/<?php echo $c->order_id;?>">Files</a>							
+							<?php } ?>
+							<?php if($c->status != 'completed') { ?>
+							<a href="<?php echo base_url();?>orders/delete/<?php echo $c->order_id;?>" class="confirm" rel="Are you sure you want to delete <?php echo $c->form_number;?>?">Delete</a></td>
+							<?php } ?>
 						<?php } else {
 						?>
 						<td>
