@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 20, 2013 at 05:34 AM
+-- Generation Time: Dec 02, 2013 at 10:09 AM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.8
 
@@ -75,23 +75,25 @@ CREATE TABLE IF NOT EXISTS `items` (
   `generic_name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `price_standard` varchar(50) NOT NULL DEFAULT '0',
+  `status` varchar(50) NOT NULL DEFAULT 'enabled',
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `items`
 --
 
-INSERT INTO `items` (`item_id`, `name`, `item_type_id`, `generic_name`, `description`, `price_standard`, `datetime`) VALUES
-(3, 'ALLUJEN', 1, 'ALLOPURINOL', '300 MG-TAB', '11', '2013-10-28 22:13:17'),
-(4, 'AMLITOR FORTE', 1, 'AMLODIPINE+ AT ORVASTATIN', '10MG/10MG TABLET', '22', '2013-10-29 03:09:21'),
-(5, 'AMLITOR-A', 1, 'AMLODIPINE+ AT ORVASTATIN', '5MG/10MG TABLET', '5', '2013-10-29 00:14:00'),
-(6, 'CALPINE', 1, 'AMLODEPINE BESILATE', '10 MG TABLET', '7', '2013-10-29 02:00:00'),
-(7, 'CALPINE', 1, 'AMLODEPINE BESILATE', '5 MG TABLET', '8', '2013-10-27 16:11:00'),
-(8, 'CLORZEF,250 MG', 1, 'CEFACLOR', '250mg/5ML SUSP, 60ML', '2', '2013-10-27 21:00:00'),
-(9, 'REFAXIL 125 MG', 1, 'CEFALEXIN', '125mg/5ML SUSP, 60ML', '88', '2013-10-27 21:00:00'),
-(10, 'CEFNAXL', 1, 'CEFDINIR', '300 MG-CAPSULE', '55', '2013-10-27 22:00:16');
+INSERT INTO `items` (`item_id`, `name`, `item_type_id`, `generic_name`, `description`, `price_standard`, `status`, `datetime`) VALUES
+(3, 'ALLUJEN', 1, 'ALLOPURINOL', '300 MG-TAB', '11', 'enabled', '2013-10-28 22:13:17'),
+(4, 'AMLITOR FORTE', 1, 'AMLODIPINE+ AT ORVASTATIN', '10MG/10MG TABLET', '22', 'enabled', '2013-10-29 03:09:21'),
+(5, 'AMLITOR-A', 1, 'AMLODIPINE+ AT ORVASTATIN', '5MG/10MG TABLET', '5', 'enabled', '2013-10-29 00:14:00'),
+(6, 'CALPINE', 1, 'AMLODEPINE BESILATE', '10 MG TABLET', '7', 'enabled', '2013-10-29 02:00:00'),
+(7, 'CALPINE', 1, 'AMLODEPINE BESILATE', '5 MG TABLET', '8', 'enabled', '2013-10-27 16:11:00'),
+(8, 'CLORZEF,250 MG', 1, 'CEFACLOR', '250mg/5ML SUSP, 60ML', '2', 'enabled', '2013-10-27 21:00:00'),
+(9, 'REFAXIL 125 MG', 1, 'CEFALEXIN', '125mg/5ML SUSP, 60ML', '88', 'enabled', '2013-10-27 21:00:00'),
+(10, 'CEFNAXL', 1, 'CEFDINIR', '300 MG-CAPSULE', '55', 'enabled', '2013-10-27 22:00:16'),
+(13, 'dsadas', 1, 'dasdsa', 'dasdas', '0', 'disabled', '2013-11-27 07:45:39');
 
 -- --------------------------------------------------------
 
@@ -115,16 +117,18 @@ CREATE TABLE IF NOT EXISTS `item_batch` (
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`item_batch_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `item_batch`
 --
 
 INSERT INTO `item_batch` (`item_batch_id`, `item_id`, `user_id`, `supplier_id`, `batch_id`, `item_count`, `sold_count`, `recieve_date`, `expire`, `buy_price`, `sell_price`, `status`, `datetime`, `deleted`) VALUES
-(2, 7, 4, 8, 'ph-73aa', 222, 0, '11/05/2013', '11/30/2015', '', '', 'recieved', '2013-11-05 07:21:34', 0),
-(3, 7, 4, 12, 'LGN177', 222, 0, '11/05/2013', '11/30/2016', '', '', 'ordered', '2013-11-05 07:31:49', 0),
-(5, 3, 1, 2, 'awaw', 2222, 0, '11/12/2013', '11/25/2020', '', '', 'ordered', '2013-11-12 10:53:41', 1);
+(2, 7, 4, 8, 'ph-73aa', 222, 222, '11/05/2013', '11/30/2015', '', '', 'recieved', '2013-11-05 07:21:34', 0),
+(3, 7, 4, 12, 'LGN177', 222, 2, '11/05/2013', '11/30/2016', '', '', 'ordered', '2013-11-05 07:31:49', 0),
+(5, 3, 1, 2, 'awaw', 2222, 0, '11/12/2013', '11/25/2020', '', '', 'ordered', '2013-11-12 10:53:41', 1),
+(6, 3, 1, 1, 'awaw', 11, 0, '11/06/2013', '11/21/2013', '', '', 'ordered', '2013-11-27 07:49:23', 1),
+(7, 9, 1, 2, 'sd32', 222, 4, '12/02/2013', '12/24/2019', '', '', 'ordered', '2013-12-02 09:00:27', 0);
 
 -- --------------------------------------------------------
 
@@ -194,15 +198,66 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `form_number` varchar(255) NOT NULL,
   `date_completed` varchar(100) NOT NULL,
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `orders`
 --
 
 INSERT INTO `orders` (`order_id`, `msr_id`, `item_id`, `item_batch_id`, `quantity`, `price`, `datetime`, `msr_client_id`, `status`, `form_number`, `date_completed`) VALUES
-(4, 7, 6, 2, 2, '11', '2013-11-08 06:21:09', 11, 'cancelled', '12345', ''),
-(5, 7, 7, 3, 224, '55', '2013-11-08 06:21:41', 5, 'pending', '123cl1', '');
+(5, 7, 7, 3, 224, '55', '2013-11-08 06:21:41', 5, 'completed', '123cl1', ''),
+(6, 7, 10, 0, 10000, '55', '2013-11-29 04:03:20', 11, 'pending', '222', ''),
+(7, 7, 8, 0, 5000, '2', '2013-11-29 04:11:04', 11, 'pending', '222', ''),
+(8, 8, 9, 0, 4, '88', '2013-12-02 08:59:41', 6, 'completed', '11111', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_details`
+--
+
+CREATE TABLE IF NOT EXISTS `order_details` (
+  `order_details_id` int(255) NOT NULL AUTO_INCREMENT,
+  `order_id` int(255) NOT NULL,
+  `item_id` int(255) NOT NULL,
+  `item_batch_id` int(255) NOT NULL,
+  `quantity` int(100) NOT NULL,
+  `status` varchar(25) NOT NULL DEFAULT 'enabled',
+  PRIMARY KEY (`order_details_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+
+--
+-- Dumping data for table `order_details`
+--
+
+INSERT INTO `order_details` (`order_details_id`, `order_id`, `item_id`, `item_batch_id`, `quantity`, `status`) VALUES
+(15, 5, 7, 2, 222, 'enabled'),
+(16, 5, 7, 3, 2, 'enabled'),
+(17, 8, 9, 7, 4, 'enabled');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_files`
+--
+
+CREATE TABLE IF NOT EXISTS `order_files` (
+  `order_files_id` int(255) NOT NULL AUTO_INCREMENT,
+  `order_id` int(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  PRIMARY KEY (`order_files_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
+--
+-- Dumping data for table `order_files`
+--
+
+INSERT INTO `order_files` (`order_files_id`, `order_id`, `file_name`, `description`) VALUES
+(7, 5, 'IntelekLogo08done3.JPG', 'awaw'),
+(8, 5, 'Me_Composed.jpg', 'sample pix 3'),
+(9, 8, 'Me_Composed1.jpg', 'asd'),
+(10, 8, 'IntelekLogo08done31.JPG', 'adf');
 
 -- --------------------------------------------------------
 
@@ -264,7 +319,7 @@ CREATE TABLE IF NOT EXISTS `suppliers` (
   `name` varchar(255) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`supplier_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
 --
 -- Dumping data for table `suppliers`
@@ -287,7 +342,8 @@ INSERT INTO `suppliers` (`supplier_id`, `name`, `status`) VALUES
 (14, 'PLANETARIUM', 1),
 (15, 'VHERMANN PHARMACEUTICAL INC', 1),
 (17, 'AMBICA INTERNATIONAL TRADING CORP.', 1),
-(20, 'sasa2', 0);
+(20, 'sasa2', 0),
+(21, 'awaw', 0);
 
 -- --------------------------------------------------------
 
@@ -308,7 +364,7 @@ CREATE TABLE IF NOT EXISTS `system_logs` (
   `transaction_id` int(255) DEFAULT NULL,
   `report_id` int(255) DEFAULT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=52 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=80 ;
 
 --
 -- Dumping data for table `system_logs`
@@ -364,7 +420,35 @@ INSERT INTO `system_logs` (`log_id`, `user_id`, `type`, `date`, `action`, `respo
 (48, 7, 'login', '2013-11-14 06:39:55', NULL, 'logout user', '::1', 'medrep1', NULL, NULL, NULL),
 (49, 1, 'login', '2013-11-14 06:39:59', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
 (50, 1, 'login', '2013-11-18 05:34:39', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
-(51, 1, 'login', '2013-11-19 09:30:19', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL);
+(51, 1, 'login', '2013-11-19 09:30:19', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(52, 1, 'login', '2013-11-25 04:32:38', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(53, 1, 'login', '2013-11-27 07:37:05', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(54, 1, 'user', '2013-11-27 07:38:09', 'delete', '11', '::1', NULL, NULL, NULL, NULL),
+(55, 1, 'inventory', '2013-11-27 07:38:55', 'create', '11', '::1', NULL, NULL, NULL, NULL),
+(56, 1, 'inventory', '2013-11-27 07:38:59', 'delete', '11', '::1', NULL, NULL, NULL, NULL),
+(57, 1, 'inventory', '2013-11-27 07:39:37', 'create', '12', '::1', NULL, NULL, NULL, NULL),
+(58, 1, 'inventory', '2013-11-27 07:39:45', 'delete', '12', '::1', NULL, NULL, NULL, NULL),
+(59, 1, 'inventory', '2013-11-27 07:45:39', 'create', '13', '::1', NULL, NULL, NULL, NULL),
+(60, 1, 'inventory', '2013-11-27 07:45:50', 'delete', '13', '::1', NULL, NULL, NULL, NULL),
+(61, 1, 'supplier', '2013-11-27 07:48:39', 'create', '21', '::1', NULL, NULL, NULL, NULL),
+(62, 1, 'supplier', '2013-11-27 07:48:45', 'delete', '21', '::1', NULL, NULL, NULL, NULL),
+(63, 1, 'inventory item', '2013-11-27 07:49:23', 'create', '6', '::1', NULL, NULL, NULL, NULL),
+(64, 1, 'inventory item', '2013-11-27 07:49:33', 'delete', '6', '::1', NULL, NULL, NULL, NULL),
+(65, 1, 'login', '2013-11-29 02:51:12', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(66, 1, 'login', '2013-11-29 03:05:03', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
+(67, 7, 'login', '2013-11-29 03:05:08', NULL, 'login success', '::1', 'medrep1', NULL, NULL, NULL),
+(68, 7, 'login', '2013-11-29 04:11:13', NULL, 'logout user', '::1', 'medrep1', NULL, NULL, NULL),
+(69, 1, 'login', '2013-11-29 04:11:17', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(70, 1, 'login', '2013-11-29 09:48:51', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(71, 1, 'login', '2013-12-02 03:30:18', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(72, 1, 'login', '2013-12-02 08:59:04', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
+(73, 8, 'login', '2013-12-02 08:59:10', NULL, 'login success', '::1', 'medrep2', NULL, NULL, NULL),
+(74, 8, 'login', '2013-12-02 08:59:46', NULL, 'logout user', '::1', 'medrep2', NULL, NULL, NULL),
+(75, 1, 'login', '2013-12-02 08:59:50', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(76, 1, 'inventory item', '2013-12-02 09:00:27', 'create', '7', '::1', NULL, NULL, NULL, NULL),
+(77, 1, 'order', '2013-12-02 09:01:13', 'completed an order', '8', '::1', NULL, NULL, NULL, NULL),
+(78, 1, 'others', '2013-12-02 09:04:10', 'uploaded a file', '8', '::1', NULL, NULL, NULL, NULL),
+(79, 1, 'others', '2013-12-02 09:04:25', 'uploaded a file', '8', '::1', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -460,7 +544,7 @@ INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `username`, `password
 (8, '', '', 'medrep2', '796b1161cddfd62aadc656d51685d0dc', '', 3, 2, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
 (9, '', '', 'medrep3', '3a85cff098f1a0ed93b4f9a1e6ce597c', '', 3, 3, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
 (10, '', '', 'medrep1.1', '2107a5a8889395d43cb2ac07a2ab720a', '', 3, 1, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
-(11, '', '', 'medrep1.1.1', '0dad8005ad28928dba2e5818fcd80a27', '', 3, 1, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
+(11, '', '', 'medrep1.1.1', '0dad8005ad28928dba2e5818fcd80a27', '', 3, 1, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'disabled'),
 (12, '', '', 'client1', 'a165dd3c2e98d5d607181d0b87a4c66b', '', 2, 2, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
 (13, '', '', 'client2', '2c66045d4e4a90814ce9280272e510ec', '', 2, 1, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
 (14, '', '', 'clientc', 'f162582f3429ccd5d48d97a5a66a88a0', '', 2, 2, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
