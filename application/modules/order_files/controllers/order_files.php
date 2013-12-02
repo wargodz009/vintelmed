@@ -28,6 +28,13 @@ class Order_files extends CI_Controller{
 			}
 		}
 		@unlink('./uploads/'.$file->file_name);
+		$logs = array(
+			'user_id'=>$this->session->userdata('user_id'),
+			'type'=>'other',
+			'action'=>'delete an upload file',
+			'response'=>$id,
+			'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+		);
 		redirect('order_files');
 	}
 }

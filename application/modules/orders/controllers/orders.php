@@ -117,15 +117,22 @@ class Orders extends CI_Controller{
 			$item_batch_id = $_POST['item_batch_id'];
 			if(!empty($items)) {
 				foreach($items as $k=>$v) {
-						$data = array(
-							'order_id'=>$id,
-							'item_id'=>$v,
-							'item_batch_id'=>$item_batch_id[$k],
-							'quantity'=>$piece[$k],
-						);
-						$this->orders_model->add($data);
+					$data = array(
+						'order_id'=>$id,
+						'item_id'=>$v,
+						'item_batch_id'=>$item_batch_id[$k],
+						'quantity'=>$piece[$k],
+					);
+					$this->orders_model->add($data);
 				}
 			}
+			$logs = array(
+				'user_id'=>$this->session->userdata('user_id'),
+				'type'=>'order',
+				'action'=>'update',
+				'response'=>$id,
+				'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+			);
 			redirect('orders');
 		} else {
 			$data['orders'] = $this->orders_model->get_single($id);
@@ -143,6 +150,14 @@ class Orders extends CI_Controller{
 				'status'=>'completed',
 			);
 			$this->orders_model->update($id,$data1);
+			$logs = array(
+				'user_id'=>$this->session->userdata('user_id'),
+				'type'=>'order',
+				'action'=>'completed an order',
+				'response'=>$id,
+				'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+			);
+			$this->logs->add($logs);
 			$order_details = $this->orders_model->get_details($id);
 			if(!empty($order_details)) {
 				foreach($order_details as $x) {
@@ -176,6 +191,14 @@ class Orders extends CI_Controller{
 					'file_name'=>$data['upload_data']['file_name'],
 				);
 				$this->order_files_model->create($info);
+				$logs = array(
+					'user_id'=>$this->session->userdata('user_id'),
+					'type'=>'others',
+					'action'=>'uploaded a file',
+					'response'=>$id,
+					'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+				);
+				$this->logs->add($logs);
 				$this->template->load('template','orders/upload_files',$data);
 			}
 		} else {
