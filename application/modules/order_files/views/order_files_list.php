@@ -19,7 +19,10 @@
 					<tr>
 						<td><?php echo $c->file_name;?></td>
 						<td><?php echo $c->description;?></td>
-						<td><a href="<?php echo base_url();?>order_files/delete/<?php echo $c->order_files_id;?>" class="confirm" rel="Are you sure you want to delete <?php echo $c->file_name;?>?">Delete</a></td>
+						<td>
+							<a href="<?php echo base_url();?>uploads/<?php echo $c->file_name;?>" target="_new">Download</a> | 
+							<a href="<?php echo base_url();?>order_files/delete/<?php echo $c->order_files_id;?>" class="confirm" rel="Are you sure you want to delete <?php echo $c->file_name;?>?">Delete</a> 
+						</td>
 					</tr>
 					<?php
 						}
