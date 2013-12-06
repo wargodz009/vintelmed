@@ -1,8 +1,6 @@
 vintelmed
 =========
 
-new read me file
-
 <<<<<<< HEAD
 vintelmed
 =======
