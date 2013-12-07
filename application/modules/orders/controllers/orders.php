@@ -207,5 +207,37 @@ class Orders extends CI_Controller{
 			$this->template->load('template','orders/upload_files',$data);
 		}
 	}
+	function return_goods($id) {
+		if(!empty($_POST)) {
+			$item_batch_id = $_POST['item_batch_id'];
+			$quantity = $_POST['quantity'];
+			if(!empty($item_batch_id)) {
+				foreach($item_batch_id as $k=>$v) {
+					$data = array(
+						'order_id'=>$this->input->post('order_id'),
+						'item_batch_id'=>$item_batch_id[$k],
+						'return_quantity'=>$quantity[$k],
+						'remarks'=>$this->input->post('remarks'),
+					);
+					$this->orders_model->add_return($data);
+				}
+				$this->session->set_flashdata('error','Orders return recorded!');	
+			}
+			redirect('orders');
+		} else {
+			if($this->orders_model->is_exist_order_return($id) == false) {
+				$data['orders'] = $this->orders_model->get_single($id);
+				$data['order_details'] = $this->orders_model->get_order_details($id);
+				if(!$data['orders']) {
+					$this->session->set_flashdata('error','not a valid orders!');	
+					redirect('orders');
+				}
+				$this->template->load('template','orders/orders_return',$data);
+			} else {
+				$this->session->set_flashdata('error','Orders returned Already!');	
+				redirect('orders');
+			}
+		}
+	}
 }
 ?>

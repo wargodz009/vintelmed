@@ -4,6 +4,7 @@ class Orders_model extends CI_Model{
 var $table = 'orders';
 var $batch = 'item_batch';
 var $order_details = 'order_details';
+var $order_return = 'order_return';
 	function get_all($offset = 0,$limit = 0,$is_admin = true) {
 	    if($offset != 0){
             $this->db->offset($offset);
@@ -26,6 +27,16 @@ var $order_details = 'order_details';
 		} else {
 			return $q->row();
 		}
+	}
+	function get_order_details($id = 0) {
+		$this->db->where('order_id',$id);
+		$q = $this->db->get($this->order_details);
+		return $q->result();
+	}
+	function is_exist_order_return($id = 0) {
+		$this->db->where('order_id',$id);
+		$q = $this->db->get($this->order_return);
+		return $q->result();
 	}
 	function count_all($msr_id = false) {
 		if($msr_id !== false) {
@@ -91,6 +102,14 @@ var $order_details = 'order_details';
 	}
 	function add($data) {
 		$this->db->insert($this->order_details,$data);
+		if($this->db->affected_rows()>0) {
+			return $this->db->insert_id();
+		} else {
+			return false;
+		}
+	}
+	function add_return($data) {
+		$this->db->insert($this->order_return,$data);
 		if($this->db->affected_rows()>0) {
 			return $this->db->insert_id();
 		} else {
