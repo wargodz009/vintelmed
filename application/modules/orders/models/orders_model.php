@@ -5,6 +5,7 @@ var $table = 'orders';
 var $batch = 'item_batch';
 var $order_details = 'order_details';
 var $order_return = 'order_return';
+var $order_pay = 'order_pay';
 	function get_all($offset = 0,$limit = 0,$is_admin = true) {
 	    if($offset != 0){
             $this->db->offset($offset);
@@ -110,6 +111,14 @@ var $order_return = 'order_return';
 	}
 	function add_return($data) {
 		$this->db->insert($this->order_return,$data);
+		if($this->db->affected_rows()>0) {
+			return $this->db->insert_id();
+		} else {
+			return false;
+		}
+	}
+	function add_pay($data) {
+		$this->db->insert($this->order_pay,$data);
 		if($this->db->affected_rows()>0) {
 			return $this->db->insert_id();
 		} else {

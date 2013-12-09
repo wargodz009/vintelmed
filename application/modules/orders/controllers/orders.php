@@ -239,5 +239,23 @@ class Orders extends CI_Controller{
 			}
 		}
 	}
+	function pay($order_id){
+		if(!empty($_POST)) {
+			$data = array(
+				'order_id'=>$this->input->post('order_id'),
+				'amount'=>$this->input->post('amount')
+			);
+			$this->orders_model->add_pay($data);
+			$this->session->set_flashdata('error','Payment record added!');	
+			redirect('orders');
+		} else {
+			$data['orders'] = $this->orders_model->get_single($order_id);
+			if(!$data['orders']) {
+				$this->session->set_flashdata('error','not a valid orders!');	
+				redirect('orders');
+			}
+			$this->template->load('template','orders/orders_pay',$data);
+		}
+	}
 }
 ?>

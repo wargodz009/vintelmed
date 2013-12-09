@@ -1,4 +1,5 @@
 <?=$error;?> <br/>
+<a href="<?php echo base_url();?>order_files/list_all/<?php echo $id;?>">View All Files</a> <br/>
 <a href="<?php echo base_url();?>order_files/list_all/<?php echo $id;?>"><< Files</a>
 <?php echo form_open_multipart('orders/upload/'.$id);?>
 <label for="">Short Description: </label>

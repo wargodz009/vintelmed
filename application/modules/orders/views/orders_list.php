@@ -45,8 +45,8 @@ $this->load->model('user/client_model');
 							<a href="<?php echo base_url();?>orders/complete/<?php echo $c->order_id;?>">Complete</a> | 
 							<?php } ?>
 							<?php if($c->status == 'completed') { ?>
-							<a href="<?php echo base_url();?>orders/upload/<?php echo $c->order_id;?>">Upload Files</a> | 
-							<a href="<?php echo base_url();?>order_files/list_all/<?php echo $c->order_id;?>">Files</a>	
+							<a href="<?php echo base_url();?>orders/upload/<?php echo $c->order_id;?>">Upload Files</a> |
+							<a href="<?php echo base_url();?>orders/pay/<?php echo $c->order_id;?>">Payment</a>	
 							<?php if($this->orders_model->is_exist_order_return($c->order_id) == false) { ?>
 							| <a href="<?php echo base_url();?>orders/return_goods/<?php echo $c->order_id;?>">Return</a>							
 							<?php } ?>
