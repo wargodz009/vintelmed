@@ -4,7 +4,7 @@ $this->load->model('orders/orders_model');
 <div class="row">
 	<div class="span12">
 		<h1>List All Order_pay</h1>
-		<h5><a href="<?php echo base_url();?>orders/upload/<?=$id;?>" class="button">Add new File</a></h5>
+		<h5><a href="<?php echo base_url();?>orders/pay/<?=$id;?>" class="button">Add new Payment</a></h5>
 		<div class="well">
 			<table class="datatable">
 				<thead>

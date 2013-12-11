@@ -190,12 +190,12 @@ class Orders extends CI_Controller{
 					'description'=>$this->input->post('description'),
 					'file_name'=>$data['upload_data']['file_name'],
 				);
-				$this->order_files_model->create($info);
+				$file_id = $this->order_files_model->create($info);
 				$logs = array(
 					'user_id'=>$this->session->userdata('user_id'),
-					'type'=>'others',
+					'type'=>'upload',
 					'action'=>'uploaded a file',
-					'response'=>$id,
+					'response'=>$file_id,
 					'fingerprint'=>$_SERVER['REMOTE_ADDR'],
 				);
 				$this->logs->add($logs);
