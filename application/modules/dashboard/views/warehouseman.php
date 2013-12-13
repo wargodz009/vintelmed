@@ -1,5 +1,6 @@
+warehouseman
 <?php 
-if(isset($all_pending)) {
+/*if(isset($all_pending)) {
 	if(count($all_pending)>0) {
 		echo '<div class="ui-widget">
 			<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
@@ -8,5 +9,5 @@ if(isset($all_pending)) {
 			</div>
 		</div>';
 	}
-}
+}*/
 ?>

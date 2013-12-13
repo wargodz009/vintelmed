@@ -20,6 +20,11 @@ var $order_pay = 'order_pay';
 		$q = $this->db->get($this->table);
 		return $q->result();
 	}
+	function get_some($key,$val) {
+		$this->db->where($key,$val);
+		$q = $this->db->get($this->table);
+		return $q->result();
+	}
 	function get_single($id,$row = '') {
 		$this->db->where('order_id',$id);
 		$q = $this->db->get($this->table);
