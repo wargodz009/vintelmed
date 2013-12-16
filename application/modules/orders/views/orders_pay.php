@@ -21,7 +21,8 @@ $this->load->model('batch/batch_model');
 					Price: <?=$orders->price;?> <br/>
 					Date: <?=$orders->datetime;?> <br/>
 					Mode of Payment: <?=$orders->payment_type;?> <br/>
-					<label class="control-label" for="">Payment</label>
+					Paid Amount: <?php echo $orders_paid;?> <br/>
+					<label class="control-label" for="">New Payment</label>
 					<div class="controls">
 						<input type="hidden" name="order_id" value="<?php echo $orders->order_id;?>" class=":required :number"/>
 						<input type="text" name="amount" class=":required :number"/>

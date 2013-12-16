@@ -24,7 +24,7 @@ class Batch extends CI_Controller{
         }
 	}
 	function create($item_id = '') {
-        if($this->users->is_admin() || $this->users->is_warehouseman()) {
+        if($this->users->is_admin() || $this->users->is_warehouseman() || $this->users->is_accountant()) {
     		if(!empty($_POST)){
 				$id = $this->batch_model->create($_POST);
     			if($id){
@@ -44,7 +44,11 @@ class Batch extends CI_Controller{
     		} else {
 				if($item_id != '') {
 					$data['item_id'] = $item_id;
-					$this->template->load('template','batch/batch_create',$data);
+					if($this->users->is_accountant()) {
+						$this->template->load('template','batch/batch_create_accountant',$data);
+					} else {
+						$this->template->load('template','batch/batch_create',$data);
+					}
 				} else {
 					$this->template->load('template','batch/batch_create');
 				}

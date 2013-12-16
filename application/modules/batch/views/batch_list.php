@@ -37,11 +37,15 @@ $this->load->model('user/user_model');
 						<td><?php echo $c->expire;?></td>
 						<td><?php echo '<a target="_new" href="'.base_url().'user/view/'.$c->user_id.'">'.$this->user_model->get_single($c->user_id,false,'username').'</a>';?></td>
 						<td><?php echo $c->status;?></td>
-						<?php if($this->users->is_admin()) { ?>
-						<td><a href="<?php echo base_url();?>batch/edit/<?php echo $c->item_batch_id;?>">Edit</a> | <a href="<?php echo base_url();?>batch/delete/<?php echo $c->item_batch_id;?>" class="confirm" rel="Are you sure you want to delete <?php echo $c->batch_id;?>?">Delete</a></td>
+						<td>
+						<?php if($this->users->is_warehouseman()) { ?>
+						<a href="<?php echo base_url();?>batch/edit/<?php echo $c->item_batch_id;?>">Edit</a>
+						<?php } else if($this->users->is_admin()) { ?>
+						| <a href="<?php echo base_url();?>batch/delete/<?php echo $c->item_batch_id;?>" class="confirm" rel="Are you sure you want to delete <?php echo $c->batch_id;?>?">Delete</a>
 						<?php } else {
-							echo '<td></td>';
+							//echo '<td></td>';
 						} ?>
+						</td>
 					</tr>
 					<?php
 						}

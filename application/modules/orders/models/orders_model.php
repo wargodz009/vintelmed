@@ -6,7 +6,7 @@ var $batch = 'item_batch';
 var $order_details = 'order_details';
 var $order_return = 'order_return';
 var $order_pay = 'order_pay';
-	function get_all($offset = 0,$limit = 0,$is_admin = true) {
+	function get_all($offset = 0,$limit = 0,$is_admin = true,$sign = false) {
 	    if($offset != 0){
             $this->db->offset($offset);
 	    }
@@ -16,12 +16,33 @@ var $order_pay = 'order_pay';
 		if($is_admin !== true) {
 			$this->db->where('msr_id',$is_admin);
 		}
+		if($sign == 'pre') {
+			$this->db->where('gm_approve_pre',0);
+			$this->db->where('status','approved');
+		}
+		if($sign == 'post') {
+			$this->db->where('gm_approve_post',0);
+			$this->db->where('gm_approve_pre !=',0);
+			$this->db->where('status','completed');
+		}
 		$this->db->order_by('status','asc');
 		$q = $this->db->get($this->table);
 		return $q->result();
 	}
 	function get_some($key,$val) {
-		$this->db->where($key,$val);
+		if($key == 'gm_approve_pre' || $key == 'gm_approve_post') {
+			if($key == 'gm_approve_pre') {
+				$this->db->where('gm_approve_pre',0);
+				$this->db->having('status','approved');
+			}
+			if($key == 'gm_approve_post') {
+				$this->db->where('gm_approve_pre !=',0);
+				$this->db->where('gm_approve_post',0);
+				$this->db->having('status','approved');
+			}
+		} else {
+			$this->db->where($key,$val);
+		}
 		$q = $this->db->get($this->table);
 		return $q->result();
 	}
@@ -44,9 +65,17 @@ var $order_pay = 'order_pay';
 		$q = $this->db->get($this->order_return);
 		return $q->result();
 	}
-	function count_all($msr_id = false) {
+	function count_all($msr_id = false,$sign = false) {
 		if($msr_id !== false) {
 			$this->db->where('msr_id',$msr_id);
+		}
+		if($sign == 'pre') {
+			$this->db->where('gm_approve_pre',0);
+			$this->db->where('status','approved');
+		}
+		if($sign == 'post') {
+			$this->db->where('gm_approve_post',0);
+			$this->db->where('status','approved');
 		}
 		return $this->db->get($this->table)->num_rows();
 	}
@@ -80,6 +109,20 @@ var $order_pay = 'order_pay';
 	}
 	function update($id,$data) {
 		$this->db->where('order_id',$id);
+		$this->db->update($this->table,$data);
+		if($this->db->affected_rows()>0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	function sign($order_id,$user_id,$loc) {
+		if($loc == 'pre') {
+			$data = array('gm_approve_pre'=>$user_id);
+		} else {
+			$data = array('gm_approve_post'=>$user_id);
+		}
+		$this->db->where('order_id',$order_id);
 		$this->db->update($this->table,$data);
 		if($this->db->affected_rows()>0) {
 			return true;
@@ -135,5 +178,11 @@ var $order_pay = 'order_pay';
 		$this->db->where('order_id',$id);
 		$q = $this->db->get($this->order_details);
 		return $q->result();
+	}
+	function get_paid($order_id) {
+		$this->db->select_sum('amount');
+		$this->db->where('order_id',$order_id);
+		$q = $this->db->get($this->order_pay);
+		return (@$q->row()->amount?$q->row()->amount:'0');
 	}
 }

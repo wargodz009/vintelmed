@@ -34,15 +34,24 @@ $this->load->model('batch/batch_model');
 							$batches = $this->batch_model->get_batches($orders->item_id);
 							$qty = $orders->quantity;
 							$tmp = 0;
+							$remaining_items = 0;
+							$output = '';
 							if(!empty($batches)) {
 								foreach($batches as $b) {
-									echo 'ITEM: '.$this->items_model->get_single($orders->item_id,'name').'- '.$this->items_model->get_single($orders->item_id,'description').' <input type="checkbox" id="item-'.$b->item_batch_id.'" name="items[]" value="'.$b->item_id.'" style="display:none;" />';
-									echo $b->item_batch_id.'<br/>';
+									$output .= 'ITEM: '.$this->items_model->get_single($orders->item_id,'name').'- '.$this->items_model->get_single($orders->item_id,'description').' <input type="checkbox" id="item-'.$b->item_batch_id.'" name="items[]" value="'.$b->item_id.'" style="display:none;" />';
+									$output .= $b->item_batch_id.'<br/>';
 									$sold_count = $this->batch_model->get_single($b->item_batch_id,'sold_count');
 									$item_count = $this->batch_model->get_single($b->item_batch_id,'item_count');
-									echo 'SOLD/STOCK: '.( $sold_count != 'Invalid Item'?$sold_count:0).'/'.$item_count;
-									echo ' Pieces: <input type="text" name="piece[]" id="piece-'.$b->item_batch_id.'" rel="'.( $sold_count != 'Invalid Item'?$sold_count:0).'" class="'.$item_count.'" value="0" /> <br/><br/>';
-									echo '<input type="hidden" name="item_batch_id[]" value="'.$b->item_batch_id.'" />';
+									$output .= 'SOLD/STOCK: '.( $sold_count != 'Invalid Item'?$sold_count:0).'/'.$item_count;
+									$remaining_items =  $item_count - $sold_count;
+									$output .= ' Pieces: <input type="text" name="piece[]" id="piece-'.$b->item_batch_id.'" rel="'.( $sold_count != 'Invalid Item'?$sold_count:0).'" class="'.$item_count.'" value="0" /> <br/><br/>';
+									$output .= '<input type="hidden" name="item_batch_id[]" value="'.$b->item_batch_id.'" />';
+								}
+								if($remaining_items < $orders->quantity) {
+									echo '<br/><br/>Items Remaining not enough for this transaction! <br/>';
+									echo '<a href="'.base_url().'batch/create/'.$orders->item_id.'">Order Items now</a> <br/>';
+								} else {
+									echo $output;
 								}
 							} else {
 								echo 'Out Of Stocks! <br/>';
@@ -52,7 +61,7 @@ $this->load->model('batch/batch_model');
 					</div>
 				</div>
 				<div class="control-group">
-					<div class="controls">
+					<div class="controls"> <br/>
 						Remaining&nbsp;
 						<div id="remaining"> <?php echo $orders->quantity; ?></div>
 					</div>
@@ -82,7 +91,7 @@ jQuery(function(){
 		var sold_count = parseInt($(this).attr('rel'));
 		var item_count = parseInt($(this).attr('class'));
 		var total = sold_count + sum;
-		
+		var remain_count = parseInt($(this).attr('class')) - parseInt($(this).attr('rel'));
 		if(<?=$orders->quantity;?> < sum ) {
 			$('[id^=piece-]').each(function(){
 				$(this).val('0');
@@ -90,10 +99,10 @@ jQuery(function(){
 			});
 			alert('TOTAL AMOUNT is greater than the ORDER!');
 		}
-		if($(this).val() > item_count) {
+		if($(this).val() > remain_count) {
 			$(this).val('0');
 			$(":checkbox").prop('checked',false);
-			alert('AMOUNT is greater than the ITEMS AVAILABLE!');
+			alert('AMOUNT is greater than the ITEMS AVAILABLE!' + remain_count);
 		}
 		$('#remaining').text(<?=$orders->quantity;?> - sum);
 		

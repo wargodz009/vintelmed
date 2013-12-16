@@ -9,11 +9,11 @@ class Orders extends CI_Controller{
 		$this->display($offset);
 	}
 	function display($offset = 0) {
-        if($this->users->is_admin() || $this->users->is_msr()) {
+        if($this->users->is_admin() || $this->users->is_msr() || $this->users->is_accountant()) {
             $this->load->library('pagination');
             $config['base_url'] = base_url().'orders/display';
             $config['per_page'] = 15;
-			if($this->users->is_admin()) {
+			if($this->users->is_admin() || $this->users->is_accountant()) {
 				$config['total_rows'] = $this->orders_model->count_all();
 				$data['orders'] = $this->orders_model->get_all($offset,$config['per_page']);
 			} else {
@@ -26,6 +26,35 @@ class Orders extends CI_Controller{
             $this->session->set_flashdata('error','NO_ACCESS');
             redirect();
         }
+	}
+	function pre($order_id = 0) {
+		 $this->load->library('pagination');
+        if($this->users->is_admin()) {
+			$data['orders'] = $this->orders_model->get_all(0,0,true,'pre');
+		    $this->template->load('template','orders/orders_list',$data);
+        } else {
+            $this->session->set_flashdata('error','NO_ACCESS');
+            redirect();
+        }
+	}
+	function post($order_id = 0) {
+		 $this->load->library('pagination');
+        if($this->users->is_admin()) {
+            $data['orders'] = $this->orders_model->get_all(0,0,true,'post');
+		    $this->template->load('template','orders/orders_list',$data);
+        } else {
+            $this->session->set_flashdata('error','NO_ACCESS');
+            redirect();
+        }
+	}
+	function sign($loc,$order_id) {
+		if($this->users->is_admin()) {
+            $res = $this->orders_model->sign($order_id,$this->session->userdata('user_id'),$loc);
+			if($res) {
+				 $this->session->set_flashdata('error','Order signed!');
+			}
+        }
+        redirect($_SERVER['HTTP_REFERER']);
 	}
 	function user($id,$offset = 0) {
         if($this->users->is_admin() || $this->users->is_msr()) {
@@ -250,6 +279,7 @@ class Orders extends CI_Controller{
 			redirect('orders');
 		} else {
 			$data['orders'] = $this->orders_model->get_single($order_id);
+			$data['orders_paid'] = $this->orders_model->get_paid($order_id);
 			if(!$data['orders']) {
 				$this->session->set_flashdata('error','not a valid orders!');	
 				redirect('orders');
