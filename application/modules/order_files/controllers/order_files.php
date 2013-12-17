@@ -9,6 +9,7 @@ class Order_files extends CI_Controller{
 		$this->list_all($id);
 	}
 	function list_all($id) {
+		$this->load->model("orders/orders_model");
 		if($id != 0) {
 			$data['order_files'] = $this->order_files_model->get_some($id);
 			$data['id'] = $id;
@@ -19,15 +20,16 @@ class Order_files extends CI_Controller{
 		}
 	}
 	function delete($id){
+		$this->load->model("orders/orders_model");
 		$file = $this->order_files_model->get_single($id);
 		if(!empty($id)) {
 			if($this->order_files_model->delete($id)) {
-				$this->session->set_flashdata('error','crud removed!');	
+				$this->session->set_flashdata('error','File removed!');	
 			} else {
-				$this->session->set_flashdata('error','crud not removed!');	
+				$this->session->set_flashdata('error','File not removed!');	
 			}
 		}
-		@unlink('./uploads/'.$file->file_name);
+		@unlink('./uploads/'.$this->orders_model->get_single($file->order_id,'form_number').'/'.$file->file_name);
 		$logs = array(
 			'user_id'=>$this->session->userdata('user_id'),
 			'type'=>'other',
@@ -35,7 +37,8 @@ class Order_files extends CI_Controller{
 			'response'=>$id,
 			'fingerprint'=>$_SERVER['REMOTE_ADDR'],
 		);
-		redirect('order_files');
+		$this->logs->add($logs);
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 }
 ?>

@@ -22,6 +22,7 @@ $this->load->model('batch/batch_model');
 					Date: <?=$orders->datetime;?> <br/>
 					Mode of Payment: <?=$orders->payment_type;?> <br/>
 					Paid Amount: <?php echo $orders_paid;?> <br/>
+					<?php if($orders_paid < $orders->price) { ?>
 					<label class="control-label" for="">New Payment</label>
 					<div class="controls">
 						<input type="hidden" name="order_id" value="<?php echo $orders->order_id;?>" class=":required :number"/>
@@ -33,6 +34,11 @@ $this->load->model('batch/batch_model');
 						<button type="submit" class="btn">Add Payment</button>
 					</div>
 				</div>
+				<?php } else {
+					?> Fully paid!
+					</div>
+					<?php
+				} ?>
 			</form>
 		</div>
 	</div>

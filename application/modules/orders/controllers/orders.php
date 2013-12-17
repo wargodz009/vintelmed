@@ -203,7 +203,10 @@ class Orders extends CI_Controller{
 		$this->load->helper('form');
 		$this->load->model('order_files/order_files_model');
 		if(!empty($_POST)) {
-			$config['upload_path'] = './uploads/';
+			$config['upload_path'] = './uploads/'.$this->orders_model->get_single($id,'form_number');
+			if (!is_dir($config['upload_path'])) {
+				mkdir($config['upload_path'], 0777, TRUE);
+			}
 			$config['allowed_types'] = 'gif|jpg|png|doc|docx|pdf|xls|xlsx';
 			$this->load->library('upload', $config);
 			if ( ! $this->upload->do_upload())
