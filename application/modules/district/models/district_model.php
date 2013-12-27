@@ -15,8 +15,8 @@ var $table = 'districts';
 	function get_single($id,$row = '') {
 		$this->db->where('district_id',$id);
 		$q = $this->db->get($this->table);
-		if($row != '') {
-			return $q->row()->$row;
+		if($row == true) {
+			return (@$q->row()->$row?$q->row()->$row:'Not Assigned');
 		} else {
 			return $q->row();
 		}

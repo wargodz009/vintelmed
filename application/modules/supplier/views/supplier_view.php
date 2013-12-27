@@ -3,7 +3,7 @@
 		<h1>View Single</h1>
 		<div class="well">
 			<?php
-				var_dump($supplier);
+				echo "Supplier Name: {$supplier->name} <br />";
 			?>
 		</div>
 	</div>

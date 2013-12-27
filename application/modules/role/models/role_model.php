@@ -12,14 +12,18 @@ var $table = 'role';
 		$q = $this->db->get($this->table);
 		return $q->result();
 	}
-	function get_single($id,$in_rolename = false) {
+	function get_single($id,$in_rolename = false,$row = false) {
 		if($in_rolename === true) {
 			$this->db->where('rolename',$id);
 		} else {
 			$this->db->where('role_id',$id);
 		}
 		$q = $this->db->get($this->table);
-		return $q->row();
+		if($row == true) {
+			return (@$q->row()->$row?$q->row()->$row:'Invalid Role');
+		} else {
+			return $q->row();
+		}
 	}
 	function count_all() {
 		return $this->db->count_all($this->table);
