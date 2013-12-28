@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 10, 2013 at 06:43 AM
+-- Generation Time: Dec 28, 2013 at 11:43 PM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.8
 
@@ -113,11 +113,11 @@ CREATE TABLE IF NOT EXISTS `item_batch` (
   `expire` varchar(50) NOT NULL,
   `buy_price` varchar(100) NOT NULL,
   `sell_price` varchar(100) NOT NULL,
-  `status` enum('ordered','recieved') NOT NULL DEFAULT 'ordered',
+  `status` enum('ordered','recieved','open') NOT NULL DEFAULT 'ordered',
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`item_batch_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `item_batch`
@@ -128,7 +128,11 @@ INSERT INTO `item_batch` (`item_batch_id`, `item_id`, `user_id`, `supplier_id`, 
 (3, 7, 4, 12, 'LGN177', 222, 2, '11/05/2013', '11/30/2016', '', '', 'ordered', '2013-11-05 07:31:49', 0),
 (5, 3, 1, 2, 'awaw', 2222, 0, '11/12/2013', '11/25/2020', '', '', 'ordered', '2013-11-12 10:53:41', 1),
 (6, 3, 1, 1, 'awaw', 11, 0, '11/06/2013', '11/21/2013', '', '', 'ordered', '2013-11-27 07:49:23', 1),
-(7, 9, 1, 2, 'sd32', 222, 4, '12/02/2013', '12/24/2019', '', '', 'ordered', '2013-12-02 09:00:27', 0);
+(7, 9, 1, 2, 'sd32', 222, 4, '12/02/2013', '12/24/2019', '', '', 'ordered', '2013-12-02 09:00:27', 0),
+(8, 9, 2, 12, 'asdasd', 111, 0, '12/24/2013', '12/31/2017', '', '', 'ordered', '2013-12-13 13:15:12', 0),
+(9, 9, 2, 12, 'asdasd2', 22222, 0, '12/13/2013', '12/31/2019', '', '', 'ordered', '2013-12-13 13:15:39', 0),
+(10, 10, 2, 1, 'aaaaa', 10000, 0, '12/16/2013', '12/31/2013', '', '', 'open', '2013-12-16 06:26:43', 0),
+(11, 6, 2, 1, 'i00001', 1000, 1, '12/16/2013', '12/31/2018', '', '', 'open', '2013-12-16 14:10:02', 0);
 
 -- --------------------------------------------------------
 
@@ -195,21 +199,21 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `msr_client_id` int(255) NOT NULL,
   `status` enum('pending','declined','approved','completed','cancelled') NOT NULL,
+  `gm_approve_pre` int(255) NOT NULL DEFAULT '0' COMMENT 'first gm checkpoint',
+  `gm_approve_post` int(255) NOT NULL DEFAULT '0' COMMENT '2nd gm checkpoint',
   `payment_type` varchar(255) NOT NULL DEFAULT '30_days',
   `form_number` varchar(255) NOT NULL,
   `date_completed` varchar(100) NOT NULL,
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`order_id`, `msr_id`, `item_id`, `item_batch_id`, `quantity`, `price`, `datetime`, `msr_client_id`, `status`, `payment_type`, `form_number`, `date_completed`) VALUES
-(5, 7, 7, 3, 224, '55', '2013-11-08 06:21:41', 5, 'completed', '30_days', '123cl1', ''),
-(6, 7, 10, 0, 10000, '55', '2013-11-29 04:03:20', 11, 'declined', '30_days', '222', ''),
-(7, 7, 8, 0, 5000, '2', '2013-11-29 04:11:04', 11, 'cancelled', '30_days', '222', ''),
-(8, 8, 9, 0, 4, '88', '2013-12-02 08:59:41', 6, 'completed', '30_days', '11111', '');
+INSERT INTO `orders` (`order_id`, `msr_id`, `item_id`, `item_batch_id`, `quantity`, `price`, `datetime`, `msr_client_id`, `status`, `gm_approve_pre`, `gm_approve_post`, `payment_type`, `form_number`, `date_completed`) VALUES
+(1, 7, 3, 0, 1, '11', '2013-12-16 13:47:13', 11, 'completed', 1, 1, '30_days', 's00001', ''),
+(2, 7, 6, 0, 1, '7', '2013-12-16 14:08:46', 5, 'completed', 1, 1, '30_days', 's00002', '');
 
 -- --------------------------------------------------------
 
@@ -225,16 +229,15 @@ CREATE TABLE IF NOT EXISTS `order_details` (
   `quantity` int(100) NOT NULL,
   `status` varchar(25) NOT NULL DEFAULT 'enabled',
   PRIMARY KEY (`order_details_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `order_details`
 --
 
 INSERT INTO `order_details` (`order_details_id`, `order_id`, `item_id`, `item_batch_id`, `quantity`, `status`) VALUES
-(15, 5, 7, 2, 222, 'enabled'),
-(16, 5, 7, 3, 2, 'enabled'),
-(17, 8, 9, 7, 4, 'enabled');
+(1, 1, 3, 5, 0, 'enabled'),
+(2, 2, 6, 11, 1, 'enabled');
 
 -- --------------------------------------------------------
 
@@ -248,21 +251,7 @@ CREATE TABLE IF NOT EXISTS `order_files` (
   `file_name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   PRIMARY KEY (`order_files_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
-
---
--- Dumping data for table `order_files`
---
-
-INSERT INTO `order_files` (`order_files_id`, `order_id`, `file_name`, `description`) VALUES
-(7, 5, 'IntelekLogo08done3.JPG', 'awaw'),
-(8, 5, 'Me_Composed.jpg', 'sample pix 3'),
-(9, 8, 'Me_Composed1.jpg', 'asd'),
-(10, 8, 'IntelekLogo08done31.JPG', 'adf'),
-(11, 8, '1475850_779763298706531_1090260025_n.jpg', 'cornineto'),
-(12, 8, 'Deva_Path.png', 'deva'),
-(13, 8, '1497504_747534461942289_1570704196_n.jpg', 'sample pix 3'),
-(14, 8, '996049_394573154007323_190863641_n.jpg', 'pusa');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -277,15 +266,16 @@ CREATE TABLE IF NOT EXISTS `order_pay` (
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`order_pay_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `order_pay`
 --
 
 INSERT INTO `order_pay` (`order_id`, `order_pay_id`, `amount`, `datetime`, `status`) VALUES
-(8, 3, 1000, '2013-12-09 07:18:20', 0),
-(8, 4, 1000, '2013-12-09 09:22:06', 0);
+(1, 1, 5, '2013-12-16 14:12:03', 0),
+(1, 2, 5, '2013-12-16 14:12:14', 0),
+(1, 3, 1, '2013-12-16 14:12:19', 0);
 
 -- --------------------------------------------------------
 
@@ -303,15 +293,7 @@ CREATE TABLE IF NOT EXISTS `order_return` (
   `status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`orders_return_id`),
   KEY `orders_return_id` (`orders_return_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
-
---
--- Dumping data for table `order_return`
---
-
-INSERT INTO `order_return` (`orders_return_id`, `order_id`, `item_batch_id`, `return_quantity`, `remarks`, `datetime`, `status`) VALUES
-(11, 5, 2, 222, '', '2013-12-07 08:04:49', 0),
-(12, 5, 3, 2, '', '2013-12-07 08:04:49', 0);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -418,7 +400,7 @@ CREATE TABLE IF NOT EXISTS `system_logs` (
   `transaction_id` int(255) DEFAULT NULL,
   `report_id` int(255) DEFAULT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=94 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=231 ;
 
 --
 -- Dumping data for table `system_logs`
@@ -516,7 +498,144 @@ INSERT INTO `system_logs` (`log_id`, `user_id`, `type`, `date`, `action`, `respo
 (90, 5, 'login', '2013-12-09 09:57:15', NULL, 'logout user', '::1', 'manager', NULL, NULL, NULL),
 (91, 7, 'login', '2013-12-09 09:57:18', NULL, 'login success', '::1', 'medrep1', NULL, NULL, NULL),
 (92, 7, 'login', '2013-12-09 09:58:53', NULL, 'logout user', '::1', 'medrep1', NULL, NULL, NULL),
-(93, 1, 'login', '2013-12-09 09:58:56', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL);
+(93, 1, 'login', '2013-12-09 09:58:56', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(94, 1, 'login', '2013-12-10 11:14:26', NULL, 'emergency login success', '::1', 'admin', NULL, NULL, NULL),
+(95, 1, 'login', '2013-12-10 11:14:49', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
+(96, 12, 'login', '2013-12-10 11:14:58', NULL, 'emergency login success', '::1', 'client1', NULL, NULL, NULL),
+(97, 12, 'login', '2013-12-10 11:15:04', NULL, 'logout user', '::1', 'client1', NULL, NULL, NULL),
+(98, 7, 'login', '2013-12-10 11:15:09', NULL, 'emergency login success', '::1', 'medrep1', NULL, NULL, NULL),
+(99, 7, 'login', '2013-12-10 11:15:31', NULL, 'logout user', '::1', 'medrep1', NULL, NULL, NULL),
+(100, 1, 'login', '2013-12-10 11:15:38', NULL, 'emergency login success', '::1', 'admin', NULL, NULL, NULL),
+(101, 1, 'login', '2013-12-10 11:16:11', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
+(102, 1, 'login', '2013-12-11 06:55:58', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(103, 1, 'login', '2013-12-11 13:18:45', NULL, 'emergency login success', '::1', 'admin', NULL, NULL, NULL),
+(104, 1, 'login', '2013-12-12 07:55:47', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(105, 1, 'login', '2013-12-12 13:26:36', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(106, 1, 'login', '2013-12-12 13:27:57', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
+(107, 1, 'login', '2013-12-12 13:28:03', NULL, 'emergency login success', '::1', 'admin', NULL, NULL, NULL),
+(108, 1, 'login', '2013-12-12 13:28:07', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
+(109, 1, 'login', '2013-12-12 13:28:11', NULL, 'emergency login success', '::1', 'admin', NULL, NULL, NULL),
+(110, 1, 'login', '2013-12-12 13:31:04', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(111, 1, 'login', '2013-12-12 13:31:14', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
+(112, 0, 'login', '2013-12-12 13:31:24', NULL, 'login Failed - invalid username', '::1', 'medrep', NULL, NULL, NULL),
+(113, 1, 'login', '2013-12-12 13:31:37', NULL, 'emergency login success', '::1', 'admin', NULL, NULL, NULL),
+(114, 1, 'login', '2013-12-13 09:36:55', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(115, 1, 'login', '2013-12-13 09:43:54', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
+(116, 7, 'login', '2013-12-13 09:44:00', NULL, 'login success', '::1', 'medrep1', NULL, NULL, NULL),
+(117, 7, 'login', '2013-12-13 09:45:41', NULL, 'logout user', '::1', 'medrep1', NULL, NULL, NULL),
+(118, 1, 'login', '2013-12-13 09:45:44', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(119, 1, 'login', '2013-12-13 11:21:27', NULL, 'emergency login success', '::1', 'admin', NULL, NULL, NULL),
+(120, 1, 'login', '2013-12-13 11:22:54', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
+(121, 2, 'login', '2013-12-13 11:23:00', NULL, 'emergency login success', '::1', 'accountant', NULL, NULL, NULL),
+(122, 1, 'login', '2013-12-13 11:23:43', NULL, 'emergency login success', '::1', 'admin', NULL, NULL, NULL),
+(123, 1, 'setting', '2013-12-13 11:24:05', 'update', '2', '::1', NULL, NULL, NULL, NULL),
+(124, 1, 'login', '2013-12-13 11:24:09', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
+(125, 2, 'login', '2013-12-13 11:24:12', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
+(126, 4, 'login', '2013-12-13 11:24:36', NULL, 'login success', '::1', 'warehouseman', NULL, NULL, NULL),
+(127, 2, 'login', '2013-12-13 11:28:18', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
+(128, 2, 'login', '2013-12-13 11:29:02', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
+(129, 7, 'login', '2013-12-13 11:29:05', NULL, 'login success', '::1', 'medrep1', NULL, NULL, NULL),
+(130, 7, 'login', '2013-12-13 11:29:43', NULL, 'logout user', '::1', 'medrep1', NULL, NULL, NULL),
+(131, 4, 'login', '2013-12-13 11:30:23', NULL, 'login success', '::1', 'warehouseman', NULL, NULL, NULL),
+(132, 4, 'login', '2013-12-13 11:30:30', NULL, 'logout user', '::1', 'warehouseman', NULL, NULL, NULL),
+(133, 3, 'login', '2013-12-13 11:31:02', NULL, 'login success', '::1', 'client', NULL, NULL, NULL),
+(134, 3, 'login', '2013-12-13 11:31:06', NULL, 'logout user', '::1', 'client', NULL, NULL, NULL),
+(135, 3, 'login', '2013-12-13 11:31:19', NULL, 'login success', '::1', 'client', NULL, NULL, NULL),
+(136, 3, 'login', '2013-12-13 11:31:24', NULL, 'logout user', '::1', 'client', NULL, NULL, NULL),
+(137, 1, 'login', '2013-12-13 11:31:27', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(138, 1, 'login', '2013-12-13 12:24:37', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
+(139, 2, 'login', '2013-12-13 12:24:41', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
+(140, 2, 'login', '2013-12-13 12:30:08', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
+(141, 1, 'login', '2013-12-13 12:30:12', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(142, 1, 'login', '2013-12-13 12:30:22', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
+(143, 2, 'login', '2013-12-13 12:31:02', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
+(144, 1, 'login', '2013-12-13 13:02:27', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(145, 1, 'login', '2013-12-13 13:02:35', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
+(146, 0, 'login', '2013-12-13 13:02:46', NULL, 'login Failed - invalid username', '::1', 'accounting', NULL, NULL, NULL),
+(147, 0, 'login', '2013-12-13 13:02:53', NULL, 'login Failed - invalid username', '::1', 'accounting', NULL, NULL, NULL),
+(148, 1, 'login', '2013-12-13 13:02:56', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(149, 1, 'login', '2013-12-13 13:03:02', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
+(150, 2, 'login', '2013-12-13 13:03:09', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
+(151, 2, 'inventory item', '2013-12-13 13:15:12', 'create', '8', '::1', NULL, NULL, NULL, NULL),
+(152, 2, 'inventory item', '2013-12-13 13:15:39', 'create', '9', '::1', NULL, NULL, NULL, NULL),
+(153, 2, 'login', '2013-12-13 13:18:58', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
+(154, 4, 'login', '2013-12-13 13:19:07', NULL, 'login success', '::1', 'warehouseman', NULL, NULL, NULL),
+(155, 4, 'inventory item', '2013-12-13 13:22:45', 'update', '8', '::1', NULL, NULL, NULL, NULL),
+(156, 4, 'inventory item', '2013-12-13 13:23:02', 'update', '9', '::1', NULL, NULL, NULL, NULL),
+(157, 4, 'login', '2013-12-13 13:23:10', NULL, 'logout user', '::1', 'warehouseman', NULL, NULL, NULL),
+(158, 2, 'login', '2013-12-13 13:23:13', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
+(159, 1, 'login', '2013-12-16 04:45:00', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(160, 1, 'login', '2013-12-16 04:47:05', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
+(161, 2, 'login', '2013-12-16 04:47:08', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
+(162, 2, 'login', '2013-12-16 04:57:57', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
+(163, 5, 'login', '2013-12-16 04:58:02', NULL, 'login success', '::1', 'manager', NULL, NULL, NULL),
+(164, 5, 'login', '2013-12-16 04:59:10', NULL, 'logout user', '::1', 'manager', NULL, NULL, NULL),
+(165, 2, 'login', '2013-12-16 04:59:13', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
+(166, 2, 'login', '2013-12-16 05:01:38', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
+(167, 1, 'login', '2013-12-16 05:01:41', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(168, 1, 'login', '2013-12-16 06:24:20', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
+(169, 8, 'login', '2013-12-16 06:24:25', NULL, 'login success', '::1', 'medrep2', NULL, NULL, NULL),
+(170, 8, 'login', '2013-12-16 06:24:47', NULL, 'logout user', '::1', 'medrep2', NULL, NULL, NULL),
+(171, 1, 'login', '2013-12-16 06:24:51', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(172, 1, 'login', '2013-12-16 06:25:08', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
+(173, 2, 'login', '2013-12-16 06:25:11', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
+(174, 2, 'inventory item', '2013-12-16 06:26:43', 'create', '10', '::1', NULL, NULL, NULL, NULL),
+(175, 2, 'login', '2013-12-16 06:26:56', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
+(176, 1, 'login', '2013-12-16 06:27:00', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(177, 1, 'login', '2013-12-16 06:36:51', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
+(178, 2, 'login', '2013-12-16 06:36:53', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
+(179, 2, 'login', '2013-12-16 06:40:41', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
+(180, 2, 'login', '2013-12-16 06:40:49', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
+(181, 2, 'login', '2013-12-16 06:42:58', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
+(182, 4, 'login', '2013-12-16 06:43:02', NULL, 'login success', '::1', 'warehouseman', NULL, NULL, NULL),
+(183, 4, 'login', '2013-12-16 06:43:07', NULL, 'logout user', '::1', 'warehouseman', NULL, NULL, NULL),
+(184, 2, 'login', '2013-12-16 06:43:11', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
+(185, 2, 'login', '2013-12-16 06:49:06', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
+(186, 1, 'login', '2013-12-16 06:49:09', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(187, 2, 'login', '2013-12-16 13:36:00', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
+(188, 2, 'login', '2013-12-16 13:36:51', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
+(189, 1, 'login', '2013-12-16 13:36:57', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(190, 1, 'login', '2013-12-16 13:45:44', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(191, 1, 'login', '2013-12-16 13:46:34', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(192, 1, 'login', '2013-12-16 13:46:38', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
+(193, 0, 'login', '2013-12-16 13:46:44', NULL, 'login Failed - invalid username', '::1', 'medrep', NULL, NULL, NULL),
+(194, 7, 'login', '2013-12-16 13:46:54', NULL, 'login success', '::1', 'medrep1', NULL, NULL, NULL),
+(195, 7, 'login', '2013-12-16 13:48:37', NULL, 'logout user', '::1', 'medrep1', NULL, NULL, NULL),
+(196, 0, 'login', '2013-12-16 13:48:44', NULL, 'login Failed - invalid username', '::1', 'accounting', NULL, NULL, NULL),
+(197, 0, 'login', '2013-12-16 13:48:53', NULL, 'login Failed - invalid username', '::1', 'accounting', NULL, NULL, NULL),
+(198, 0, 'login', '2013-12-16 13:48:58', NULL, 'login Failed - invalid username', '::1', 'accounting', NULL, NULL, NULL),
+(199, 2, 'login', '2013-12-16 13:49:36', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
+(200, 2, 'order', '2013-12-16 14:04:59', 'completed an order', '1', '::1', NULL, NULL, NULL, NULL),
+(201, 2, 'login', '2013-12-16 14:08:27', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
+(202, 7, 'login', '2013-12-16 14:08:32', NULL, 'login success', '::1', 'medrep1', NULL, NULL, NULL),
+(203, 7, 'login', '2013-12-16 14:08:49', NULL, 'logout user', '::1', 'medrep1', NULL, NULL, NULL),
+(204, 2, 'login', '2013-12-16 14:08:58', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
+(205, 2, 'inventory item', '2013-12-16 14:10:02', 'create', '11', '::1', NULL, NULL, NULL, NULL),
+(206, 2, 'order', '2013-12-16 14:11:24', 'completed an order', '2', '::1', NULL, NULL, NULL, NULL),
+(207, 1, 'login', '2013-12-17 07:56:25', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(208, 1, 'upload', '2013-12-17 08:02:01', 'uploaded a file', '1', '::1', NULL, NULL, NULL, NULL),
+(209, 1, 'upload', '2013-12-17 08:08:11', 'uploaded a file', '2', '::1', NULL, NULL, NULL, NULL),
+(210, 1, 'upload', '2013-12-17 08:08:18', 'uploaded a file', '3', '::1', NULL, NULL, NULL, NULL),
+(211, 1, '', '2013-12-17 08:08:28', 'delete an upload file', '3', '::1', NULL, NULL, NULL, NULL),
+(212, 1, '', '2013-12-17 08:09:03', 'delete an upload file', '2', '::1', NULL, NULL, NULL, NULL),
+(213, 1, 'upload', '2013-12-17 08:09:27', 'uploaded a file', '4', '::1', NULL, NULL, NULL, NULL),
+(214, 1, '', '2013-12-17 08:09:34', 'delete an upload file', '4', '::1', NULL, NULL, NULL, NULL),
+(215, 1, 'upload', '2013-12-17 08:10:02', 'uploaded a file', '5', '::1', NULL, NULL, NULL, NULL),
+(216, 1, '', '2013-12-17 08:10:10', 'delete an upload file', '5', '::1', NULL, NULL, NULL, NULL),
+(217, 1, 'upload', '2013-12-17 08:12:32', 'uploaded a file', '6', '::1', NULL, NULL, NULL, NULL),
+(218, 1, '', '2013-12-17 08:12:42', 'delete an upload file', '6', '::1', NULL, NULL, NULL, NULL),
+(219, 1, 'upload', '2013-12-17 08:12:55', 'uploaded a file', '7', '::1', NULL, NULL, NULL, NULL),
+(220, 1, '', '2013-12-17 08:13:03', 'delete an upload file', '7', '::1', NULL, NULL, NULL, NULL),
+(221, 1, 'upload', '2013-12-17 08:14:00', 'uploaded a file', '8', '::1', NULL, NULL, NULL, NULL),
+(222, 1, 'upload', '2013-12-17 08:15:18', 'uploaded a file', '9', '::1', NULL, NULL, NULL, NULL),
+(223, 1, '', '2013-12-17 08:15:27', 'delete an upload file', '9', '::1', NULL, NULL, NULL, NULL),
+(224, 1, '', '2013-12-17 08:15:31', 'delete an upload file', '8', '::1', NULL, NULL, NULL, NULL),
+(225, 1, 'login', '2013-12-20 07:15:35', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(226, 1, 'login', '2013-12-23 02:01:39', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(227, 1, 'login', '2013-12-27 04:30:50', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(228, 1, 'user', '2013-12-27 05:32:52', 'update', '8', '::1', NULL, NULL, NULL, NULL),
+(229, 1, 'login', '2013-12-27 14:05:03', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
+(230, 1, 'login', '2013-12-28 22:17:21', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -541,7 +660,7 @@ CREATE TABLE IF NOT EXISTS `system_setting` (
 
 INSERT INTO `system_setting` (`setting_id`, `name`, `type`, `option`, `group`, `display_name`, `value`) VALUES
 (1, 'time_open', 'time', '', 'system settings', 'Time Open', '06:00 am'),
-(2, 'time_close', 'time', '', 'system setting', 'Time Close', '06:36 pm'),
+(2, 'time_close', 'time', '', 'system setting', 'Time Close', '11:59 pm'),
 (3, 'time_zone', 'select', 'Asia/Manila,Asia/Macao,Asia/Bangkok', 'system settings', 'Time Zone', 'Asia/Manila'),
 (4, 'expire_near', 'text', '', 'items', 'Near Expire (months)', '7'),
 (5, 'empty_near', 'text', '', 'items', 'Critical limit', '300');
@@ -609,7 +728,7 @@ INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `username`, `password
 (4, '', '', 'warehouseman', 'b56b651bd46d63f3f0fad79a98ae66d5', '', 4, 0, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
 (5, '', '', 'manager', '1d0258c2440a8d19e716292b231e3190', '', 1, 0, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
 (7, '', '', 'medrep1', 'a857792ecd07fac5258be1bfac2fe980', '', 3, 1, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
-(8, '', '', 'medrep2', '796b1161cddfd62aadc656d51685d0dc', '', 3, 2, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
+(8, 'user3', 'user8ln', 'medrep2', '796b1161cddfd62aadc656d51685d0dc', 'user8email@gmail.com', 3, 2, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
 (9, '', '', 'medrep3', '3a85cff098f1a0ed93b4f9a1e6ce597c', '', 3, 3, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
 (10, '', '', 'medrep1.1', '2107a5a8889395d43cb2ac07a2ab720a', '', 3, 1, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
 (11, '', '', 'medrep1.1.1', '0dad8005ad28928dba2e5818fcd80a27', '', 3, 1, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'disabled'),
