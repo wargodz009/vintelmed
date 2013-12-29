@@ -25,6 +25,18 @@ var $order = 'orders';
 			return $q->row();
 		}
 	}
+	function get_some($key = 0,$val = 0) {
+	    if(is_array($key)){
+			foreach($key as $k=>$v){
+				$this->db->where($k,$v);
+			}
+	    } else {
+			$this->db->where($key,$val);
+		}
+		$this->db->where('status','enabled');
+		$q = $this->db->get($this->table);
+		return $q->result();
+	}
 	function count_all() {
 		$this->db->where('status','enabled');
 		return $this->db->get($this->table)->num_rows();
