@@ -38,7 +38,7 @@ var $order_pay = 'order_pay';
 			if($key == 'gm_approve_post') {
 				$this->db->where('gm_approve_pre !=',0);
 				$this->db->where('gm_approve_post',0);
-				$this->db->having('status','approved');
+				$this->db->having('status','completed');
 			}
 		} else {
 			$this->db->where($key,$val);

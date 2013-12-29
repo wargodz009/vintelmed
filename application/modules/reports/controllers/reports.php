@@ -48,6 +48,7 @@ class Reports extends CI_Controller{
 		$this->template->load('template','reports/reports_list');
 	}
 	function view($report_id) {
+		//$this->output->enable_profiler(true);
 		$report = $this->report_model->get_single($report_id);
 		if($report) {
 			$data['report'] = $report;

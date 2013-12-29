@@ -22,8 +22,8 @@ $period = new DatePeriod($begin, $interval, $end);
 		<td>Description</td>
 		<td>Supplier Name</td>
 		<td>Begin Inventory</td>
-		<td>Ave. Usage/montd</td>
-		<td>Ave. Usage/montd (8 montds)</td>
+		<td>Ave. Usage/month</td>
+		<td>Ave. Usage/month (8 months)</td>
 		<td>Batch ID</td>
 		<td>IN</td>
 		<td>Cancelled (DR/RGS) </td>
@@ -47,27 +47,51 @@ $period = new DatePeriod($begin, $interval, $end);
 		foreach($items as $k) {
 			?>
 			<tr>
-				<td><?php echo $ctr; ?></td>
+				<!-- no -->
+				<td><?php //echo $ctr;
+				echo $k->item_batch_id; ?></td>
+				<!-- generic name -->
 				<td><?php echo $k->generic_name; ?></td>
+				<!-- product name -->
 				<td><?php echo $k->name; ?></td>
+				<!-- description -->
 				<td><?php echo $k->description; ?></td>
+				<!-- supplier name -->
 				<td><?php echo $k->supplier_name; ?></td>
+				<!-- begin inventory -->
 				<td><?php echo $k->item_count; ?></td>
-				<td><?php echo '-'; ?></td>
-				<td><?php echo '-'; ?></td>
+				<!-- ave. usage/ month -->
+				<td><?php 
+				$fromDate = date("Y-m-d", strtotime($report->date_start." -1 months"));
+				echo $this->report_model->get_item_average_usage($k->item_batch_id,$fromDate,date("Y-m-d",$date_end)); ?></td>
+				<!-- ave. usage/ 8 months -->
+				<td><?php 
+				$fromDate = date("Y-m-d", strtotime($report->date_start." -8 months"));
+				echo $this->report_model->get_item_average_usage($k->item_batch_id,$fromDate,date("Y-m-d",$date_end)); ?></td>
+				<!-- batch id / expire date -->
 				<td><?php echo $k->batch_id.'/ '.date('d-y',strtotime($k->expire)); ?></td>
+				<!-- in -->
 				<td><?php echo '-'; ?></td>
+				<!-- cancelled -->
 				<td><?php echo '-'; ?></td>
 				<?php
-				foreach ( $period as $dt )
-				  echo '<td>--</td>';
+				foreach ( $period as $dt ) {
+					echo '<td>'.$this->report_model->get_item_sum_usage($k->item_batch_id,$dt->format('Y-m-d')).'</td>';
+				}
 				?>
+				<!-- total out -->
 				<td><?php echo '-'; ?></td>
+				<!-- end inventory -->
 				<td><?php echo '-'; ?></td>
+				<!-- actual inventory -->
 				<td><?php echo '-'; ?></td>
+				<!-- cavite whse inventory -->
 				<td><?php echo '-'; ?></td>
+				<!-- total stocks -->
 				<td><?php echo '-'; ?></td>
+				<!-- remarks -->
 				<td><?php echo '-'; ?></td>
+				<!-- critical buffer -->
 				<td><?php echo '-'; ?></td>
 			</tr>
 			<?php

@@ -162,6 +162,7 @@ class Orders extends CI_Controller{
 				'response'=>$id,
 				'fingerprint'=>$_SERVER['REMOTE_ADDR'],
 			);
+			$this->logs->add($logs);
 			redirect('orders');
 		} else {
 			$data['orders'] = $this->orders_model->get_single($id);
@@ -177,6 +178,7 @@ class Orders extends CI_Controller{
 		if($this->orders_model->get_single($id,'status') == 'approved') {
 			$data1 = array(
 				'status'=>'completed',
+				'date_completed'=>date("Y-m-d"),
 			);
 			$this->orders_model->update($id,$data1);
 			$logs = array(
