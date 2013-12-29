@@ -254,6 +254,7 @@ class Orders extends CI_Controller{
 						'remarks'=>$this->input->post('remarks'),
 					);
 					$this->orders_model->add_return($data);
+					$this->orders_model->set_returned($id);
 				}
 				$this->session->set_flashdata('error','Orders return recorded!');	
 			}

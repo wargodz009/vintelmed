@@ -44,12 +44,14 @@ $period = new DatePeriod($begin, $interval, $end);
 	<?php 
 	if(isset($items)) {
 		$ctr = 1;
+		$total_out = 0;
 		foreach($items as $k) {
+			$total_out = 0;
 			?>
 			<tr>
 				<!-- no -->
 				<td><?php //echo $ctr;
-				echo $k->item_batch_id; ?></td>
+				echo $ctr; ?></td>
 				<!-- generic name -->
 				<td><?php echo $k->generic_name; ?></td>
 				<!-- product name -->
@@ -71,22 +73,26 @@ $period = new DatePeriod($begin, $interval, $end);
 				<!-- batch id / expire date -->
 				<td><?php echo $k->batch_id.'/ '.date('d-y',strtotime($k->expire)); ?></td>
 				<!-- in -->
-				<td><?php echo '-'; ?></td>
-				<!-- cancelled -->
-				<td><?php echo '-'; ?></td>
+				<td><?php 
+				$returned_goods = $this->report_model->get_item_sum_returned($k->item_batch_id,$fromDate,date("Y-m-d",$date_end));
+				echo $returned_goods['sum_qty']; ?></td>
+				<!-- cancelled rgs/dr-->
+				<td><?php echo $returned_goods['return_id']; ?></td>
 				<?php
 				foreach ( $period as $dt ) {
-					echo '<td>'.$this->report_model->get_item_sum_usage($k->item_batch_id,$dt->format('Y-m-d')).'</td>';
+					$out = $this->report_model->get_item_sum_usage($k->item_batch_id,$dt->format('Y-m-d'));
+					echo '<td>'.$out.'</td>';
+					$total_out = $total_out + $out;
 				}
 				?>
 				<!-- total out -->
-				<td><?php echo '-'; ?></td>
+				<td><?php echo $total_out; ?></td>
 				<!-- end inventory -->
-				<td><?php echo '-'; ?></td>
+				<td><?php echo $k->item_count - $total_out; ?></td>
 				<!-- actual inventory -->
-				<td><?php echo '-'; ?></td>
+				<td>&nbsp;</td>
 				<!-- cavite whse inventory -->
-				<td><?php echo '-'; ?></td>
+				<td>&nbsp;</td>
 				<!-- total stocks -->
 				<td><?php echo '-'; ?></td>
 				<!-- remarks -->

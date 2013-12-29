@@ -141,6 +141,18 @@ var $order_pay = 'order_pay';
 	}
 	function cancel($id) {
 		$this->db->set('status','cancelled');
+		$this->db->set('date_cancelled',date("Y-m-d"));
+		$this->db->where('order_id',$id);
+		$this->db->update($this->table);
+		if($this->db->affected_rows()>0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	function set_returned($id) {
+		$this->db->set('status','returned');
+		$this->db->set('date_cancelled',date("Y-m-d"));
 		$this->db->where('order_id',$id);
 		$this->db->update($this->table);
 		if($this->db->affected_rows()>0) {

@@ -8,6 +8,7 @@ var $suppliers = 'suppliers';
 var $item_types = 'item_types';
 var $orders = 'orders';
 var $order_details = 'order_details';
+var $order_return = 'order_return';
 	function get_all($offset = 0,$limit = 0) {
 	    if($offset != 0){
             $this->db->offset($offset);
@@ -93,5 +94,21 @@ var $order_details = 'order_details';
 		$this->db->group_by($this->orders.'.order_id');
 		$q = $this->db->get($this->order_details);
 		return @floor($q->row()->sum_qty);
+	}
+	function get_item_sum_returned($batch_id,$start,$end = false){
+		$this->db->select("sum(".$this->order_details.".quantity) as sum_qty, return_id");
+		$this->db->where($this->order_details.'.item_batch_id',$batch_id);
+		$this->db->where($this->orders.'.status','returned');
+		if($end != false) {
+			$this->db->where("date_cancelled BETWEEN '$start' AND '$end'");
+		} else {
+			$this->db->where("date_cancelled",$start);
+		}
+		$this->db->join($this->orders,$this->order_details.'.order_id = '.$this->orders.'.order_id');
+		$this->db->group_by($this->orders.'.order_id');
+		$q = $this->db->get($this->order_details);
+		$data['return_id'] = (@$q->row()->return_id?$q->row()->return_id:'-');
+		$data['sum_qty'] = @floor($q->row()->sum_qty);
+		return $data;
 	}
 }
