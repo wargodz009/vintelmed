@@ -45,7 +45,8 @@ class Reports extends CI_Controller{
 		}
 	}
 	function list_all() {
-		$this->template->load('template','reports/reports_list');
+		$data['all_reports'] = $this->report_model->get_all();
+		$this->template->load('template','reports/reports_list',$data);
 	}
 	function view($report_id) {
 		//$this->output->enable_profiler(true);
