@@ -26,6 +26,7 @@ class Batch extends CI_Controller{
 	function create($item_id = '') {
         if($this->users->is_admin() || $this->users->is_warehouseman() || $this->users->is_accountant()) {
     		if(!empty($_POST)){
+				$_POST['expire'] = date("Y-m-d",strtotime($_POST['expire']));
 				$id = $this->batch_model->create($_POST);
     			if($id){
 					$logs = array(

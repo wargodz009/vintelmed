@@ -57,7 +57,7 @@ var $order_return = 'order_return';
 			return false;
 		}
 	}
-	
+	/* INVENTORY */
 	function get_inventory_items($type = 1){
 		$this->db->select('*,'.$this->suppliers.'.name as supplier_name,'.$this->item_types.'.name as item_type_name');
 		$this->db->join($this->suppliers,$this->suppliers.'.supplier_id = '.$this->batch.'.supplier_id');
@@ -110,5 +110,16 @@ var $order_return = 'order_return';
 		$data['return_id'] = (@$q->row()->return_id?$q->row()->return_id:'-');
 		$data['sum_qty'] = @floor($q->row()->sum_qty);
 		return $data;
+	}
+	/* NEAR EXPIRY */
+	function get_near_expiry_items($date,$expire_date){
+		$this->db->select('*,'.$this->items.'.name as items_name');
+		$this->db->join($this->suppliers,$this->suppliers.'.supplier_id = '.$this->batch.'.supplier_id');
+		$this->db->join($this->items,$this->items.'.item_id = '.$this->batch.'.item_id');
+		$this->db->join($this->item_types,$this->item_types.'.item_type_id = '.$this->items.'.item_type_id');
+		$this->db->where("expire BETWEEN '$date' AND '$expire_date'");
+		$this->db->order_by('expire','asc');
+		$q = $this->db->get($this->batch);
+		return $q->result();
 	}
 }
