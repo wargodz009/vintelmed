@@ -17,16 +17,16 @@
 		<option value="PESO_QUANTITY">PESO QUANTITY</option>
 		<?php } ?>
 		<?php if($this->users->is_admin() || $this->users->is_warehouseman()) { ?>
-		<option value="INVENTORY">INVENTORY REPORT</option>
+		<option value="INVENTORY">INVENTORY REPORT -done</option>
 		<?php } ?>
 		<?php if($this->users->is_admin() || $this->users->is_warehouseman()) { ?>
 		<option value="MONTHLY_RETURN_GOODS_SLIP">MONTHLY RETURN GOODS SLIP REPORT</option>
 		<?php } ?>
 		<?php if($this->users->is_admin() || $this->users->is_warehouseman()) { ?>
-		<option value="NEAR_EXPIRY">NEAR EXPIRY</option>
+		<option value="NEAR_EXPIRY">NEAR EXPIRY -done</option>
 		<?php } ?>
 		<?php if($this->users->is_admin() || $this->users->is_warehouseman()) { ?>
-		<option value="SUMMARY_OF_CRITICAL_STOCKS">SUMMARY OF CRITICAL STOCKS</option>
+		<option value="SUMMARY_OF_CRITICAL_STOCKS">SUMMARY OF CRITICAL STOCKS -done</option>
 		<?php } ?>
 		<?php if($this->users->is_admin() || $this->users->is_warehouseman()) { ?>
 		<option value="SUMMARY_OF_EXPIRED_PRODUCTS">SUMMARY OF EXPIRED PRODUCTS</option>
