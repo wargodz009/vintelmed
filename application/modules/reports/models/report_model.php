@@ -122,4 +122,14 @@ var $order_return = 'order_return';
 		$q = $this->db->get($this->batch);
 		return $q->result();
 	}
+	
+	/* NEAR EXPIRY */
+	function get_critical_items($date){
+		$this->db->select('*,'.$this->items.'.name as items_name');
+		$this->db->join($this->suppliers,$this->suppliers.'.supplier_id = '.$this->batch.'.supplier_id');
+		$this->db->join($this->items,$this->items.'.item_id = '.$this->batch.'.item_id');
+		$this->db->join($this->item_types,$this->item_types.'.item_type_id = '.$this->items.'.item_type_id');
+		$q = $this->db->get($this->batch);
+		return $q->result();
+	}
 }

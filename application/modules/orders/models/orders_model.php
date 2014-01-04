@@ -197,4 +197,12 @@ var $order_pay = 'order_pay';
 		$q = $this->db->get($this->order_pay);
 		return (@$q->row()->amount?$q->row()->amount:'0');
 	}
+	function get_item_pending_orders($item_id,$to_date){
+		$this->db->select_sum('quantity');
+		$this->db->where('status','pending');
+		$this->db->where("DATE(datetime) <=",$to_date);
+		$this->db->where("item_id",$item_id);
+		$q = $this->db->get($this->table);
+		return (@$q->row()->quantity?$q->row()->quantity:'0');
+	}
 }
