@@ -132,4 +132,12 @@ var $order_return = 'order_return';
 		$q = $this->db->get($this->batch);
 		return $q->result();
 	}
+	
+	function get_returned_goods($date_from,$date_to) {
+		$this->db->where("date_cancelled BETWEEN '$date_from' AND '$date_to'");
+		$this->db->where($this->orders.'.status','returned');
+		$this->db->join($this->order_return,$this->order_return.'.order_id = '.$this->orders.'.order_id');
+		$q = $this->db->get($this->orders);
+		return $q->result();
+	}
 }

@@ -205,4 +205,14 @@ var $order_pay = 'order_pay';
 		$q = $this->db->get($this->table);
 		return (@$q->row()->quantity?$q->row()->quantity:'0');
 	}
+	function get_order_all_details($order_id,$item_id,$row){ 
+		$this->db->where('order_id',$order_id);
+		$this->db->where('item_id',$item_id);
+		$q = $this->db->get($this->order_details);
+		if($row != '') {
+			return (@$q->row()->$row?$q->row()->$row:'Invalid Item');
+		} else {
+			return $q->row();
+		}
+	}
 }

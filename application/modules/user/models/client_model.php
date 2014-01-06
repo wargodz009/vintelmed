@@ -46,4 +46,9 @@ var $msr_tbl = 'msr_clients';
 		$q = $this->db->get($this->msr_tbl);
 		return (@$q->row()->client_id?$q->row()->client_id:'Invalid ID');
 	}
+	function get_user_id_by_client_msr_id($id){
+		$this->db->where('msr_client_id',$id);
+		$q = $this->db->get($this->msr_tbl);
+		return (@$q->row()->client_id?$q->row()->client_id:'Invalid ID');
+	}
 }

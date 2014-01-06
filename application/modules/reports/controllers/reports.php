@@ -49,7 +49,7 @@ class Reports extends CI_Controller{
 		$this->template->load('template','reports/reports_list',$data);
 	}
 	function view($report_id) {
-		//$this->output->enable_profiler(true);
+		$this->output->enable_profiler(true);
 		$report = $this->report_model->get_single($report_id);
 		if($report) {
 			$data['report'] = $report;
@@ -66,6 +66,12 @@ class Reports extends CI_Controller{
 				$date1 = date("Y/m/d",strtotime($report->date_start));
 				$data['items'] = $this->report_model->get_critical_items($date1);
 				$this->template->load('template','reports/reports/summary_of_critical_stocks',$data); break;
+				case 'MONTHLY_RETURN_GOODS_SLIP': 
+				$date_from = date("Y/m/d",strtotime($report->date_start));
+				$date_to = date("Y/m/d",strtotime($report->date_end));
+				$data['items'] = $this->report_model->get_returned_goods($date_from,$date_to);
+				$this->template->load('template','reports/reports/monthly_return_goods_slip',$data); break;
+				
 				default: $this->template->load('template','reports/reports_view',$report); break;
 			}
 		} else {
