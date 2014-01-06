@@ -42,6 +42,13 @@
 						<input class=":required autocomplete_suppliers" rel="supplier_name" type="text" id="supplier" value="" name="supplier_id">
 					</div>
 				</div>
+				<div class="control-group" id="lot_number"></div><br/><br/>
+				<div class="control-group">
+					<label class="control-label" for="">Lot Number</label>
+					<div class="controls">
+						<input class="" type="text" id="" value="" name="lot_number">
+					</div>
+				</div>
 				<div class="control-group" id="supplier_name"></div><br/><br/>
 				<div class="control-group">
 					<label class="control-label" for="">recieve date</label>

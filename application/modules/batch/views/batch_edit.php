@@ -59,6 +59,13 @@ $this->load->model('items/items_model');
 						<input class="datepicker_from" type="text" id="" value="<?=$batch->recieve_date; ?>" name="recieve_date" readonly>
 					</div>
 				</div>
+				<div class="control-group" id="lot_number"></div><br/><br/>
+				<div class="control-group">
+					<label class="control-label" for="">Lot Number</label>
+					<div class="controls">
+						<input class="" type="text" id="" value="<?=$batch->lot_number; ?>" name="lot_number">
+					</div>
+				</div>
 				<div class="control-group">
 					<label class="control-label" for="">expiry date</label>
 					<div class="controls">
