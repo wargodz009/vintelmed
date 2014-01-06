@@ -35,6 +35,14 @@ class Reports extends CI_Controller{
 			$data['report_id'] = $this->report_model->create($_POST);
 			$data['report_for'] = $this->input->post('report_for');
 			if($data['report_id']) {
+				$logs = array(
+					'user_id'=>$this->session->userdata('user_id'),
+					'type'=>'generate report',
+					'action'=>'create report',
+					'response'=>$data['report_id'],
+					'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+				);
+				$this->logs->add($logs);
 				$this->session->set_flashdata('error','REPORT_GENERATED! <a href="'.base_url().'reports/view/'.$data['report_id'].'">VIEW</a>');
 			} else {
 				$this->session->set_flashdata('error','ERROR_CREATING_REPORT');
@@ -49,7 +57,7 @@ class Reports extends CI_Controller{
 		$this->template->load('template','reports/reports_list',$data);
 	}
 	function view($report_id) {
-		$this->output->enable_profiler(true);
+		//$this->output->enable_profiler(true);
 		$report = $this->report_model->get_single($report_id);
 		if($report) {
 			$data['report'] = $report;

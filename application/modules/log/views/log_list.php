@@ -6,6 +6,7 @@ $this->load->model('batch/batch_model');
 $this->load->model('setting/setting_model');
 $this->load->model('orders/orders_model');
 $this->load->model('order_files/order_files_model');
+$this->load->model('reports/report_model');
 ?>
 <div class="row">
 	<div class="span12">
@@ -68,6 +69,17 @@ $this->load->model('order_files/order_files_model');
 							<tr>
 								<td><?php echo '<a href="'.base_url().'user/view/'.$c->user_id.'">'.$this->user_model->get_single($c->user_id,false,'username').'</a>';?></td>
 								<td><?php echo $c->action.' inventory item: <a href="'.base_url().'batch/view/'.$c->response.'">'.$this->batch_model->get_single($c->response,'batch_id').'</a>'; ?></td>
+								<td><?php echo $c->type;?></td>
+								<td><?php echo $c->date;?></td>
+							</tr>
+							<!-- to here -->
+							<!-- copy from here -->
+							<?php
+							} else if($c->type == 'generate report') {
+							?>
+							<tr>
+								<td><?php echo '<a href="'.base_url().'user/view/'.$c->user_id.'">'.$this->user_model->get_single($c->user_id,false,'username').'</a>';?></td>
+								<td><?php echo $c->action.' for <a href="'.base_url().'reports/view/'.$c->response.'">'.$this->report_model->get_single($c->response,'report_type').' -'.date("d M,Y",strtotime($this->report_model->get_single($c->response,'datetime'))).'</a>'; ?></td>
 								<td><?php echo $c->type;?></td>
 								<td><?php echo $c->date;?></td>
 							</tr>

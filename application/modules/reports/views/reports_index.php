@@ -20,7 +20,7 @@
 		<option value="INVENTORY">INVENTORY REPORT -done</option>
 		<?php } ?>
 		<?php if($this->users->is_admin() || $this->users->is_warehouseman()) { ?>
-		<option value="MONTHLY_RETURN_GOODS_SLIP">MONTHLY RETURN GOODS SLIP REPORT</option>
+		<option value="MONTHLY_RETURN_GOODS_SLIP">MONTHLY RETURN GOODS SLIP REPORT -done</option>
 		<?php } ?>
 		<?php if($this->users->is_admin() || $this->users->is_warehouseman()) { ?>
 		<option value="NEAR_EXPIRY">NEAR EXPIRY -done</option>
