@@ -66,6 +66,13 @@ $this->load->model('items/items_model');
 						<input class="" type="text" id="" value="<?=$batch->lot_number; ?>" name="lot_number">
 					</div>
 				</div>
+				<div class="control-group" id=""></div><br/><br/>
+				<div class="control-group">
+					<label class="control-label" for="">on Cavite Warehouse</label>
+					<div class="controls">
+						<input class="" type="checkbox" id="" value="" name="cavite_warehouse" <?=($batch->cavite_warehouse == 1?"checked":""); ?>>
+					</div>
+				</div>
 				<div class="control-group">
 					<label class="control-label" for="">expiry date</label>
 					<div class="controls">

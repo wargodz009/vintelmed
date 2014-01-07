@@ -13,6 +13,7 @@ $this->load->model('user/user_model');
 				echo "<div class='batch_item'>Qty: {$batch->item_count} </div><br />";
 				echo "<div class='batch_item'>Sold: {$batch->sold_count} </div><br />";
 				echo "<div class='batch_item'>Lot #: {$batch->lot_number} </div><br />";
+				echo "<div class='batch_item'>on cavite warehouse: ".($batch->cavite_warehouse == 1?"Yes":"No")." </div><br />";
 				echo "<div class='batch_item'>Date Recieved: {$batch->recieve_date} </div><br />";
 				echo "<div class='batch_item'>Expiration Date: {$batch->expire} </div><br />";
 				echo "<div class='batch_item'>Buy Price: {$batch->buy_price} </div><br />";
