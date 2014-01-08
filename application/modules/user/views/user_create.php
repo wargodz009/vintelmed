@@ -37,7 +37,7 @@ $this->load->model('district/district_model');
 					</div> <br/>
 					<label class="control-label" for="">Password</label>
 					<div class="controls">
-						<input class=":required" type="password" id="" value="" name="password">
+						<input class=":required" type="text" id="" value="" name="password">
 					</div>
 				</div>
 				<div class="control-group">

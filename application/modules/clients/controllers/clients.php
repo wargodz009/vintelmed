@@ -36,14 +36,14 @@ class Clients extends CI_Controller{
 	function create() {
         if($this->users->is_admin() || $this->users->is_msr()) {
     		if(!empty($_POST)){
-    			if($this->client_model->create($_POST)){
+    			if($this->clients_model->create($_POST)){
     				$this->session->set_flashdata('error','client saved!');	
     			} else {
     				$this->session->set_flashdata('error','client not saved!');	
     			}
-    			redirect('client');
+    			redirect('clients');
     		} else {
-    			$this->template->load('template','clients/client_create');
+    			$this->template->load('template','clients/clients_create');
     		}
         } else {
             $this->session->set_flashdata('error','NO_ACCESS');

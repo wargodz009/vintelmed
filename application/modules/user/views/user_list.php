@@ -3,7 +3,10 @@ $this->load->model('role/role_model');
 ?>
 <div class="row">
 	<div class="span12">
-		<h1>List All User</h1>
+		<h1>List All Users</h1>
+		<?php if($this->users->is_admin()) { ?>
+		<a class="button" href="<?php echo base_url(); ?>user/create">Add User</a>
+		<?php } ?>
 		<div class="well">
 			<table class="datatable">
 				<thead>
