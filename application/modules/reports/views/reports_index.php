@@ -29,7 +29,7 @@
 		<option value="SUMMARY_OF_CRITICAL_STOCKS">SUMMARY OF CRITICAL STOCKS -done</option>
 		<?php } ?>
 		<?php if($this->users->is_admin() || $this->users->is_warehouseman()) { ?>
-		<option value="SUMMARY_OF_EXPIRED_PRODUCTS">SUMMARY OF EXPIRED PRODUCTS -no doc</option>
+		<option value="SUMMARY_OF_EXPIRED_PRODUCTS">SUMMARY OF EXPIRED PRODUCTS -done</option>
 		<?php } ?>
 	</select>
 	<input type="submit" value="CREATE">

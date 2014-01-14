@@ -111,7 +111,7 @@ var $order_return = 'order_return';
 		$data['sum_qty'] = @floor($q->row()->sum_qty);
 		return $data;
 	}
-	/* NEAR EXPIRY */
+	/* NEAR EXPIRY, EXPIRING */
 	function get_near_expiry_items($date,$expire_date){
 		$this->db->select('*,'.$this->items.'.name as items_name');
 		$this->db->join($this->suppliers,$this->suppliers.'.supplier_id = '.$this->batch.'.supplier_id');
@@ -123,7 +123,7 @@ var $order_return = 'order_return';
 		return $q->result();
 	}
 	
-	/* NEAR EXPIRY */
+	/* CRITICAL PRODUCTS */
 	function get_critical_items($date){
 		$this->db->select('*,'.$this->items.'.name as items_name');
 		$this->db->join($this->suppliers,$this->suppliers.'.supplier_id = '.$this->batch.'.supplier_id');

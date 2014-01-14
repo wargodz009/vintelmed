@@ -79,6 +79,11 @@ class Reports extends CI_Controller{
 				$date_to = date("Y/m/d",strtotime($report->date_end));
 				$data['items'] = $this->report_model->get_returned_goods($date_from,$date_to);
 				$this->template->load('template','reports/reports/monthly_return_goods_slip',$data); break;
+				case 'SUMMARY_OF_EXPIRED_PRODUCTS': 
+				$date1 = date("Y/m/d",strtotime($report->date_start));
+				$date2 = date("Y/m/d",strtotime($report->date_end));
+				$data['items'] = $this->report_model->get_near_expiry_items($date1,$date2);
+				$this->template->load('template','reports/reports/summary_of_expired_products',$data); break;
 				
 				default: $this->template->load('template','reports/reports_view',$report); break;
 			}
