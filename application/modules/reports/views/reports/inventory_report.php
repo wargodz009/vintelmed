@@ -55,7 +55,7 @@ $period = new DatePeriod($begin, $interval, $end);
 				<!-- generic name -->
 				<td><?php echo $k->generic_name; ?></td>
 				<!-- product name -->
-				<td><?php echo $k->name; ?></td>
+				<td><?php echo $k->item_name; ?></td>
 				<!-- description -->
 				<td><?php echo $k->description; ?></td>
 				<!-- supplier name -->

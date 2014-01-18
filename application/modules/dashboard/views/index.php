@@ -62,132 +62,50 @@ if(isset($post_approval)) {
             <!-- tblist -->
             <div id="tblisthldr1" class="tblist scrl-1">
             	<table border="0" cellspacing="0" cellpadding="0">
-                  <tr>
-                    <td class="wd2-1">Amikacin</td>
-                    <td class="wd2-2">Cinmik</td>
-                    <td class="wd2-3">125MG / ML-2ML</td>
-                    <td class="wd2-4">Ferj's Pharmacy</td>
-                    <td class="wd2-5">-</td>
-                    <td class="wd2-6">-</td>
-                    <td class="wd2-7">-</td>
-                    <td class="wd2-8">7800313 /<br/>04-16</td>
-                    <td class="wd2-9">50</td>
-                    <td class="wd2-10">-</td>
-                    <td class="wd2-11">50 /<br/> 08-30</td>
-                    <td class="wd2-12"><a href="#" class="lnkicn"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd2-1">Sample Prod</td>
-                    <td class="wd2-2">Near Expiry Date</td>
-                    <td class="wd2-3">00MG/ ML-0ML</td>
-                    <td class="wd2-4">Sample Prod</td>
-                    <td class="wd2-5">-</td>
-                    <td class="wd2-6">-</td>
-                    <td class="wd2-7">-</td>
-                    <td class="wd2-8">-</td>
-                    <td class="wd2-9">-</td>
-                    <td class="wd2-10">-</td>
-                    <td class="wd2-11">-</td>
-                    <td class="wd2-12"><a href="#" class="lnkicn"><img src="images/warning-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd2-1">Ampicillin</td>
-                    <td class="wd2-2">Liferzin</td>
-                    <td class="wd2-3">1g-VIAL</td>
-                    <td class="wd2-4">Marzan Pharma<br/>Corp.</td>
-                    <td class="wd2-5">15</td>
-                    <td class="wd2-6">-</td>
-                    <td class="wd2-7">-</td>
-                    <td class="wd2-8">674110905 /<br/>09-14</td>
-                    <td class="wd2-9">-</td>
-                    <td class="wd2-10">-</td>
-                    <td class="wd2-11">-</td>
-                    <td class="wd2-12"><a href="#" class="lnkicn"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd2-1">Sample Prod</td>
-                    <td class="wd2-2">Near Expiry Date</td>
-                    <td class="wd2-3">00MG/ ML-0ML</td>
-                    <td class="wd2-4">Sample Prod</td>
-                    <td class="wd2-5">-</td>
-                    <td class="wd2-6">-</td>
-                    <td class="wd2-7">-</td>
-                    <td class="wd2-8">-</td>
-                    <td class="wd2-9">-</td>
-                    <td class="wd2-10">-</td>
-                    <td class="wd2-11">-</td>
-                    <td class="wd2-12"><a href="#" class="lnkicn"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd2-1">Sample Prod</td>
-                    <td class="wd2-2">Near Expiry Date</td>
-                    <td class="wd2-3">00MG/ ML-0ML</td>
-                    <td class="wd2-4">Sample Prod</td>
-                    <td class="wd2-5">-</td>
-                    <td class="wd2-6">-</td>
-                    <td class="wd2-7">-</td>
-                    <td class="wd2-8">-</td>
-                    <td class="wd2-9">-</td>
-                    <td class="wd2-10">-</td>
-                    <td class="wd2-11">-</td>
-                    <td class="wd2-12"><a href="#" class="lnkicn"><img src="images/warning-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd2-1">Sample Prod</td>
-                    <td class="wd2-2">Near Expiry Date</td>
-                    <td class="wd2-3">00MG/ ML-0ML</td>
-                    <td class="wd2-4">Sample Prod</td>
-                    <td class="wd2-5">-</td>
-                    <td class="wd2-6">-</td>
-                    <td class="wd2-7">-</td>
-                    <td class="wd2-8">-</td>
-                    <td class="wd2-9">-</td>
-                    <td class="wd2-10">-</td>
-                    <td class="wd2-11">-</td>
-                    <td class="wd2-12"><a href="#" class="lnkicn"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd2-1">Sample Prod</td>
-                    <td class="wd2-2">Near Expiry Date</td>
-                    <td class="wd2-3">00MG/ ML-0ML</td>
-                    <td class="wd2-4">Sample Prod</td>
-                    <td class="wd2-5">-</td>
-                    <td class="wd2-6">-</td>
-                    <td class="wd2-7">-</td>
-                    <td class="wd2-8">-</td>
-                    <td class="wd2-9">-</td>
-                    <td class="wd2-10">-</td>
-                    <td class="wd2-11">-</td>
-                    <td class="wd2-12"><a href="#" class="lnkicn"><img src="images/warning-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd2-1">Sample Prod</td>
-                    <td class="wd2-2">Near Expiry Date</td>
-                    <td class="wd2-3">00MG/ ML-0ML</td>
-                    <td class="wd2-4">Sample Prod</td>
-                    <td class="wd2-5">-</td>
-                    <td class="wd2-6">-</td>
-                    <td class="wd2-7">-</td>
-                    <td class="wd2-8">-</td>
-                    <td class="wd2-9">-</td>
-                    <td class="wd2-10">-</td>
-                    <td class="wd2-11">-</td>
-                    <td class="wd2-12"><a href="#" class="lnkicn"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd2-1">Sample Prod</td>
-                    <td class="wd2-2">Near Expiry Date</td>
-                    <td class="wd2-3">00MG/ ML-0ML</td>
-                    <td class="wd2-4">Sample Prod</td>
-                    <td class="wd2-5">-</td>
-                    <td class="wd2-6">-</td>
-                    <td class="wd2-7">-</td>
-                    <td class="wd2-8">-</td>
-                    <td class="wd2-9">-</td>
-                    <td class="wd2-10">-</td>
-                    <td class="wd2-11">-</td>
-                    <td class="wd2-12"><a href="#" class="lnkicn"><img src="images/warning-icon.png" width="8" height="8" /></a></td>
-                  </tr>
+				  <?php 
+					if(isset($items)) {
+						$ctr = 1;
+						$total_out = 0;
+						foreach($items as $k) {
+							$total_out = 0;
+							?>
+							<tr>
+								<!-- generic name -->
+								<td class="wd1-1"><?php echo $k->generic_name; ?></td>
+								<!-- product name -->
+								<td class="wd1-2"><?php echo $k->item_name; ?></td>
+								<!-- description -->
+								<td class="wd1-3"><?php echo $k->description; ?></td>
+								<!-- supplier name -->
+								<td class="wd1-4"><?php echo $k->supplier_name; ?></td>
+								<!-- begin inventory -->
+								<td class="wd1-5"><?php echo $k->item_count; ?></td>
+								<!-- ave. usage/ month -->
+								<td class="wd1-6"><?php 
+								$fromDate = date("Y-m-d", strtotime(date("Y-m-d")." -1 months"));
+								echo $this->report_model->get_item_average_usage($k->item_batch_id,$fromDate,date("Y-m-d")); ?></td>
+								<!-- ave. usage/ 8 months -->
+								<td class="wd1-7"><?php 
+								$fromDate = date("Y-m-d", strtotime(date("Y-m-d")." -8 months"));
+								echo $this->report_model->get_item_average_usage($k->item_batch_id,$fromDate,date("Y-m-d")); ?></td>
+								<!-- batch id / expire date -->
+								<td class="wd1-8"><?php echo $k->batch_id.'/ '.date('d-y',strtotime($k->expire)); ?></td>
+								<!-- in -->
+								<td class="wd1-9"><?php 
+								$returned_goods = $this->report_model->get_item_sum_returned($k->item_batch_id,$fromDate,date("Y-m-d"));
+								echo $returned_goods['sum_qty']; ?></td>
+								<!-- cancelled rgs/dr-->
+								<td class="wd1-10"><?php echo $returned_goods['return_id']; ?></td>
+								<!-- total out -->
+								<td class="wd1-11"><?php echo $total_out; ?></td>
+								<!-- remarks -->
+								<td class="wd1-12"><?php echo '-'; ?></td>
+							</tr>
+							<?php
+							$ctr++;
+						}
+					}
+					?>
                 </table>
                 <script type="text/javascript">
 					$(function(){
