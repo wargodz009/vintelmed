@@ -75,7 +75,7 @@ $this->load->model('user/client_model');
 						} else {
 						?>
 						<td>
-						<?php if($c->status != 'completed' && $c->status != 'cancelled') { ?>
+						<?php if($c->status != 'completed' && $c->status != 'cancelled' && $c->status != 'returned') { ?>
 						<a href="<?php echo base_url();?>orders/cancel/<?php echo $c->order_id;?>" class="confirm" rel="Are you sure you want to Cancel <?php echo $c->form_number;?>?">Cancel</a>
 						<?php } ?>
 						</td>

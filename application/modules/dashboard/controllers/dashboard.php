@@ -9,12 +9,16 @@ class Dashboard extends CI_Controller{
 		$this->load->model('item_type/item_type_model');
 		$this->load->model('batch/batch_model');
 	}
-	function index(){
+	function index($filter = '',$var = ''){
 		if($this->users->is_admin() === true) {
 			$this->load->model('orders/orders_model');
 			$data['pre_approval'] = $this->orders_model->get_some('gm_approve_pre','0',true,'pre');
 			$data['post_approval'] = $this->orders_model->get_some('gm_approve_post','0',true,'post');
-			$data['items'] = $this->report_model->get_inventory_items();
+			if($filter == 'item_type') {
+				$data['items'] = $this->report_model->get_inventory_items($var);
+			} else {
+				$data['items'] = $this->report_model->get_inventory_items();
+			}
 			$this->template->load('template','dashboard/index',$data);
 		} else if($this->users->is_logged_in() === true && $this->users->is_accountant() === true) {
 			$this->load->model('orders/orders_model');

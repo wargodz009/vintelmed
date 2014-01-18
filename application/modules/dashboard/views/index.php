@@ -27,10 +27,10 @@ if(isset($post_approval)) {
                 <input name="" type="button" class="settings" />
                 <input name="" type="button" class="view" />
                 <input name="" type="button" class="download" />
-                <select name="" class="slct">
+                <select id='inventory_item_type' name="" class="slct">
                 	<option selected="selected">---</option>
-                    <option>Vials Products</option>
-                    <option>Orals Products</option>
+                    <option value='2'>Vials Products</option>
+                    <option value='1'>Orals Products</option>
                 </select>
                 <div class="clear"></div>
             </div>
@@ -500,3 +500,11 @@ if(isset($post_approval)) {
         </div>
         <!-- / collection updates -->
         <div class="clear"></div>
+		
+<script type="text/javascript">
+jQuery(function(){
+	$('#inventory_item_type').change(function(){
+		window.location = '<?php echo base_url(); ?>dashboard/index/item_type/'+$(this).val();
+	});
+});
+</script>

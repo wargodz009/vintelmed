@@ -88,6 +88,15 @@ class User extends CI_Controller{
 		}
 		$this->template->load('template','user/user_view',$data);
 	}
+	function profile() {
+		$id = $this->session->userdata('user_id');
+		$data['user'] = $this->user_model->get_single($id);
+		if(!$data['user']) {
+			$this->session->set_flashdata('error','not a valid user!');	
+			redirect('user');
+		}
+		$this->template->load('template','user/user_profile',$data);
+	}
 	function delete($id) {
 		if(!empty($id)) {
 			if($this->user_model->delete($id)){
