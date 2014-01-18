@@ -104,7 +104,7 @@ class User extends CI_Controller{
 				$this->session->set_flashdata('error','user not removed!');	
 			}
 		}
-		redirect('user');
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 	function activate($id) {
 		if(!empty($id)) {
@@ -122,7 +122,7 @@ class User extends CI_Controller{
 				$this->session->set_flashdata('error','user not activated!');	
 			}
 		}
-		redirect('user');
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 	function login(){
 		if(!empty($_POST)) {
