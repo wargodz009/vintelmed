@@ -12,10 +12,20 @@ var $table = 'order_pay';
 		$q = $this->db->get($this->table);
 		return $q->result();
 	}
-	function get_some($id) {
+	function get_some($id,$offset = 0,$limit = 0,$count = false) {
+		if($offset != 0){
+            $this->db->offset($offset);
+	    }
+        if($limit != 0){
+	        $this->db->limit($limit);
+	    } 
         $this->db->where('order_id',$id);
 		$q = $this->db->get($this->table);
-		return $q->result();
+		if($count === true) {
+			return $q->num_rows();
+		} else {
+			return $q->result();
+		}
 	}
 	function get_single($id,$row = '') {
 		$this->db->where('order_pay_id',$id);

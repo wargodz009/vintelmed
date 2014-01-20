@@ -8,9 +8,15 @@ class Order_pay extends CI_Controller{
 	function index($id = 0) {
 		$this->list_all($id);
 	}
-	function list_all($id) {
+	function list_all($id,$offset = 0) {
 		if($id != 0) {
-			$data['order_pay'] = $this->order_pay_model->get_some($id);
+			$this->load->library('pagination');
+            $config['base_url'] = base_url().'order_pay/list_all';
+            $config['total_rows'] = $this->order_pay_model->get_some($id,0,0,true);
+            $config['per_page'] = 15;
+            $this->pagination->initialize($config); 
+			
+			$data['order_pay'] = $this->order_pay_model->get_some($id,$offset,$config['per_page']);
 			$data['id'] = $id;
 			$this->template->load('template','order_pay/order_pay_list',$data);
 		} else {

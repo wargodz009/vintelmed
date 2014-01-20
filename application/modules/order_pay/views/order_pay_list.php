@@ -3,10 +3,11 @@ $this->load->model('orders/orders_model');
 ?>
 <div class="row">
 	<div class="span12">
-		<h1>List All Order_pay</h1>
-		<h5><a href="<?php echo base_url();?>orders/pay/<?=$id;?>" class="button">Add new Payment</a></h5>
+		<a href="<?php echo base_url();?>orders/pay/<?=$id;?>" class="menu_button">Add new Payment</a>
+		<br/>
+		<br/>
 		<div class="well">
-			<table class="datatable">
+			<table class="gridtable">
 				<thead>
 					<tr>
 						<th>order</th>
@@ -38,6 +39,11 @@ $this->load->model('orders/orders_model');
 					?>
 				</tbody>
 			</table>
+			<div class="pagination">
+            <?php
+                echo $this->pagination->create_links();
+            ?>
+			</div>
 		</div>
 	</div>
 </div>
