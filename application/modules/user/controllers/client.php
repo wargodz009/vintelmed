@@ -28,19 +28,23 @@ class Client extends CI_Controller{
 	function create() {
 		if(!empty($_POST)){
 			$_POST['password'] = md5($_POST['password']);
-			$id = $this->user_model->create($_POST);
-			if($id) {
-				$logs = array(
-					'user_id'=>$this->session->userdata('user_id'),
-					'type'=>'user',
-					'action'=>'create',
-					'response'=>$id,
-					'fingerprint'=>$_SERVER['REMOTE_ADDR'],
-				);
-				$this->logs->add($logs);
-				$this->session->set_flashdata('error','user saved!');	
+			if($this->user_model->get_single($_POST['username'],true,'username') == 'Invalid user') { 
+				$id = $this->user_model->create($_POST);
+				if($id) {
+					$logs = array(
+						'user_id'=>$this->session->userdata('user_id'),
+						'type'=>'user',
+						'action'=>'create',
+						'response'=>$id,
+						'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+					);
+					$this->logs->add($logs);
+					$this->session->set_flashdata('error','user saved!');	
+				} else {
+					$this->session->set_flashdata('error','user not saved!');	
+				}
 			} else {
-				$this->session->set_flashdata('error','user not saved!');	
+				$this->session->set_flashdata('error','user not saved! username already taken!');	
 			}
 			redirect('user');
 		} else {

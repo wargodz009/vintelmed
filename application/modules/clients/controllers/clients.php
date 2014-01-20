@@ -5,6 +5,7 @@ class Clients extends CI_Controller{
 		parent::__construct();
 		$this->load->model("user/client_model");
 		$this->load->model("clients/clients_model");
+		$this->load->model("user/user_model");
 	}
 	function index($offset = 0) {
 		$this->display($offset);
@@ -36,11 +37,24 @@ class Clients extends CI_Controller{
 	function create() {
         if($this->users->is_admin() || $this->users->is_msr()) {
     		if(!empty($_POST)){
-    			if($this->clients_model->create($_POST)){
-    				$this->session->set_flashdata('error','client saved!');	
-    			} else {
-    				$this->session->set_flashdata('error','client not saved!');	
-    			}
+    			if($this->user_model->get_single($_POST['username'],true,'username') == 'Invalid user') { 
+					$id = $this->user_model->create($_POST);
+					if($id) {
+						$logs = array(
+							'user_id'=>$this->session->userdata('user_id'),
+							'type'=>'user',
+							'action'=>'create',
+							'response'=>$id,
+							'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+						);
+						$this->logs->add($logs);
+						$this->session->set_flashdata('error','user saved!');	
+					} else {
+						$this->session->set_flashdata('error','user not saved!');	
+					}
+				} else {
+					$this->session->set_flashdata('error','user not saved! username already taken!');	
+				}
     			redirect('clients');
     		} else {
     			$this->template->load('template','clients/clients_create');
