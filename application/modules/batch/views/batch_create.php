@@ -5,7 +5,7 @@
 		<div class="well">
 			<form class="form-horizontal" method="post" action="">
 				<div class="control-group">
-					<label class="control-label" for="">batch name</label>
+					<label class="control-label" for="">batch Number</label>
 					<div class="controls">
 						<input class=":required" type="text" id="" value="" name="batch_id">
 						<input class=":required" type="hidden" id="" value="<?php echo $this->session->userdata('user_id'); ?>" name="user_id">
@@ -27,9 +27,9 @@
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="">item id</label>
+					<label class="control-label" for="">select item</label>
 					<div class="controls">
-						<input class=":required autocomplete_items" rel="item_name" type="text" id="items" value="<?php echo (isset($item_id)?$item_id:''); ?>" name="item_id" <?php echo (isset($item_id)?'readonly':''); ?>>
+						<input placeholder="start typing" class=":required autocomplete_items" rel="item_name" type="text" id="items" value="<?php echo (isset($item_id)?$item_id:''); ?>" name="item_id" <?php echo (isset($item_id)?'readonly':''); ?>>
 					</div>
 				</div>
 				<div class="control-group" id="item_name"><?php if(isset($item_id)) {
@@ -37,11 +37,12 @@
 					echo $this->items_model->get_single($item_id,'name').' '.$this->items_model->get_single($item_id,'description');
 				} ?></div><br/><br/>
 				<div class="control-group">
-					<label class="control-label" for="">Supplier id</label>
+					<label class="control-label" for="">select supplier</label>
 					<div class="controls">
-						<input class=":required autocomplete_suppliers" rel="supplier_name" type="text" id="supplier" value="" name="supplier_id">
+						<input class=":required autocomplete_suppliers" rel="supplier_name" type="text" id="supplier" value="" name="supplier_id" placeholder="start typing">
 					</div>
 				</div>
+				<div class="control-group" id="supplier_name"></div><br/><br/>
 				<div class="control-group" id="lot_number"></div><br/><br/>
 				<div class="control-group">
 					<label class="control-label" for="">Lot Number</label>
@@ -55,7 +56,6 @@
 						<input class="" type="checkbox" id="" value="1" name="cavite_warehouse">
 					</div>
 				</div>
-				<div class="control-group" id="supplier_name"></div><br/><br/>
 				<div class="control-group">
 					<label class="control-label" for="">recieve date</label>
 					<div class="controls">
