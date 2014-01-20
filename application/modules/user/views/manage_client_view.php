@@ -14,7 +14,7 @@ $this->load->model('district/district_model');
 	<div class="span12">
 		<h1>Medreps</h1>
 		<div class="well">
-			<table class="datatable">
+			<table class="gridtable">
 				<thead>
 					<tr>
 						<th>Username</th>

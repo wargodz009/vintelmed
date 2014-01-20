@@ -3,12 +3,13 @@ $this->load->model('item_type/item_type_model');
 ?>
 <div class="row">
 	<div class="span12">
-		<h1>List All Items</h1>
-		<h5><a href="<?php echo base_url();?>items/create" class="button">Add new items</a></h5>
+		<a href="<?php echo base_url();?>items/create" class="menu_button">Add</a>
+		<br/>
+		<br/>
 		<div class="well">
-			<table class="datatable">
+			<table class="gridtable">
 				<thead>
-					<tr>
+					<tr valign="middle">
 						<th>Item</th>
 						<th>Description</th>
 						<th>Type</th>
@@ -45,9 +46,11 @@ $this->load->model('item_type/item_type_model');
 					?>
 				</tbody>
 			</table>
+			<div class="pagination">
             <?php
                 echo $this->pagination->create_links();
             ?>
+			</div>
 		</div>
 	</div>
 </div>

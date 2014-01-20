@@ -1,8 +1,7 @@
 <div class="row">
 	<div class="span12">
-		<h1>List All Setting</h1>
 		<div class="well">
-			<table class="datatable">
+			<table class="gridtable">
 				<thead>
 					<tr>
 						<th>group</th>
@@ -36,9 +35,11 @@
 					?>
 				</tbody>
 			</table>
+            <div class="pagination">
             <?php
                 echo $this->pagination->create_links();
             ?>
+			</div>
 		</div>
 	</div>
 </div>

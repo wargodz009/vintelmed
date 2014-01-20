@@ -1,9 +1,10 @@
 <div class="row">
 	<div class="span12">
-		<h1>List All Supplier</h1>
-		<h5><a href="<?php echo base_url();?>supplier/create" class="button">Add new supplier</a></h5>
+		<a href="<?php echo base_url();?>supplier/create" class="menu_button">Add new supplier</a>
+		<br/>
+		<br/>
 		<div class="well">
-			<table class="datatable">
+			<table class="gridtable">
 				<thead>
 					<tr>
 						<th>Supplier</th>
@@ -37,9 +38,11 @@
 					?>
 				</tbody>
 			</table>
+			<div class="pagination">
             <?php
                 echo $this->pagination->create_links();
             ?>
+			</div>
 		</div>
 	</div>
 </div>

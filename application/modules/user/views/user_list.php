@@ -3,12 +3,13 @@ $this->load->model('role/role_model');
 ?>
 <div class="row">
 	<div class="span12">
-		<h1>List All Users</h1>
 		<?php if($this->users->is_admin()) { ?>
-		<a class="button" href="<?php echo base_url(); ?>user/create">Add User</a>
+		<a class="menu_button" href="<?php echo base_url(); ?>user/create">Add Emplyee</a>
 		<?php } ?>
+		<br/>
+		<br/>
 		<div class="well">
-			<table class="datatable">
+			<table class="gridtable">
 				<thead>
 					<tr>
 						<th>Username</th>
@@ -48,9 +49,11 @@ $this->load->model('role/role_model');
 					?>
 				</tbody>
 			</table>
-			<?php
+			<div class="pagination">
+            <?php
                 echo $this->pagination->create_links();
             ?>
+			</div>
 		</div>
 	</div>
 </div>

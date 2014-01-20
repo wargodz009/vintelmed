@@ -52,8 +52,13 @@ class Reports extends CI_Controller{
 			$this->template->load('template','reports/reports_create');
 		}
 	}
-	function list_all() {
-		$data['all_reports'] = $this->report_model->get_all();
+	function list_all($offset = 0) {
+		$this->load->library('pagination');
+		$config['base_url'] = base_url().'reports/list_all';
+		$config['total_rows'] = $this->report_model->count_all();
+		$config['per_page'] = 15;
+		$this->pagination->initialize($config);
+		$data['all_reports'] = $this->report_model->get_all($offset,$config['per_page']);
 		$this->template->load('template','reports/reports_list',$data);
 	}
 	function view($report_id) {

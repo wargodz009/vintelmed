@@ -5,10 +5,9 @@ $this->load->model('user/client_model');
 ?>
 <div class="row">
 	<div class="span12">
-		<h1>List All Orders</h1>
 		<!--h5><a href="<?php echo base_url();?>orders/create" class="button">Add new orders</a></h5-->
 		<div class="well">
-			<table class="datatable">
+			<table class="gridtable">
 				<thead>
 					<tr>
 						<th>SO #</th>
@@ -104,9 +103,11 @@ $this->load->model('user/client_model');
 					?>
 				</tbody>
 			</table>
+            <div class="pagination">
             <?php
                 echo $this->pagination->create_links();
             ?>
+			</div>
 		</div>
 	</div>
 </div>

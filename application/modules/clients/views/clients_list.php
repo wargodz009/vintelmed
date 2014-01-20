@@ -4,12 +4,13 @@ $this->load->model('user/client_model');
 ?>
 <div class="row">
 	<div class="span12">
-		<h1>List All Clients</h1>
 		<?php if($this->users->is_admin()) { ?>
-		<a class="button" href="<?php echo base_url(); ?>clients/create">Add Client</a>
+		<a class="menu_button" href="<?php echo base_url(); ?>clients/create">Add Client</a>
 		<?php } ?>
+		<br/>
+		<br/>
 		<div class="well">
-			<table class="datatable">
+			<table class="gridtable">
 				<thead>
 					<tr>
 						<th>Username</th>
@@ -56,9 +57,11 @@ $this->load->model('user/client_model');
 					?>
 				</tbody>
 			</table>
-			<?php
+			<div class="pagination">
+            <?php
                 echo $this->pagination->create_links();
             ?>
+			</div>
 		</div>
 	</div>
 </div>

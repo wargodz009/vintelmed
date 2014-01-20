@@ -230,6 +230,7 @@ class Orders extends CI_Controller{
 					'type'=>'upload',
 					'action'=>'uploaded a file',
 					'response'=>$file_id,
+					'item_id'=>$id,
 					'fingerprint'=>$_SERVER['REMOTE_ADDR'],
 				);
 				$this->logs->add($logs);

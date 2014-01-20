@@ -10,9 +10,8 @@ $this->load->model('reports/report_model');
 ?>
 <div class="row">
 	<div class="span12">
-		<h1>List All Log</h1>
 		<div class="well">
-			<table class="datatable">
+			<table class="gridtable">
 				<thead>
 					<tr>
 						<th>User</th>
@@ -89,7 +88,7 @@ $this->load->model('reports/report_model');
 							?>
 							<tr>
 								<td><?php echo '<a href="'.base_url().'user/view/'.$c->user_id.'">'.$this->user_model->get_single($c->user_id,false,'username').'</a>';?></td>
-								<td><?php echo $c->action.': <a target="_new" href="'.base_url().'uploads/'.$this->order_files_model->get_single($c->response,'file_name').'">'.$this->order_files_model->get_single($c->response,'file_name').'</a>'; ?></td>
+								<td><?php echo $c->action.': <a target="_new" href="'.base_url().'uploads/'.$this->orders_model->get_single($c->item_id,'form_number').'/'.$this->order_files_model->get_single($c->response,'file_name').'">'.$this->order_files_model->get_single($c->response,'file_name').'</a>'; ?></td>
 								<td><?php echo $c->type;?></td>
 								<td><?php echo $c->date;?></td>
 							</tr>
@@ -136,9 +135,11 @@ $this->load->model('reports/report_model');
 				?>
 				</tbody>
 			</table>
+            <div class="pagination">
             <?php
                 echo $this->pagination->create_links();
             ?>
+			</div>
 		</div>
 	</div>
 </div>
