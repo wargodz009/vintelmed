@@ -58,12 +58,14 @@ var $order_return = 'order_return';
 		}
 	}
 	/* INVENTORY */
-	function get_inventory_items($type = 1){
+	function get_inventory_items($type = 0){
 		$this->db->select('*,'.$this->suppliers.'.name as supplier_name,'.$this->item_types.'.name as item_type_name,'.$this->items.'.name as item_name');
 		$this->db->join($this->suppliers,$this->suppliers.'.supplier_id = '.$this->batch.'.supplier_id');
 		$this->db->join($this->items,$this->items.'.item_id = '.$this->batch.'.item_id');
 		$this->db->join($this->item_types,$this->item_types.'.item_type_id = '.$this->items.'.item_type_id');
+		if($type != 0) {
 		$this->db->where($this->item_types.'.item_type_id',$type);
+		}
 		$q = $this->db->get($this->batch);
 		return $q->result();
 	}

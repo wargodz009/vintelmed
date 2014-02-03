@@ -6,7 +6,9 @@ class Inventory extends CI_Controller{
 		$this->load->model("items/items_model");
 	}
 	function index() {
-		$this->template->load('template','inventory/warehouseman_dashboard');
+		$this->load->model("reports/report_model");
+		$data['items'] = $this->report_model->get_inventory_items();
+		$this->template->load('template','inventory/warehouseman_dashboard',$data);
 	}
 	function display($offset = 0) {
         if($this->users->is_admin() || $this->users->is_warehouseman()) {

@@ -181,102 +181,12 @@ if(isset($post_approval)) {
             <div id="tblisthldr2" class="tblist scrl-2">
             	<table border="0" cellspacing="0" cellpadding="0">
                   <tr>
-                    <td class="wd3-8">S2</td>
-                    <td class="wd3-9">Villablanca, Eric</td>
-                    <td class="wd3-10">124,267.20</td>
-                    <td class="wd3-11">500,000.00</td>
-                    <td class="wd3-12">24.85%</td>
-                    <td class="wd3-13">50,555.00</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">SV1</td>
-                    <td class="wd3-9">Laguna - VACANT</td>
-                    <td class="wd3-10">250,816.00</td>
-                    <td class="wd3-11">700,000.00</td>
-                    <td class="wd3-12">35.83%</td>
-                    <td class="wd3-13">-</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">SV2</td>
-                    <td class="wd3-9">Morillo, Jane</td>
-                    <td class="wd3-10">396,635.00</td>
-                    <td class="wd3-11">900,000.00</td>
-                    <td class="wd3-12">44.07%</td>
-                    <td class="wd3-13">704,231.00</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">SO1</td>
-                    <td class="wd3-9">Adora, Omar</td>
-                    <td class="wd3-10">157,580.00</td>
-                    <td class="wd3-11">450,000.00</td>
-                    <td class="wd3-12">35.02%</td>
-                    <td class="wd3-13">482,231.40</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">SO2</td>
-                    <td class="wd3-9">Abanco, Margie</td>
-                    <td class="wd3-10">90,198.25</td>
-                    <td class="wd3-11">450,000.00</td>
-                    <td class="wd3-12">20.04%</td>
-                    <td class="wd3-13">-</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">&nbsp;</td>
-                    <td class="wd3-9">SUPERVISOR</td>
-                    <td class="wd3-10">2,540.00</td>
-                    <td class="wd3-11">-</td>
-                    <td class="wd3-12">-</td>
-                    <td class="wd3-13">12,317.00</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">SO2</td>
-                    <td class="wd3-9">SUPERVISOR</td>
-                    <td class="wd3-10">2,540.00</td>
-                    <td class="wd3-11">-</td>
-                    <td class="wd3-12">-</td>
-                    <td class="wd3-13">12,317.00</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">SO2</td>
-                    <td class="wd3-9">SUPERVISOR</td>
-                    <td class="wd3-10">2,540.00</td>
-                    <td class="wd3-11">-</td>
-                    <td class="wd3-12">-</td>
-                    <td class="wd3-13">12,317.00</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">SO2</td>
-                    <td class="wd3-9">SUPERVISOR</td>
-                    <td class="wd3-10">2,540.00</td>
-                    <td class="wd3-11">-</td>
-                    <td class="wd3-12">-</td>
-                    <td class="wd3-13">12,317.00</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">SO2</td>
-                    <td class="wd3-9">SUPERVISOR</td>
-                    <td class="wd3-10">2,540.00</td>
-                    <td class="wd3-11">-</td>
-                    <td class="wd3-12">-</td>
-                    <td class="wd3-13">12,317.00</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">SO2</td>
-                    <td class="wd3-9">SUPERVISOR</td>
-                    <td class="wd3-10">2,540.00</td>
-                    <td class="wd3-11">-</td>
-                    <td class="wd3-12">-</td>
-                    <td class="wd3-13">12,317.00</td>
+                    <td class="wd3-8"></td>
+                    <td class="wd3-9"></td>
+                    <td class="wd3-10"></td>
+                    <td class="wd3-11"></td>
+                    <td class="wd3-12"></td>
+                    <td class="wd3-13"></td>
                     <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
                   </tr>
                 </table>
@@ -299,10 +209,10 @@ if(isset($post_approval)) {
             	<table width="0" border="0" cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="wd4-1">TOTAL South Area</td>
-                    <td class="wd4-2">1,161,635.05</td>
-                    <td class="wd4-3">3,850,000.00</td>
-                    <td class="wd4-4">30.17%</td>
-                    <td class="wd4-5">1,443,703.52</td>
+                    <td class="wd4-2">0</td>
+                    <td class="wd4-3">0</td>
+                    <td class="wd4-4">0</td>
+                    <td class="wd4-5">0</td>
                     <td>&nbsp;</td>
                   </tr>
                 </table>
@@ -370,102 +280,12 @@ if(isset($post_approval)) {
             <div id="tblisthldr3" class="tblist scrl-2">
             	<table border="0" cellspacing="0" cellpadding="0">
                   <tr>
-                    <td class="wd3-8">S2</td>
-                    <td class="wd3-9">Villablanca, Eric</td>
-                    <td class="wd3-10">124,267.20</td>
-                    <td class="wd3-11">500,000.00</td>
-                    <td class="wd3-12">24.85%</td>
-                    <td class="wd3-13">50,555.00</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">SV1</td>
-                    <td class="wd3-9">Laguna - VACANT</td>
-                    <td class="wd3-10">250,816.00</td>
-                    <td class="wd3-11">700,000.00</td>
-                    <td class="wd3-12">35.83%</td>
-                    <td class="wd3-13">-</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">SV2</td>
-                    <td class="wd3-9">Morillo, Jane</td>
-                    <td class="wd3-10">396,635.00</td>
-                    <td class="wd3-11">900,000.00</td>
-                    <td class="wd3-12">44.07%</td>
-                    <td class="wd3-13">704,231.00</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">SO1</td>
-                    <td class="wd3-9">Adora, Omar</td>
-                    <td class="wd3-10">157,580.00</td>
-                    <td class="wd3-11">450,000.00</td>
-                    <td class="wd3-12">35.02%</td>
-                    <td class="wd3-13">482,231.40</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">SO2</td>
-                    <td class="wd3-9">Abanco, Margie</td>
-                    <td class="wd3-10">90,198.25</td>
-                    <td class="wd3-11">450,000.00</td>
-                    <td class="wd3-12">20.04%</td>
-                    <td class="wd3-13">-</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">&nbsp;</td>
-                    <td class="wd3-9">SUPERVISOR</td>
-                    <td class="wd3-10">2,540.00</td>
-                    <td class="wd3-11">-</td>
-                    <td class="wd3-12">-</td>
-                    <td class="wd3-13">12,317.00</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">SO2</td>
-                    <td class="wd3-9">SUPERVISOR</td>
-                    <td class="wd3-10">2,540.00</td>
-                    <td class="wd3-11">-</td>
-                    <td class="wd3-12">-</td>
-                    <td class="wd3-13">12,317.00</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">SO2</td>
-                    <td class="wd3-9">SUPERVISOR</td>
-                    <td class="wd3-10">2,540.00</td>
-                    <td class="wd3-11">-</td>
-                    <td class="wd3-12">-</td>
-                    <td class="wd3-13">12,317.00</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">SO2</td>
-                    <td class="wd3-9">SUPERVISOR</td>
-                    <td class="wd3-10">2,540.00</td>
-                    <td class="wd3-11">-</td>
-                    <td class="wd3-12">-</td>
-                    <td class="wd3-13">12,317.00</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">SO2</td>
-                    <td class="wd3-9">SUPERVISOR</td>
-                    <td class="wd3-10">2,540.00</td>
-                    <td class="wd3-11">-</td>
-                    <td class="wd3-12">-</td>
-                    <td class="wd3-13">12,317.00</td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                  <tr>
-                    <td class="wd3-8">SO2</td>
-                    <td class="wd3-9">SUPERVISOR</td>
-                    <td class="wd3-10">2,540.00</td>
-                    <td class="wd3-11">-</td>
-                    <td class="wd3-12">-</td>
-                    <td class="wd3-13">12,317.00</td>
+                    <td class="wd3-8"></td>
+                    <td class="wd3-9"></td>
+                    <td class="wd3-10"></td>
+                    <td class="wd3-11"></td>
+                    <td class="wd3-12"></td>
+                    <td class="wd3-13"></td>
                     <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
                   </tr>
                 </table>
@@ -487,11 +307,11 @@ if(isset($post_approval)) {
             <div class="total">
             	<table width="0" border="0" cellspacing="0" cellpadding="0">
                   <tr>
-                    <td class="wd4-1">TOTAL South Area</td>
-                    <td class="wd4-2">1,161,635.05</td>
-                    <td class="wd4-3">3,850,000.00</td>
-                    <td class="wd4-4">30.17%</td>
-                    <td class="wd4-5">1,443,703.52</td>
+                    <td class="wd4-1">0</td>
+                    <td class="wd4-2">0</td>
+                    <td class="wd4-3">0</td>
+                    <td class="wd4-4">0</td>
+                    <td class="wd4-5">0</td>
                     <td>&nbsp;</td>
                   </tr>
                 </table>
