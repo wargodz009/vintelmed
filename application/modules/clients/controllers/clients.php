@@ -7,12 +7,12 @@ class Clients extends CI_Controller{
 		$this->load->model("clients/clients_model");
 		$this->load->model("user/user_model");
 	}
-	function index($offset = 0) {
-		$this->display($offset);
+	function index($msr_id,$offset = 0) {
+		$this->display($msr_id,$offset);
 	}
-	function display($offset = 0) {
-        if($this->users->is_admin() || $this->users->is_msr()) {
-			$this->load->library('pagination');
+	function display($msr_id,$offset = 0) {
+		$this->load->library('pagination');
+        if($this->users->is_admin() || $this->users->is_msr() || $this->users->is_accountant()) {
             if($this->users->is_admin()) {
 				$config['base_url'] = base_url().'clients/display';
 				$config['total_rows'] = $this->clients_model->count_all();
@@ -20,8 +20,7 @@ class Clients extends CI_Controller{
 				$this->pagination->initialize($config); 
 				$data['client'] = $this->clients_model->get_all($offset,$config['per_page']);
 				$this->template->load('template','clients/clients_list',$data);
-			} else {
-				$msr_id = $this->session->userdata('user_id');
+			} else if($this->users->is_accountant() || $this->users->is_msr()){
 				$config['base_url'] = base_url().'clients/display';
 				$config['total_rows'] = $this->client_model->get_clients($msr_id,true);
 				$config['per_page'] = 15;

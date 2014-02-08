@@ -7,9 +7,11 @@ $date_end = strtotime(date("d-m-Y"));
 <?php
 $begin = new DateTime(date("d-m-Y",$date_start));
 $end = new DateTime(date("d-m-Y",$date_end));
-
-$interval = DateInterval::createFromDateString('1 day');
-$period = new DatePeriod($begin, $interval, $end);
+$period = array();
+while($begin <= $end) {
+	$period[] = $begin->format('d-M');
+	$begin->modify('+1 day');
+}
 ?>
 <table border="0" cellspacing="0" cellpadding="0">
 <thead>
@@ -26,7 +28,7 @@ $period = new DatePeriod($begin, $interval, $end);
 		<td>Cancelled (DR/RGS) </td>
 		<?php
 		foreach ( $period as $dt )
-		  echo '<td>'.$dt->format( "d-M" ).'</td>';
+		  echo '<td>'.$dt.'</td>';
 		?>
 		<td>Total Out</td>
 		<td>End Inventory</td>
@@ -58,11 +60,11 @@ $period = new DatePeriod($begin, $interval, $end);
 				<td><?php echo $k->item_count; ?></td>
 				<!-- ave. usage/ month -->
 				<td><?php 
-				$fromDate = date("Y-m-d", strtotime($report->date_start." -1 months"));
+				$fromDate = date("Y-m-d", strtotime($date_start." -1 months"));
 				echo $this->report_model->get_item_average_usage($k->item_batch_id,$fromDate,date("Y-m-d",$date_end)); ?></td>
 				<!-- ave. usage/ 8 months -->
 				<td><?php 
-				$fromDate = date("Y-m-d", strtotime($report->date_start." -8 months"));
+				$fromDate = date("Y-m-d", strtotime($date_start." -8 months"));
 				echo $this->report_model->get_item_average_usage($k->item_batch_id,$fromDate,date("Y-m-d",$date_end)); ?></td>
 				<!-- batch id / expire date -->
 				<td><?php echo $k->batch_id.'/ '.date('d-y',strtotime($k->expire)); ?></td>
@@ -74,7 +76,7 @@ $period = new DatePeriod($begin, $interval, $end);
 				<td><?php echo $returned_goods['return_id']; ?></td>
 				<?php
 				foreach ( $period as $dt ) {
-					$out = $this->report_model->get_item_sum_usage($k->item_batch_id,$dt->format('Y-m-d'));
+					$out = $this->report_model->get_item_sum_usage($k->item_batch_id,date("Y-m-d",strtotime($dt)));
 					echo '<td>'.$out.'</td>';
 					$total_out = $total_out + $out;
 				}

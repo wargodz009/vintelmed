@@ -31,6 +31,14 @@ $this->load->model('district/district_model');
 						?>
 						</div>  
 					</div><br/>
+					<label class="control-label" for="">First name</label>
+					<div class="controls">
+						<input class=":required" type="text" id="" value="" name="first_name">
+					</div> <br/>
+					<label class="control-label" for="">Last name</label>
+					<div class="controls">
+						<input class=":required" type="text" id="" value="" name="last_name">
+					</div> <br/>
 					<label class="control-label" for="">username</label>
 					<div class="controls">
 						<input class=":required" type="text" id="" value="" name="username">

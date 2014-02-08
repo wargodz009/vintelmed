@@ -4,9 +4,10 @@ class User extends CI_Controller{
 	function __construct(){
 		parent::__construct();
 		$this->load->model("user/user_model");
+		$this->load->model("user/medrep_model");
 	}
 	function index($offset = 0){
-		if($this->users->is_admin()) {
+		if($this->users->is_admin() || $this->users->is_accountant()) {
 			$this->display($offset);
 		} else {
 			$this->view();
@@ -21,6 +22,15 @@ class User extends CI_Controller{
             $this->pagination->initialize($config);
 			
 			$data['user'] = $this->user_model->get_all($offset,$config['per_page']);
+			$this->template->load('template','user/user_list',$data);
+		} else if($this->users->is_accountant()) {
+			$this->load->library('pagination');
+            $config['base_url'] = base_url().'user/display';
+            $config['total_rows'] = count($this->medrep_model->get_all($this->session->userdata('district_id')));
+            $config['per_page'] = 15;
+            $this->pagination->initialize($config);
+			
+			$data['user'] = $this->medrep_model->get_all($this->session->userdata('district_id'),$offset,$config['per_page']);
 			$this->template->load('template','user/user_list',$data);
 		} else {
 			$this->session->set_flashdata('error','NO_ACCESS');
@@ -79,6 +89,39 @@ class User extends CI_Controller{
 				redirect('user');
 			}
 			$this->template->load('template','user/user_edit',$data);
+		}
+	}
+	function change_pass() {
+		$id = $this->session->userdata('user_id');
+		if(!empty($_POST)) {
+			$data['user'] = $this->user_model->get_single($id);
+			if($_POST['new_password'] == $_POST['re_new_password']) {
+				if($data['user']->password == md5($_POST['old_password'])) {
+					$user_data = array('password'=>md5($_POST['new_password']));
+					$this->user_model->update($id,$user_data);
+					$logs = array(
+							'user_id'=>$this->session->userdata('user_id'),
+							'type'=>'user',
+							'action'=>'update',
+							'response'=>$id,
+							'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+						);
+						$this->logs->add($logs);
+					$this->session->set_flashdata('error','user updated!');	
+				} else {
+					$this->session->set_flashdata('error','Incorrect password!');	
+				}
+			} else {
+				$this->session->set_flashdata('error','Passwords Did not match!');	
+			}
+			redirect('user/profile');
+		} else {
+			$data['user'] = $this->user_model->get_single($id);
+			if(!$data['user']) {
+				$this->session->set_flashdata('error','not a valid user!');	
+				redirect('user');
+			}
+			$this->template->load('template','user/user_change_pass',$data);
 		}
 	}
 	function view($id = false) {
@@ -153,6 +196,7 @@ class User extends CI_Controller{
 						$user = array(
 							'username'=>$this->input->post('username'),
 							'user_id'=>$data['user']->user_id,
+							'district_id'=>$data['user']->district_id,
 							'role_id'=>$data['user']->role_id
 						);
 						$this->session->set_userdata($user);

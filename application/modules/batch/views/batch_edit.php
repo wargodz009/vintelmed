@@ -80,6 +80,12 @@ $this->load->model('items/items_model');
 					</div>
 				</div>
 				<div class="control-group">
+					<label class="control-label" for="">Sell Price</label>
+					<div class="controls">
+						<input class="" type="text" id="" value="<?=$batch->sell_price; ?>" name="sell_price">
+					</div>
+				</div>
+				<div class="control-group">
 					<div class="controls">
 						<button type="submit" class="btn">UPDATE</button>
 					</div>

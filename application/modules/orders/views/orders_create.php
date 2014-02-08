@@ -3,7 +3,6 @@ $this->load->model('user/client_model');
 ?>
 <div class="row">
 	<div class="span8 offset2">
-		<h1>Add</h1>
 		<a href="<?php echo base_url();?>orders"><< Back</a>
 		<div class="well">
 			<form class="form-horizontal" method="post" action="">

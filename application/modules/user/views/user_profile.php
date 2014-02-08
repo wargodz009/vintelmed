@@ -4,7 +4,7 @@ $this->load->model('district/district_model');
 ?>
 <div class="row">
 	<div class="span8 offset2">
-		<h1>View Profile</h1>
+		<h1> <a href="<?php echo base_url();?>user/edit">EDIT PROFILE</a>  ||  <a href="<?php echo base_url();?>user/change_pass">CHANGE PASSWORD</a></h1>
 		<div class="well">
 			<?php
 				echo "<div class='user_item'>User: {$user->username}</div> <br />";

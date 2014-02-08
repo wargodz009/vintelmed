@@ -1,9 +1,18 @@
 <?php
 
 class Medrep_model extends CI_Model {
-var $table = 'users';
-var $msr_tbl = 'msr_clients';
-	function get_all() {
+	var $table = 'users';
+	var $msr_tbl = 'msr_clients';
+	function get_all($district_id = 0,$offset = 0,$limit = 0) {
+		if($offset != 0){
+            $this->db->offset($offset);
+	    }
+        if($limit != 0){
+	        $this->db->limit($limit);
+	    } 
+		if($district_id > 0) {
+			$this->db->where('district_id',$district_id);
+		}
 		$this->db->where('role_id',3);
 		$q = $this->db->get($this->table);
 		return $q->result();

@@ -57,7 +57,7 @@ class Orders extends CI_Controller{
         redirect($_SERVER['HTTP_REFERER']);
 	}
 	function user($id,$offset = 0) {
-        if($this->users->is_admin() || $this->users->is_msr()) {
+        if($this->users->is_admin() || $this->users->is_msr() || $this->users->is_accountant()) {
             $this->load->library('pagination');
             $config['base_url'] = base_url().'orders/user';
             $config['per_page'] = 15;
@@ -71,7 +71,7 @@ class Orders extends CI_Controller{
         }
 	}
 	function create($user_id = false) {
-        if($this->users->is_admin() || $this->users->is_msr()) {
+        if($this->users->is_admin() || $this->users->is_msr() || $this->users->is_accountant()) {
     		if(!empty($_POST)){
     			if($this->orders_model->create($_POST)){
     				$this->session->set_flashdata('error','orders saved!');	

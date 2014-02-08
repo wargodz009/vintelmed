@@ -12,7 +12,7 @@ $this->load->model('role/role_model');
 			<table class="gridtable">
 				<thead>
 					<tr>
-						<th>Username</th>
+						<th>Name</th>
 						<th>Role</th>
 						<th>Options</th>
 					</tr>
@@ -23,15 +23,26 @@ $this->load->model('role/role_model');
 						foreach($user as $c) {
 					?>
 					<tr>
-						<td><?php echo '<a target="_new" href="'.base_url().'user/view/'.$c->user_id.'">'.$c->username.'</a>';?></td>
+						<td><?php 
+						if(!empty($c->first_name) && !empty($c->last_name)) {
+							echo '<a target="_new" href="'.base_url().'user/view/'.$c->user_id.'">'.$c->first_name.', '.$c->last_name.'</a>';
+						} else {
+							echo '<a target="_new" href="'.base_url().'user/view/'.$c->user_id.'">'.$c->username.'</a>';
+						} 
+						?></td>
 						<td><?php
 						$role = $this->role_model->get_single($c->role_id);
 						echo $role->role_name;?></td>
-						<td><a href="<?php echo base_url();?>user/manage/<?php echo $c->user_id;?>">Manage</a> | <a href="<?php echo base_url();?>user/edit/<?php echo $c->user_id;?>">Edit</a> | 
+						<td>
+						<?php if($this->users->is_admin()) { ?>
+							<a href="<?php echo base_url();?>user/manage/<?php echo $c->user_id;?>">Manage</a> | <a href="<?php echo base_url();?>user/edit/<?php echo $c->user_id;?>">Edit</a> | 
 						<?php if($c->status == 'enabled') { ?>
-						<a href="<?php echo base_url();?>user/delete/<?php echo $c->user_id;?>" class="confirm" rel="Are you sure you want to deactivate <?php echo $c->username;?>?">Deactivate</a>
+							<a href="<?php echo base_url();?>user/delete/<?php echo $c->user_id;?>" class="confirm" rel="Are you sure you want to deactivate <?php echo $c->username;?>?">Deactivate</a>
 						<?php } else { ?>
-						<a href="<?php echo base_url();?>user/activate/<?php echo $c->user_id;?>" class="confirm" rel="Are you sure you want to enable <?php echo $c->username;?>?">Activate</a>
+							<a href="<?php echo base_url();?>user/activate/<?php echo $c->user_id;?>" class="confirm" rel="Are you sure you want to enable <?php echo $c->username;?>?">Activate</a>
+						<?php } ?>
+						<?php } else { ?>
+							<a href="<?php echo base_url();?>clients/display/<?php echo $c->user_id;?>">Show Clients</a>
 						<?php } ?>
 						</td>
 					</tr>

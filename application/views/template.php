@@ -165,7 +165,7 @@ $(document).ready(function() {
 					</a>
 				</li>
 				<?php } ?>
-				<?php if($this->users->is_admin()) { ?>
+				<?php if($this->users->is_admin() || $this->users->is_accountant()) { ?>
 				<li class="<?php echo (in_array($this->uri->segment(1),$employees)?'active':''); ?>">
 					<div class="lgt"></div>
 					<a href="<?=base_url()?>user">

@@ -7,11 +7,13 @@ echo date("M",$date_start).' '.date("d",$date_start).' - '.date("d",$date_end).'
 ?>
 <div id="divscroll" class="tbl3 tblist skin 2soph scrollable">
 <?php
-$begin = new DateTime($report->date_start);
-$end = new DateTime($report->date_end);
-
-$interval = DateInterval::createFromDateString('1 day');
-$period = new DatePeriod($begin, $interval, $end);
+$begin = new DateTime(date("d-m-Y",$date_start));
+$end = new DateTime(date("d-m-Y",$date_end));
+$period = array();
+while($begin < $end) {
+	$period[] = $begin->format('d-M');
+	$begin->modify('+1 day');
+}
 ?>
 <table border="0" cellspacing="0" cellpadding="0">
 <tdead>
@@ -29,7 +31,7 @@ $period = new DatePeriod($begin, $interval, $end);
 		<td>Cancelled (DR/RGS) </td>
 		<?php
 		foreach ( $period as $dt )
-		  echo '<td>'.$dt->format( "d-M" ).'</td>';
+		  echo '<td>'.$dt.'</td>';
 		?>
 		<td>Total Out</td>
 		<td>End Inventory</td>
@@ -80,7 +82,7 @@ $period = new DatePeriod($begin, $interval, $end);
 				<td><?php echo $returned_goods['return_id']; ?></td>
 				<?php
 				foreach ( $period as $dt ) {
-					$out = $this->report_model->get_item_sum_usage($k->item_batch_id,$dt->format('Y-m-d'));
+					$out = $this->report_model->get_item_sum_usage($k->item_batch_id,date("Y-m-d",strtotime($dt)));
 					echo '<td>'.$out.'</td>';
 					$total_out = $total_out + $out;
 				}

@@ -69,6 +69,12 @@
 					</div>
 				</div>
 				<div class="control-group">
+					<label class="control-label" for="">Sell Price</label>
+					<div class="controls">
+						<input class="" type="text" id="" value="" name="sell_price">
+					</div>
+				</div>
+				<div class="control-group">
 					<div class="controls">
 						<button type="submit" class="btn">SAVE</button>
 					</div>

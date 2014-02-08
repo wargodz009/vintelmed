@@ -39,6 +39,12 @@ $this->load->model('item_type/item_type_model');
 					</div>
 				</div>
 				<div class="control-group">
+					<label class="control-label" for="">Standard Price</label>
+					<div class="controls">
+						<input class="" type="text" id="" value="0" name="price_standard">
+					</div>
+				</div>
+				<div class="control-group">
 					<div class="controls">
 						<button type="submit" class="btn">SAVE</button>
 					</div>

@@ -6,20 +6,11 @@ $this->load->model('batch/batch_model');
 ?>
 <div class="row">
 	<div class="span8 offset2">
-		<h1>Edit</h1>
 		<a href="<?php echo base_url();?>orders"><< Back</a>
 		<div class="well">
 			<form class="form-horizontal" method="post" action="<?php echo base_url().'orders/manage/'.$orders->order_id; ?>">
 				<div class="control-group">
-					<div class="controls">
-						<label for="">Action: </label>
-						<select name="status" id="">
-							<option value="approved">Approved</option>
-							<option value="declined">Declined</option>
-						</select>
-					</div>
-				</div>
-				<div class="control-group">
+					<br>
 					Order details: <br/>
 					Msr: <?php
 						$client_id = $this->client_model->get_client_id($orders->msr_id,$orders->msr_client_id);
@@ -28,6 +19,17 @@ $this->load->model('batch/batch_model');
 					Quantity: <?=$orders->quantity;?> <br/>
 					Price: <?=$orders->price;?> <br/>
 					Date: <?=$orders->datetime;?> <br/>
+					<hr>
+					<div class="control-group">
+					<div class="controls">
+							<label for="">Action: </label>
+							<select name="status" id="">
+								<option value="approved">Approved</option>
+								<option value="declined">Declined</option>
+							</select>
+						</div>
+					</div>
+					<br>
 					<label class="control-label" for="">orders value</label>
 					<div class="controls">
 						<?php

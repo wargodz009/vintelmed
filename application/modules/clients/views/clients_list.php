@@ -13,7 +13,7 @@ $this->load->model('user/client_model');
 			<table class="gridtable">
 				<thead>
 					<tr>
-						<th>Username</th>
+						<th>Name</th>
 						<th>Role</th>
 						<th>Options</th>
 					</tr>
@@ -24,7 +24,13 @@ $this->load->model('user/client_model');
 						foreach($client as $c) {
 					?>
 					<tr>
-						<td><?php echo '<a target="_new" href="'.base_url().'user/view/'.$c->user_id.'">'.$c->username.'</a>';?></td>
+						<td><?php 
+						if(!empty($c->first_name) && !empty($c->last_name)) {
+							echo '<a target="_new" href="'.base_url().'user/view/'.$c->user_id.'">'.$c->first_name.', '.$c->last_name.'</a>';
+						} else {
+							echo '<a target="_new" href="'.base_url().'user/view/'.$c->user_id.'">'.$c->username.'</a>';
+						} 
+						?></td>
 						<td><?php
 						$role = $this->role_model->get_single($c->role_id);
 						echo $role->role_name;?></td>
@@ -39,7 +45,7 @@ $this->load->model('user/client_model');
 						<?php } else { ?>
 							<td>
 							<a href="<?php echo base_url();?>orders/create/<?php echo $c->user_id;?>">Add Order</a>
-							| <a href="<?php echo base_url();?>orders/user/<?php echo $this->client_model->get_msr_client_id($this->session->userdata('user_id'),$c->user_id);?>">Orders</a>
+							| <a href="<?php echo base_url();?>orders/user/<?php echo $this->client_model->get_msr_client_id($this->uri->segment(3),$c->user_id);?>">Orders</a>
 							</td>
 						<?php } ?>
 					</tr>

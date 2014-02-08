@@ -11,7 +11,7 @@ class Accountant extends CI_Controller{
 		$this->display($offset);
 	}
 	function display($offset = 0){
-		if($this->users->is_admin()) {
+		if($this->users->is_admin() || $this->users->is_accountant()) {
 			$this->load->library('pagination');
             $config['base_url'] = base_url().'user/display';
             $config['total_rows'] = $this->user_model->count_all();

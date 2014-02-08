@@ -5,11 +5,13 @@ echo date("M",$date_start).' '.date("d",$date_start).' - '.date("d",$date_end).'
 ?>
 <div id="divscroll" class="tbl3 tblist skin 2soph scrollable">
 <?php
-$begin = new DateTime($report->date_start);
-$end = new DateTime($report->date_end);
-
-$interval = DateInterval::createFromDateString('1 day');
-$period = new DatePeriod($begin, $interval, $end);
+$begin = new DateTime(date("d-m-Y",$date_start));
+$end = new DateTime(date("d-m-Y",$date_end));
+$period = array();
+while($begin < $end) {
+	$period[] = $begin->format('d-M');
+	$begin->modify('+1 day');
+}
 ?>
 <table border="0" cellspacing="0" cellpadding="0">
 <div class="title">
@@ -39,7 +41,7 @@ Product Inventory
 		<td>Cancelled (DR/RGS) </td>
 		<?php
 		foreach ( $period as $dt )
-		  echo '<td>'.$dt->format( "d-M" ).'</td>';
+		  echo '<td>'.$dt.'</td>';
 		?>
 		<td>Total Out</td>
 		<td>End Inventory</td>
