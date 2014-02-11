@@ -30,6 +30,8 @@ class Dashboard extends CI_Controller{
 			$this->template->load('template','dashboard/warehouseman');
 		} else if($this->users->is_logged_in() === true && $this->users->is_client() === true) {
 			$this->template->load('template','dashboard/client');
+		} else if($this->users->is_logged_in() === true && $this->users->is_hrd() === true) {
+			$this->template->load('template','dashboard/hrd');
 		} else {
 			redirect('welcome');
 		}

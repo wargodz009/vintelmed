@@ -3,7 +3,7 @@ $this->load->model('role/role_model');
 ?>
 <div class="row">
 	<div class="span12">
-		<?php if($this->users->is_admin()) { ?>
+		<?php if($this->users->is_admin() || $this->users->is_hrd() || $this->users->is_accountant()) { ?>
 		<a class="menu_button" href="<?php echo base_url(); ?>user/create">Add Emplyee</a>
 		<?php } ?>
 		<br/>
@@ -23,13 +23,7 @@ $this->load->model('role/role_model');
 						foreach($user as $c) {
 					?>
 					<tr>
-						<td><?php 
-						if(!empty($c->first_name) && !empty($c->last_name)) {
-							echo '<a target="_new" href="'.base_url().'user/view/'.$c->user_id.'">'.$c->first_name.', '.$c->last_name.'</a>';
-						} else {
-							echo '<a target="_new" href="'.base_url().'user/view/'.$c->user_id.'">'.$c->username.'</a>';
-						} 
-						?></td>
+						<td><?php echo get_name($c->user_id); ?></td>
 						<td><?php
 						$role = $this->role_model->get_single($c->role_id);
 						echo $role->role_name;?></td>
@@ -42,7 +36,7 @@ $this->load->model('role/role_model');
 							<a href="<?php echo base_url();?>user/activate/<?php echo $c->user_id;?>" class="confirm" rel="Are you sure you want to enable <?php echo $c->username;?>?">Activate</a>
 						<?php } ?>
 						<?php } else { ?>
-							<a href="<?php echo base_url();?>clients/display/<?php echo $c->user_id;?>">Show Clients</a>
+							<a href="<?php echo base_url();?>clients/display/<?php echo $c->user_id;?>">Show Clients</a> | <a href="<?php echo base_url();?>user/manage/<?php echo $c->user_id;?>">Manage</a>
 						<?php } ?>
 						</td>
 					</tr>

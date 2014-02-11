@@ -2,6 +2,7 @@
 $this->load->helper('form');
 $this->load->helper('array');
 $this->load->model('district/district_model');
+$this->load->model('role/role_model');
 ?>
 <div class="row">
 	<div class="span8 offset2">
@@ -9,6 +10,19 @@ $this->load->model('district/district_model');
 		<a href="<?php echo base_url();?>user"><< Back</a>
 		<div class="well">
 			<form class="form-horizontal" method="post" action="<?php echo base_url().'user/edit/'.$user->user_id; ?>">
+				<?php if($this->users->is_admin()) { ?>
+				<div class="control-group">
+					<label class="control-label" for="">Role</label>
+					<div class="controls">
+						<?php
+							$others = 'class=":required" id="role_id"';
+							$options = $this->role_model->get_all(0,0,true);
+							$types = to_select($options,'role_name','role_id');	
+							echo form_dropdown('role_id', $types,$user->role_id,$others);
+						?>
+					</div>
+				</div> <br/>
+				<?php } ?>
 				<div class="control-group">
 					<label class="control-label" for="">First name</label>
 					<div class="controls">

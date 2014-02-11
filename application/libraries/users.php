@@ -23,6 +23,17 @@ class Users {
 			return false;
 		}
 	}
+	function is_hrd($id = false){
+		$CI =& get_instance();
+		if($id === false) {
+			$id = $CI->session->userdata('role_id');
+		}
+		if($id == "6") {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	function is_client($id = false){
 		$CI =& get_instance();
 		if($id === false) {

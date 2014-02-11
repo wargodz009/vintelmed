@@ -10,9 +10,9 @@ $this->load->model('user/client_model');
 					<label class="control-label" for="">SO #:</label>
 					<div class="controls">
 						<input class=":required" type="text" id="" value="" name="form_number">
-						<input class=":required" type="hidden" id="" value="<?=$this->session->userdata('user_id');?>" name="msr_id">
-						<?php if(isset($user_id)) { ?>
-							<input class=":required" type="hidden" id="" value="<?php echo $this->client_model->get_msr_client_id($this->session->userdata('user_id'),$user_id);?>" name="msr_client_id">
+						<input class=":required" type="hidden" id="" value="<?=$msr_id;?>" name="msr_id">
+						<?php if(isset($client_id)) { ?>
+							<input class=":required" type="hidden" id="" value="<?php echo $this->client_model->get_msr_client_id($msr_id,$client_id);?>" name="msr_client_id">
 						<?php } ?>
 					</div>
 				</div> <br/>

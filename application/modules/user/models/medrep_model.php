@@ -34,4 +34,15 @@ class Medrep_model extends CI_Model {
 		$q = $this->db->get($this->msr_tbl);
 		return ($q->row()->msr_id?$q->row()->msr_id:'Invalid ID');
 	}
+	function get_msr_client_info($msr_client_id){
+		$this->db->where('msr_client_id',$msr_client_id);
+		$msr_client = $this->db->get($this->msr_tbl)->row();
+		
+		$this->db->where('user_id',$msr_client->msr_id);
+		$data['msr_info'] = $this->db->get($this->table)->row();
+		
+		$this->db->where('user_id',$msr_client->client_id);
+		$data['client_info'] = $this->db->get($this->table)->row();
+		return $data;
+	}
 }

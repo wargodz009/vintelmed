@@ -9,7 +9,7 @@ class Setting extends CI_Controller{
 		$this->display($offset);
 	}
 	function display($offset = 0) {
-        if($this->users->is_admin()) {
+        if($this->users->is_admin() || $this->users->is_hrd()) {
             $this->load->library('pagination');
             $config['base_url'] = base_url().'setting/display';
             $config['total_rows'] = $this->setting_model->count_all();
@@ -42,7 +42,7 @@ class Setting extends CI_Controller{
         }
 	}
 	function edit($id) {
-		if($this->users->is_admin()) {
+		if($this->users->is_admin() || $this->users->is_hrd()) {
 			if(!empty($_POST)) {
 				$this->setting_model->update($id,$_POST);
 				$logs = array(

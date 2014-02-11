@@ -4,6 +4,7 @@ class Orders extends CI_Controller{
 	function __construct() {
 		parent::__construct();
 		$this->load->model("orders/orders_model");
+		$this->load->model("user/medrep_model");
 	}
 	function index($offset = 0) {
 		$this->display($offset);
@@ -63,6 +64,7 @@ class Orders extends CI_Controller{
             $config['per_page'] = 15;
 			$config['total_rows'] = $this->orders_model->count_all_user($id);
 			$data['orders'] = $this->orders_model->get_all_user($offset,$config['per_page'],$id);
+			$data['msr_client_info'] = $this->medrep_model->get_msr_client_info($id);
 			$this->pagination->initialize($config); 
 		    $this->template->load('template','orders/orders_list',$data);
         } else {
@@ -70,7 +72,7 @@ class Orders extends CI_Controller{
             redirect();
         }
 	}
-	function create($user_id = false) {
+	function create($msr_id = false,$client_id = false) {
         if($this->users->is_admin() || $this->users->is_msr() || $this->users->is_accountant()) {
     		if(!empty($_POST)){
     			if($this->orders_model->create($_POST)){
@@ -80,8 +82,9 @@ class Orders extends CI_Controller{
     			}
     			redirect('orders');
     		} else {
-				if($user_id != false) {
-					$data['user_id'] = $user_id;
+				if($msr_id != false && $client_id != false) {
+					$data['msr_id'] = $msr_id;
+					$data['client_id'] = $client_id;
  					$this->template->load('template','orders/orders_create',$data);	
 				} else {
 					$this->template->load('template','orders/orders_create');

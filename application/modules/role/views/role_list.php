@@ -1,7 +1,6 @@
 <div class="row">
 	<div class="span12">
 		<h1>List All Role</h1>
-		<h5><a href="<?php echo base_url();?>role/create" class="button">Add new role</a></h5>
 		<div class="well">
 			<table class="datatable">
 				<thead>

@@ -20,7 +20,7 @@ $this->load->model('district/district_model');
 						foreach($client as $c) {
 					?>
 					<tr>
-						<td><?php echo $c->username;?></td>
+						<td><?php echo get_name($c->user_id); ?></td>
 						<td><?=$this->district_model->get_single($c->district_id,'name')?></td>
 						<td>
 						<?php 

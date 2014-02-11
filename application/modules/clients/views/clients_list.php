@@ -4,8 +4,11 @@ $this->load->model('user/client_model');
 ?>
 <div class="row">
 	<div class="span12">
-		<?php if($this->users->is_admin()) { ?>
+		<?php if($this->users->is_admin() || $this->users->is_accountant() || $this->users->is_hrd()) { ?>
 		<a class="menu_button" href="<?php echo base_url(); ?>user/create">Add Client</a>
+		<?php } ?>
+		<?php if($this->users->is_accountant()) { ?>
+		<h1>Clients of: <?php echo get_name($this->uri->segment(3)); ?></h1>
 		<?php } ?>
 		<br/>
 		<br/>
@@ -24,13 +27,7 @@ $this->load->model('user/client_model');
 						foreach($client as $c) {
 					?>
 					<tr>
-						<td><?php 
-						if(!empty($c->first_name) && !empty($c->last_name)) {
-							echo '<a target="_new" href="'.base_url().'user/view/'.$c->user_id.'">'.$c->first_name.', '.$c->last_name.'</a>';
-						} else {
-							echo '<a target="_new" href="'.base_url().'user/view/'.$c->user_id.'">'.$c->username.'</a>';
-						} 
-						?></td>
+						<td><?php echo get_name($c->user_id); ?></td>
 						<td><?php
 						$role = $this->role_model->get_single($c->role_id);
 						echo $role->role_name;?></td>
@@ -44,7 +41,7 @@ $this->load->model('user/client_model');
 						</td>
 						<?php } else { ?>
 							<td>
-							<a href="<?php echo base_url();?>orders/create/<?php echo $c->user_id;?>">Add Order</a>
+							<a href="<?php echo base_url();?>orders/create/<?php echo $this->uri->segment(3).'/'.$c->user_id;?>">Add Order</a>
 							| <a href="<?php echo base_url();?>orders/user/<?php echo $this->client_model->get_msr_client_id($this->uri->segment(3),$c->user_id);?>">Orders</a>
 							</td>
 						<?php } ?>
@@ -56,7 +53,7 @@ $this->load->model('user/client_model');
 					<tr>
 						<td>No items yet!</td>
 						<td></td>
-						<th></th>
+						<td></td>
 					</tr>
 					<?php
 					}

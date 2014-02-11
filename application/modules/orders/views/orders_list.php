@@ -2,17 +2,25 @@
 $this->load->model('items/items_model');
 $this->load->model('user/user_model');
 $this->load->model('user/client_model');
+$this->load->model('user/medrep_model');
 ?>
 <div class="row">
 	<div class="span12">
 		<!--h5><a href="<?php echo base_url();?>orders/create" class="button">Add new orders</a></h5-->
 		<div class="well">
+			<?php 
+				if($this->uri->segment(3) > 0 ) {
+					echo '<h1>MSR: '.get_name($msr_client_info['msr_info']->user_id).'</h1>';
+					echo '<h1>Client: '.get_name($msr_client_info['client_info']->user_id).'</h1>';
+				}
+			?>
 			<table class="gridtable">
 				<thead>
 					<tr>
 						<th>SO #</th>
 						<th>Item</th>
 						<th>Client</th>
+						<th>Msr</th>
 						<th>Quantity</th>
 						<th>Price</th>
 						<th>Total</th>
@@ -33,7 +41,12 @@ $this->load->model('user/client_model');
 						<td><?php echo '<a href="'.base_url().'items/view/'.$c->item_id.'" target="_new">'.$this->items_model->get_single($c->item_id,'name').' ('.$this->items_model->get_single($c->item_id,'description').')</a>';?></td>
 						<td><?php
 						$client_id = $this->client_model->get_client_id($c->msr_id,$c->msr_client_id);
-						echo '<a href="'.base_url().'user/view/'.$client_id.'">'.$this->user_model->get_single($client_id,false,'username').'</a>'; ?></td>
+						echo get_name($client_id);
+						?></td>
+						<td><?php
+						$msr_id = $this->medrep_model->get_msr_id($client_id,$c->msr_client_id);
+						echo get_name($msr_id);
+						?></td>
 						<td><?php echo $c->quantity;?></td>
 						<td><?php echo $c->price;?></td>
 						<td><?php echo $c->price * $c->quantity;?></td>
@@ -87,6 +100,7 @@ $this->load->model('user/client_model');
 					?>
 					<tr>
 						<td>No items yet!</td>
+						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>

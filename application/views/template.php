@@ -156,7 +156,7 @@ $(document).ready(function() {
 					</a>
 				</li>
 				<?php } ?>
-				<?php if($this->users->is_admin() || $this->users->is_msr()) { ?>
+				<?php if($this->users->is_admin() || $this->users->is_msr() || $this->users->is_hrd()) { ?>
 				<li class="<?php echo (in_array($this->uri->segment(1),$clients)?'active':''); ?>">
 					<div class="lgt"></div>
 					<a href="<?=base_url()?>clients">
@@ -165,7 +165,7 @@ $(document).ready(function() {
 					</a>
 				</li>
 				<?php } ?>
-				<?php if($this->users->is_admin() || $this->users->is_accountant()) { ?>
+				<?php if($this->users->is_admin() || $this->users->is_accountant() || $this->users->is_hrd()) { ?>
 				<li class="<?php echo (in_array($this->uri->segment(1),$employees)?'active':''); ?>">
 					<div class="lgt"></div>
 					<a href="<?=base_url()?>user">
@@ -186,7 +186,7 @@ $(document).ready(function() {
 					<?php } ?>
 				<?php } ?>
 				<?php if($this->users->is_logged_in()) { ?>
-					<?php if($this->users->is_admin()) { ?>
+					<?php if($this->users->is_admin() || $this->users->is_hrd()) { ?>
 					<li class="<?php echo (in_array($this->uri->segment(1),$settings)?'active':''); ?>">
 						<div class="lgt"></div>
 						<a href="<?=base_url()?>setting">
@@ -215,22 +215,24 @@ $(document).ready(function() {
 		<div id="cntnt">
 			<?php if($this->system->is_open()) { ?>
 			<?php
-				if(in_array($this->uri->segment(1),$dashboard)) {
-					echo generate_menu($dashboard_toolbar);
-				} else if(in_array($this->uri->segment(1),$inventory)) {
-					echo generate_menu($inventory_toolbar);
-				} else if(in_array($this->uri->segment(1),$clients)) {
-					echo generate_menu($clients_toolbar);
-				} else if(in_array($this->uri->segment(1),$orders)) {
-					echo generate_menu($orders_toolbar);
-				} else if(in_array($this->uri->segment(1),$employees)) {
-					echo generate_menu($employees_toolbar);
-				} else if(in_array($this->uri->segment(1),$reports)) {
-					echo generate_menu($reports_toolbar);
-				} else if(in_array($this->uri->segment(1),$settings)) {
-					echo generate_menu($settings_toolbar);
-				} else {
-					
+				if(!$this->users->is_hrd()){
+					if(in_array($this->uri->segment(1),$dashboard)) {
+						echo generate_menu($dashboard_toolbar);
+					} else if(in_array($this->uri->segment(1),$inventory)) {
+						echo generate_menu($inventory_toolbar);
+					} else if(in_array($this->uri->segment(1),$clients)) {
+						echo generate_menu($clients_toolbar);
+					} else if(in_array($this->uri->segment(1),$orders)) {
+						echo generate_menu($orders_toolbar);
+					} else if(in_array($this->uri->segment(1),$employees)) {
+						echo generate_menu($employees_toolbar);
+					} else if(in_array($this->uri->segment(1),$reports)) {
+						echo generate_menu($reports_toolbar);
+					} else if(in_array($this->uri->segment(1),$settings)) {
+						echo generate_menu($settings_toolbar);
+					} else {
+						
+					}
 				}
 			?>
 			<?php 

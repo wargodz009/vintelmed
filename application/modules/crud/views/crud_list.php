@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="span12">
-		<h1>List All Crud</h1>
-		<h5><a href="<?php echo base_url();?>crud/create" class="button">Add new crud</a></h5>
+		<h1>List All role</h1>
+		<h5><a href="<?php echo base_url();?>role/create" class="button">Add new role</a></h5>
 		<div class="well">
 			<table class="datatable">
 				<thead>
@@ -17,9 +17,9 @@
 						foreach($crud as $c) {
 					?>
 					<tr>
-						<td><?php echo $c->crud_id;?></td>
-						<td><?php echo $c->name;?></td>
-						<td><a href="<?php echo base_url();?>crud/edit/<?php echo $c->crud_id;?>">Edit</a> | <a href="<?php echo base_url();?>crud/delete/<?php echo $c->crud_id;?>" class="confirm" rel="Are you sure you want to delete <?php echo $c->name;?>?">Delete</a></td>
+						<td><?php echo $c->role_id;?></td>
+						<td><?php echo $c->role_name;?></td>
+						<td><a href="<?php echo base_url();?>role/edit/<?php echo $c->role_id;?>">Edit</a> | <a href="<?php echo base_url();?>role/delete/<?php echo $c->role_id;?>" class="confirm" rel="Are you sure you want to delete <?php echo $c->role_name;?>?">Delete</a></td>
 					</tr>
 					<?php
 						}

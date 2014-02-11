@@ -14,10 +14,20 @@ $this->load->model('district/district_model');
 					<label class="control-label" for="">Role</label>
 					<div class="controls">
 						<?php
-							$others = 'class=":required" id="role_id"';
-							$options = $this->role_model->get_all(0,0,true);
-							$types = to_select($options,'role_name','role_id');	
-							echo form_dropdown('role_id', $types,'',$others);
+							if($this->users->is_admin() || $this->users->is_hrd()) {
+								$others = 'class=":required" id="role_id"';
+								$options = $this->role_model->get_all(0,0,true);
+								$types = to_select($options,'role_name','role_id');	
+								echo form_dropdown('role_id', $types,'',$others);
+							} else if($this->users->is_accountant()) {
+								?>
+									<select name="role_id" id="role_id" class=":required" >
+										<option value="">--</option>
+										<option value="2">Client</option>
+										<option value="3">Medical Representative</option>
+									</select>
+								<?php
+							}
 						?>
 					</div> <br/>
 					<div class="controls" id="div_district_id" style="display:none;">

@@ -7,14 +7,14 @@ class User extends CI_Controller{
 		$this->load->model("user/medrep_model");
 	}
 	function index($offset = 0){
-		if($this->users->is_admin() || $this->users->is_accountant()) {
+		if($this->users->is_admin() || $this->users->is_accountant() || $this->users->is_hrd()) {
 			$this->display($offset);
 		} else {
 			$this->view();
 		}
 	}
 	function display($offset = 0){
-		if($this->users->is_admin()) {
+		if($this->users->is_admin() || $this->users->is_hrd()) {
 			$this->load->library('pagination');
             $config['base_url'] = base_url().'user/display';
             $config['total_rows'] = $this->user_model->count_all();
@@ -38,57 +38,61 @@ class User extends CI_Controller{
 		}
 	}
 	function create() {
-		if(isset($_POST['role_id']) && isset($_POST['username']) && isset($_POST['password']) && $_POST['role_id'] != ''){
-			$_POST['password'] = md5($_POST['password']);
-			if($this->user_model->get_single($_POST['username'],true,'username') == 'Invalid user') { 
-				$id = $this->user_model->create($_POST);
-				if($id) {
-					$logs = array(
+		if($this->users->is_admin() || $this->users->is_msr() || $this->users->is_accountant() || $this->users->is_hrd()) {
+			if(isset($_POST['role_id']) && isset($_POST['username']) && isset($_POST['password']) && $_POST['role_id'] != ''){
+				$_POST['password'] = md5($_POST['password']);
+				if($this->user_model->get_single($_POST['username'],true,'username') == 'Invalid user') { 
+					$id = $this->user_model->create($_POST);
+					if($id) {
+						$logs = array(
+							'user_id'=>$this->session->userdata('user_id'),
+							'type'=>'user',
+							'action'=>'create',
+							'response'=>$id,
+							'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+						);
+						$this->logs->add($logs);
+						$this->session->set_flashdata('error','user saved!');	
+					} else {
+						$this->session->set_flashdata('error','user not saved!');	
+					}
+				} else {
+					$this->session->set_flashdata('error','user not saved! username already taken!');	
+				}
+				redirect('user');
+			} else {
+				if(isset($_POST['role_id']) && $_POST['role_id'] == '') {
+					$this->session->set_flashdata('error','Please select user role!');	
+				}
+				$this->template->load('template','user/user_create');
+			}
+		}
+	}
+	function edit($id = false) {
+		if($this->users->is_admin() || $this->users->is_msr() || $this->users->is_accountant() || $this->users->is_hrd()) {
+			if($id === false) {
+				$id = $this->session->userdata('user_id');
+			}
+			if(!empty($_POST)) {
+				$this->user_model->update($id,$_POST);
+				$logs = array(
 						'user_id'=>$this->session->userdata('user_id'),
 						'type'=>'user',
-						'action'=>'create',
+						'action'=>'update',
 						'response'=>$id,
 						'fingerprint'=>$_SERVER['REMOTE_ADDR'],
 					);
 					$this->logs->add($logs);
-					$this->session->set_flashdata('error','user saved!');	
-				} else {
-					$this->session->set_flashdata('error','user not saved!');	
-				}
-			} else {
-				$this->session->set_flashdata('error','user not saved! username already taken!');	
-			}
-			redirect('user');
-		} else {
-			if(isset($_POST['role_id']) && $_POST['role_id'] == '') {
-				$this->session->set_flashdata('error','Please select user role!');	
-			}
-			$this->template->load('template','user/user_create');
-		}
-	}
-	function edit($id = false) {
-		if($id === false) {
-			$id = $this->session->userdata('user_id');
-		}
-		if(!empty($_POST)) {
-			$this->user_model->update($id,$_POST);
-			$logs = array(
-					'user_id'=>$this->session->userdata('user_id'),
-					'type'=>'user',
-					'action'=>'update',
-					'response'=>$id,
-					'fingerprint'=>$_SERVER['REMOTE_ADDR'],
-				);
-				$this->logs->add($logs);
-			$this->session->set_flashdata('error','user updated!');	
-			redirect('user');
-		} else {
-			$data['user'] = $this->user_model->get_single($id);
-			if(!$data['user']) {
-				$this->session->set_flashdata('error','not a valid user!');	
+				$this->session->set_flashdata('error','user updated!');	
 				redirect('user');
+			} else {
+				$data['user'] = $this->user_model->get_single($id);
+				if(!$data['user']) {
+					$this->session->set_flashdata('error','not a valid user!');	
+					redirect('user');
+				}
+				$this->template->load('template','user/user_edit',$data);
 			}
-			$this->template->load('template','user/user_edit',$data);
 		}
 	}
 	function change_pass() {
@@ -145,19 +149,21 @@ class User extends CI_Controller{
 		$this->template->load('template','user/user_profile',$data);
 	}
 	function delete($id) {
-		if(!empty($id)) {
-			if($this->user_model->delete($id)){
-				$logs = array(
-					'user_id'=>$this->session->userdata('user_id'),
-					'type'=>'user',
-					'action'=>'delete',
-					'response'=>$id,
-					'fingerprint'=>$_SERVER['REMOTE_ADDR'],
-				);
-				$this->logs->add($logs);
-				$this->session->set_flashdata('error','user removed!');	
-			} else {
-				$this->session->set_flashdata('error','user not removed!');	
+		if($this->users->is_admin() || $this->users->is_msr() || $this->users->is_accountant() || $this->users->is_hrd()) {
+			if(!empty($id)) {
+				if($this->user_model->delete($id)){
+					$logs = array(
+						'user_id'=>$this->session->userdata('user_id'),
+						'type'=>'user',
+						'action'=>'delete',
+						'response'=>$id,
+						'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+					);
+					$this->logs->add($logs);
+					$this->session->set_flashdata('error','user removed!');	
+				} else {
+					$this->session->set_flashdata('error','user not removed!');	
+				}
 			}
 		}
 		redirect($_SERVER['HTTP_REFERER']);
