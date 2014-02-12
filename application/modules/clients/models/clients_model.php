@@ -55,4 +55,14 @@ var $table = 'users';
 			return false;
 		}
 	}
+	function delete_admin($id) {
+		$this->db->where('client_id',$id);
+		$this->db->where('role_id',2);
+		$this->db->delete($this->table);
+		if($this->db->affected_rows()>0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

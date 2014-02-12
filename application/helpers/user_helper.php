@@ -5,9 +5,9 @@ function get_name($user_id){
 	$user = $CI->user_model->get_single($user_id);
 	if($user) {
 		if(!empty($user->first_name) && !empty($user->last_name)) {
-			return '<a target="_new" href="'.base_url().'user/view/'.$user->user_id.'">'.$user->first_name.', '.$user->last_name.'</a>';
+			return '<a target="_new" href="'.base_url().'user/view/'.$user->user_id.'">'.$user->last_name.', '.$user->first_name.'</a>';
 		} else {
-			return '<a target="_new" href="'.base_url().'user/view/'.$user->user_id.'">'.$user->username.'</a>';
+			return '<a target="_new" href="'.base_url().'user/view/'.$user->user_id.'">'.$user->first_name.'</a>';
 		}
 	} else {
 		return 'Unknown user';

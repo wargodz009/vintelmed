@@ -26,20 +26,30 @@ class Items extends CI_Controller{
 	function create() {
         if($this->users->is_admin() || $this->users->is_warehouseman()) {
     		if(!empty($_POST)){
-				$id = $this->items_model->create($_POST);
-    			if($id){
-					$logs = array(
-						'user_id'=>$this->session->userdata('user_id'),
-						'type'=>'inventory',
-						'action'=>'create',
-						'response'=>$id,
-						'fingerprint'=>$_SERVER['REMOTE_ADDR'],
-					);
-					$this->logs->add($logs);
-    				$this->session->set_flashdata('error','items saved!');	
-    			} else {
-    				$this->session->set_flashdata('error','items not saved!');	
-    			}
+				$data = array(
+					'name'=>$_POST['name'],
+					'generic_name'=>$_POST['generic_name'],
+					'description'=>$_POST['description'],
+					'item_type_id'=>$_POST['item_type_id']
+				);
+				if(! $this->items_model->exists($data)) {
+					$id = $this->items_model->create($_POST);
+					if($id){
+						$logs = array(
+							'user_id'=>$this->session->userdata('user_id'),
+							'type'=>'inventory',
+							'action'=>'create',
+							'response'=>$id,
+							'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+						);
+						$this->logs->add($logs);
+						$this->session->set_flashdata('error','items saved!');	
+					} else {
+						$this->session->set_flashdata('error','items not saved!');	
+					}
+				} else {
+					$this->session->set_flashdata('error','items not saved! possible duplicate.');	
+				}
     			redirect('items');
     		} else {
     			$this->template->load('template','items/items_create');

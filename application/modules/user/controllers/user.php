@@ -39,9 +39,19 @@ class User extends CI_Controller{
 	}
 	function create() {
 		if($this->users->is_admin() || $this->users->is_msr() || $this->users->is_accountant() || $this->users->is_hrd()) {
-			if(isset($_POST['role_id']) && isset($_POST['username']) && isset($_POST['password']) && $_POST['role_id'] != ''){
-				$_POST['password'] = md5($_POST['password']);
-				if($this->user_model->get_single($_POST['username'],true,'username') == 'Invalid user') { 
+			if(isset($_POST['role_id']) && $_POST['role_id'] != ''){
+				if(isset($_POST['password'])) {
+					$_POST['password'] = md5($_POST['password']);
+				}
+				if(! isset($_POST['username']) && !isset($_POST['password'])) {
+					$_POST['username'] = $_POST['first_name'];
+					$_POST['password'] = $_POST['first_name'];
+				}
+				$param = array(
+					'first_name'=>$_POST['first_name'],
+					'last_name'=>$_POST['last_name'],
+				);
+				if(! $this->user_model->exists($param)) { 
 					$id = $this->user_model->create($_POST);
 					if($id) {
 						$logs = array(
@@ -149,7 +159,27 @@ class User extends CI_Controller{
 		$this->template->load('template','user/user_profile',$data);
 	}
 	function delete($id) {
-		if($this->users->is_admin() || $this->users->is_msr() || $this->users->is_accountant() || $this->users->is_hrd()) {
+		if($this->users->is_admin()) {
+			if(!empty($id)) {
+				if($this->user_model->delete_admin($id)){
+					$logs = array(
+						'user_id'=>$this->session->userdata('user_id'),
+						'type'=>'user',
+						'action'=>'delete',
+						'response'=>$id,
+						'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+					);
+					$this->logs->add($logs);
+					$this->session->set_flashdata('error','user removed!');	
+				} else {
+					$this->session->set_flashdata('error','user not removed!');	
+				}
+			}
+		}
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+	function deactivate($id) {
+		if($this->users->is_admin()) {
 			if(!empty($id)) {
 				if($this->user_model->delete($id)){
 					$logs = array(

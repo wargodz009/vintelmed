@@ -57,6 +57,14 @@ var $msr_tbl = 'msr_clients';
 		} else {
 			return false;
 		}
+	}function delete_admin($id) {
+		$this->db->where('user_id',$id);
+		$this->db->delete($this->table);
+		if($this->db->affected_rows()>0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	function activate($id) {
 		$this->db->set('status','enabled');
@@ -95,5 +103,20 @@ var $msr_tbl = 'msr_clients';
 		} else {
 			return false;
 		}
+	}
+	function exists($params,$val = ''){
+		if(is_array($params)) {
+			foreach($params as $k=>$v){
+				$this->db->where($k,$v);
+			}
+		} else {
+			$this->db->where($params,$val);
+		}
+		$Q = $this->db->get($this->table);
+		if($Q->num_rows()>0) {
+			return true;
+		} else {
+			return false;
+		}	
 	}
 }

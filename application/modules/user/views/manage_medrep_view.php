@@ -25,7 +25,7 @@ $this->load->model('district/district_model');
 						<td>
 						<?php 
 							if($this->user_model->is_assigned($this->uri->segment(3),$c->user_id)) {
-								echo '<a href="'.base_url().'user/del_client/'.$this->uri->segment(3).'/'.$c->user_id.'">Unassign</a>';
+								echo '<a href="'.base_url().'user/del_client/'.$this->uri->segment(3).'/'.$c->user_id.'">Remove</a>';
 							} else {
 								echo '<a href="'.base_url().'user/add_client/'.$this->uri->segment(3).'/'.$c->user_id.'">Assign</a>';
 							}

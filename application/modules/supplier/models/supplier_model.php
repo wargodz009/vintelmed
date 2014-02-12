@@ -63,4 +63,19 @@ var $table_users = 'users';
 			return $q->result_array();
 		}
 	}
+	function exists($params,$val = ''){
+		if(is_array($params)) {
+			foreach($params as $k=>$v){
+				$this->db->where($k,$v);
+			}
+		} else {
+			$this->db->where($params,$val);
+		}
+		$Q = $this->db->get($this->table);
+		if($Q->num_rows()>0) {
+			return true;
+		} else {
+			return false;
+		}	
+	}
 }

@@ -86,4 +86,19 @@ var $order = 'orders';
 		$q = $this->db->get($this->order);
 		return ($q->row()->quantity?$q->row()->quantity:0);
 	}
+	function exists($params,$val = ''){
+		if(is_array($params)) {
+			foreach($params as $k=>$v){
+				$this->db->where($k,$v);
+			}
+		} else {
+			$this->db->where($params,$val);
+		}
+		$Q = $this->db->get($this->table);
+		if($Q->num_rows()>0) {
+			return true;
+		} else {
+			return false;
+		}	
+	}
 }

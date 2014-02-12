@@ -69,6 +69,7 @@ $settings_toolbar = array(
 <script type="text/javascript" src="<?=base_url();?>assets/js/prettify.js"></script>
 <script type="text/javascript" src="<?=base_url();?>assets/js/jquery.slimscroll.js"></script>
 <script src="<?=base_url();?>assets/js/jquery.custom-scrollbar.js"></script>
+<script src="<?=base_url();?>assets/js/custom.js"></script>
 <link type="text/css" rel="stylesheet" href="<?=base_url();?>assets/css/jquery.custom-scrollbar.css"/>
 <script type="text/javascript">
 tinyMCE.init({

@@ -32,9 +32,9 @@ $this->load->model('user/client_model');
 						$role = $this->role_model->get_single($c->role_id);
 						echo $role->role_name;?></td>
 						<?php if($this->users->is_admin()) { ?>
-							<td><a href="<?php echo base_url();?>user/manage/<?php echo $c->user_id;?>">Manage</a> | <a href="<?php echo base_url();?>user/edit/<?php echo $c->user_id;?>">Edit</a> | 
+							<td><a href="<?php echo base_url();?>user/manage/<?php echo $c->user_id;?>">Manage</a> | <a href="<?php echo base_url();?>user/edit/<?php echo $c->user_id;?>">Edit</a> |  <a class="confirm" rel="Are you sure you want to permanently delete <?php echo $c->username;?>?" href="<?php echo base_url();?>user/delete/<?php echo $c->user_id;?>">Delete</a> |
 							<?php if($c->status == 'enabled') { ?>
-							<a href="<?php echo base_url();?>user/delete/<?php echo $c->user_id;?>" class="confirm" rel="Are you sure you want to deactivate <?php echo $c->username;?>?">Deactivate</a>
+							<a href="<?php echo base_url();?>user/deactivate/<?php echo $c->user_id;?>" class="confirm" rel="Are you sure you want to deactivate <?php echo $c->username;?>?">Deactivate</a>
 							<?php } else { ?>
 							<a href="<?php echo base_url();?>user/activate/<?php echo $c->user_id;?>" class="confirm" rel="Are you sure you want to enable <?php echo $c->username;?>?">Activate</a>
 							<?php } ?>

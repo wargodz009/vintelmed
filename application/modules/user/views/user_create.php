@@ -41,21 +41,15 @@ $this->load->model('district/district_model');
 						?>
 						</div>  
 					</div><br/>
-					<label class="control-label" for="">First name</label>
+					<label class="control-label" for="">First name/Hospital Name</label>
 					<div class="controls">
 						<input class=":required" type="text" id="" value="" name="first_name">
 					</div> <br/>
 					<label class="control-label" for="">Last name</label>
 					<div class="controls">
-						<input class=":required" type="text" id="" value="" name="last_name">
+						<input class="" type="text" id="" value="" name="last_name">
 					</div> <br/>
-					<label class="control-label" for="">username</label>
-					<div class="controls">
-						<input class=":required" type="text" id="" value="" name="username">
-					</div> <br/>
-					<label class="control-label" for="">Password</label>
-					<div class="controls">
-						<input class=":required" type="text" id="" value="" name="password">
+					<div id="logins">
 					</div>
 				</div>
 				<div class="control-group">
@@ -70,10 +64,12 @@ $this->load->model('district/district_model');
 <script type="text/javascript">
 $(function(){
 	$('#role_id').change(function(){
-		if($(this).val()== "2" || $(this).val()== "3" || $(this).val()== "5"){
+		if($(this).val()== "2" || $(this).val()== "3" || $(this).val()== "5") {
 			$("div#div_district_id").show();
+			$("div#logins").html('');
 		} else {
 			$("div#div_district_id").hide();
+			$("div#logins").html('<label class="control-label" for="">username</label><div class="controls"><input class=":required" type="text" id="" value="" name="username">	</div> <br/><label class="control-label" for="">Password</label><div class="controls"><input class=":required" type="text" id="" value="" name="password"></div>');
 		}
 	});
 });

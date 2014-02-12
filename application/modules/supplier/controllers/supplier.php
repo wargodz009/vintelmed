@@ -26,20 +26,24 @@ class Supplier extends CI_Controller{
 	function create() {
         if($this->users->is_admin() || $this->users->is_warehouseman()) {
     		if(!empty($_POST)){
-				$id = $this->supplier_model->create($_POST);
-    			if($id) {
-					$logs = array(
-						'user_id'=>$this->session->userdata('user_id'),
-						'type'=>'supplier',
-						'action'=>'create',
-						'response'=>$id,
-						'fingerprint'=>$_SERVER['REMOTE_ADDR'],
-					);
-					$this->logs->add($logs);
-    				$this->session->set_flashdata('error','supplier saved!');	
-    			} else {
-    				$this->session->set_flashdata('error','supplier not saved!');	
-    			}
+				if(! $this->supplier_model->exists('name',$_POST['name'])) {
+					$id = $this->supplier_model->create($_POST);
+					if($id) {
+						$logs = array(
+							'user_id'=>$this->session->userdata('user_id'),
+							'type'=>'supplier',
+							'action'=>'create',
+							'response'=>$id,
+							'fingerprint'=>$_SERVER['REMOTE_ADDR'],
+						);
+						$this->logs->add($logs);
+						$this->session->set_flashdata('error','supplier saved!');	
+					} else {
+						$this->session->set_flashdata('error','supplier not saved!');	
+					}
+				} else {
+					$this->session->set_flashdata('error','supplier not saved! possible duplicate.');	
+				}
     			redirect('supplier');
     		} else {
     			$this->template->load('template','supplier/supplier_create');
