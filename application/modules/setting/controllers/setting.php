@@ -76,5 +76,12 @@ class Setting extends CI_Controller{
 		}
 		$this->template->load('template','setting/setting_view',$data);
 	}
+	function backup(){
+		$this->load->dbutil();
+		$backup =& $this->dbutil->backup(); 
+
+		$this->load->helper('download');
+		force_download('mybackup.gz', $backup);
+	}
 }
 ?>
