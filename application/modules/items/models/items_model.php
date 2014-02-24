@@ -58,6 +58,26 @@ var $order = 'orders';
 			return false;
 		}
 	}
+	function subtract_sold_count($item_batch_id,$count) {
+		$this->db->set('sold_count', 'sold_count-'.$count, FALSE);
+		$this->db->where('item_batch_id',$item_batch_id);
+		$this->db->update($this->batch);
+		if($this->db->affected_rows()>0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	function increase_sold_count($item_batch_id,$count) {
+		$this->db->set('sold_count', 'sold_count+'.$count, FALSE);
+		$this->db->where('item_batch_id',$item_batch_id);
+		$this->db->update($this->batch);
+		if($this->db->affected_rows()>0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	function delete($id) {
 		$this->db->set('status','disabled');
 		$this->db->where('item_id',$id);

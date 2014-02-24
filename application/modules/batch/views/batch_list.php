@@ -68,9 +68,6 @@ $this->load->model('user/user_model');
 				</tbody>
 			</table>
             <div class="pagination">
-            <?php
-                echo $this->pagination->create_links();
-            ?>
 			</div>
 		</div>
 	</div>

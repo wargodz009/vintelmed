@@ -37,7 +37,8 @@ $this->load->model('user/medrep_model');
 						foreach($orders as $c) {
 					?>
 					<tr>
-						<td><?php echo $c->form_number;?></td>
+						<td>
+						<a href="<?php echo base_url();?>orders/view/<?php echo $c->order_id;?>"><?php echo $c->form_number;?></a>
 						<td><?php echo '<a href="'.base_url().'items/view/'.$c->item_id.'" target="_new">'.$this->items_model->get_single($c->item_id,'name').' ('.$this->items_model->get_single($c->item_id,'description').')</a>';?></td>
 						<td><?php
 						$client_id = $this->client_model->get_client_id($c->msr_id,$c->msr_client_id);

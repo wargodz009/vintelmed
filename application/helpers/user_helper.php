@@ -4,10 +4,25 @@ function get_name($user_id){
 	$CI->load->model('user/user_model');
 	$user = $CI->user_model->get_single($user_id);
 	if($user) {
-		if(!empty($user->first_name) && !empty($user->last_name)) {
-			return '<a target="_new" href="'.base_url().'user/view/'.$user->user_id.'">'.$user->last_name.', '.$user->first_name.'</a>';
+		$fname = trim($user->first_name);
+		$lname = trim($user->last_name);
+		$uname = trim($user->username);
+		if(!empty($fname) && !empty($lname)) {
+			return '<a target="_new" href="'.base_url().'user/view/'.$user->user_id.'">'.$lname.', '.$fname.'</a>';
+		} else if(empty($fname) || empty($lname)) {
+			if(!empty($fname) && empty($lname)) {
+				return '<a target="_new" href="'.base_url().'user/view/'.$user->user_id.'">'.$fname.'</a>';
+			} else {
+				if(!empty($lname)) {
+					return '<a target="_new" href="'.base_url().'user/view/'.$user->user_id.'">'.$lname.'</a>';
+				}
+				if(!empty($uname)) {
+					return '<a target="_new" href="'.base_url().'user/view/'.$user->user_id.'">'.$uname.'</a>';
+				}
+			}
+			return '<a target="_new" href="'.base_url().'user/view/'.$user->user_id.'">'.$lname.', '.$fname.'</a>';
 		} else {
-			return '<a target="_new" href="'.base_url().'user/view/'.$user->user_id.'">'.$user->first_name.'</a>';
+			return '<a target="_new" href="'.base_url().'user/view/'.$user->user_id.'">'.$fname.'</a>';
 		}
 	} else {
 		return 'Unknown user';

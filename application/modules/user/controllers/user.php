@@ -331,7 +331,7 @@ class User extends CI_Controller{
 	}
 	function del_client($msr_id,$client_id){
 		if($this->user_model->unassign($msr_id,$client_id)){
-			$this->session->set_flashdata('error','Unssigned!!');
+			$this->session->set_flashdata('error','Unassigned!!');
 		} else {
 			$this->session->set_flashdata('error','Error While Trying to Unassign!!');
 		}

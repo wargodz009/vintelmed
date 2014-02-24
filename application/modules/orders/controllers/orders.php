@@ -5,6 +5,7 @@ class Orders extends CI_Controller{
 		parent::__construct();
 		$this->load->model("orders/orders_model");
 		$this->load->model("user/medrep_model");
+		$this->load->model("items/items_model");
 	}
 	function index($offset = 0) {
 		$this->display($offset);
@@ -75,11 +76,35 @@ class Orders extends CI_Controller{
 	function create($msr_id = false,$client_id = false) {
         if($this->users->is_admin() || $this->users->is_msr() || $this->users->is_accountant()) {
     		if(!empty($_POST)){
-    			if($this->orders_model->create($_POST)){
-    				$this->session->set_flashdata('error','orders saved!');	
-    			} else {
-    				$this->session->set_flashdata('error','orders not saved!');	
-    			}
+				if(!empty($_POST['batch_id'])) {
+					$data = array(
+						'form_number'=>$_POST['form_number'],
+						'msr_id'=>$_POST['msr_id'],
+						'msr_client_id'=>$_POST['msr_client_id'],
+						'item_id'=>$_POST['item_id'],
+						'quantity'=>$_POST['quantity'],
+						'price'=>$_POST['price'],
+						'status'=>'approved'
+					);
+					$order_id = $this->orders_model->create($data);
+					if($order_id){
+						foreach($_POST['batch_id'] as $batch) {
+							$order_details = array(
+								'order_id'=>$order_id,
+								'item_id'=>$_POST['item_id'],
+								'item_batch_id'=>$batch,
+								'quantity'=>$_POST['batch-'.$batch],
+							);
+							$this->orders_model->add($order_details);
+							$this->items_model->increase_sold_count($batch,$_POST['batch-'.$batch]);
+						}
+						$this->session->set_flashdata('error','orders saved!');	
+					} else {
+						$this->session->set_flashdata('error','orders not saved!');	
+					}
+				} else {
+					$this->session->set_flashdata('error','Please select batch!');	
+				}
     			redirect('orders');
     		} else {
 				if($msr_id != false && $client_id != false) {
@@ -114,12 +139,20 @@ class Orders extends CI_Controller{
 		if(!$data['orders']) {
 			$this->session->set_flashdata('error','not a valid orders!');	
 			redirect('orders');
+		} else {
+			$data['order_details'] = $this->orders_model->get_order_details($data['orders']->order_id);
 		}
 		$this->template->load('template','orders/orders_view',$data);
 	}
 	function delete($id) {
 		if(!empty($id)) {
 			if($this->orders_model->delete($id)) {
+				$items = $this->orders_model->get_details($id);
+				if($items) {
+					foreach($items as $item) {
+						$this->items_model->subtract_sold_count($item->item_batch_id,$item->quantity);
+					}
+				}
 				$this->session->set_flashdata('error','orders removed!');	
 			} else {
 				$this->session->set_flashdata('error','orders not removed!');	

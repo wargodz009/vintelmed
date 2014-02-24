@@ -1,11 +1,12 @@
 <?php
 $this->load->model('user/client_model');
 ?>
-<div class="row">
-	<div class="span8 offset2">
+<form class="form-horizontal" method="post" action="">
+	<div class="row">
 		<a href="<?php echo base_url();?>orders"><< Back</a>
-		<div class="well">
-			<form class="form-horizontal" method="post" action="">
+		<div class="clear">&nbsp;</div>
+		<div class="span4 offset2 left half">
+			<div class="well">
 				<div class="control-group">
 					<label class="control-label" for="">SO #:</label>
 					<div class="controls">
@@ -40,28 +41,63 @@ $this->load->model('user/client_model');
 						<input class="" type="text" id="price" value="" name="price">
 					</div>
 				</div> <br/>
-				Total Price: <div class="control-group" id="total_price"></div><br/><br/>
+				Total Price: <span class="control-group" id="total_price"></span><br/><br/>
 				<div class="control-group">
 					<div class="controls">
-						<button type="submit" class="btn">SAVE</button>
+						
 					</div>
 				</div>
-			</form>
+			</div>
+		</div>
+		<div class="span4 left half">
+			Inventory Items <br/>
+			<div id="item_list" class="list"></div>
+		</div>
+		<div class="clear">
+			<button type="submit" class="btn save_btn">SAVE</button>
 		</div>
 	</div>
-</div>
+</form>
 <script type="text/javascript">
 jQuery(function(){
+	$('.save_btn').attr('disabled',true);
+	$(document.body).on('click', '.close', function() {
+		$('#item_name').hide();
+		$('.autocomplete_items').show();
+		$('#item_list').text('');
+		$('#items').val('');
+		$('.save_btn').attr('disabled',true);
+	});
+	$(document.body).on('change', '.check_empty', function() {
+		if($(this).val() != '') {
+			$(this).parent().find('input:checkbox:first').prop('checked', true);
+		} else {
+			$(this).parent().find('input:checkbox:first').prop('checked', false);
+		}
+	});
 	$(".autocomplete_items").autocomplete({
 		source: "<?=base_url();?>items/search/",
 		minLength: 1,
-		change: function( event, ui ) {
+		select: function ( event , ui ) {
 			if(! ui.item){
 				this.value = '';
+			} else {
+				save($(this).attr('rel'),ui.item.label);
+				$(this).hide();
+				$('#item_name').show().append(' &nbsp;<span class="close">-Remove</span>');
+				$.getJSON('<?php echo base_url();?>batch/list_all/'+ui.item.value+'/true', function(data){
+					if(data.length != 0 || data == '') {
+						$('#item_list').html('Stock: <br />');
+						$.each(data, function(k,v) {
+							$('#item_list').append('<div><input type="checkbox" name="batch_id[]" value="'+v.item_batch_id+'" onclick="return false;" onkeydown="return false;" /> '+v.item_name+' ('+v.name+') <br/> <input type="text" name="batch-'+v.item_batch_id+'" value="" placeholder="Quantity" sold="'+v.sold_count+'" count="'+v.item_count+'" class="check_empty" />('+v.sold_count+'/'+v.item_count+')</div><br/>-------------------------------------------<br/>');
+						});
+						$('.save_btn').attr('disabled',false);
+					}
+				}).fail(function() {
+					$('#item_list').text('Out of Stock');
+					$('.save_btn').attr('disabled',true);
+				});
 			}
-		},
-		select: function ( event , ui ) {
-			save($(this).attr('rel'),ui.item.label);
 		}
 	});
 	function save( x , id ) {

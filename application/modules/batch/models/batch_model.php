@@ -2,6 +2,8 @@
 
 class Batch_model extends CI_Model{
 var $table = 'item_batch';
+var $items = 'items';
+var $suppliers = 'suppliers';
 	function get_all($offset = 0,$limit = 0) {
 	    if($offset != 0){
             $this->db->offset($offset);
@@ -52,8 +54,13 @@ var $table = 'item_batch';
 			return false;
 		}
 	}
-	function get_batches($item_id) {
-		$this->db->where('item_id',$item_id);
+	function get_batches($item_id,$all = false) {
+		$this->db->where($this->items.'.item_id',$item_id);
+		if($all = true) {
+			$this->db->select('*,'.$this->items.'.name as item_name');
+			$this->db->join($this->items,$this->items.'.item_id = '.$this->table.'.item_id');
+			$this->db->join($this->suppliers,$this->suppliers.'.supplier_id = '.$this->table.'.supplier_id');
+		}
 		$q = $this->db->get($this->table);
 		return $q->result();
 	}

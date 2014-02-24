@@ -64,7 +64,7 @@ $autoload['libraries'] = array('template','settings','system','users','logs','da
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','user');
+$autoload['helper'] = array('url','user','item','batch');
 
 
 /*

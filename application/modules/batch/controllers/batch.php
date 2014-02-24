@@ -23,6 +23,22 @@ class Batch extends CI_Controller{
             redirect();
         }
 	}
+	function list_all($item_id,$is_ajax = false) {
+        if($this->users->is_admin() || $this->users->is_warehouseman() || $this->users->is_accountant()) {
+            $data['batch'] = $this->batch_model->get_batches($item_id,true);
+			if($is_ajax !== false) {
+				if($data['batch'])
+				echo json_encode($data['batch']);
+				else 
+				echo '';
+			} else {
+				$this->template->load('template','batch/batch_list',$data);
+			}
+        } else {
+            $this->session->set_flashdata('error','NO_ACCESS');
+            redirect();
+        }
+	}
 	function create($item_id = '') {
         if($this->users->is_admin() || $this->users->is_warehouseman() || $this->users->is_accountant()) {
     		if(!empty($_POST)){
