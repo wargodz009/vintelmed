@@ -55,6 +55,15 @@ var $order_pay = 'order_pay';
 			return $q->row();
 		}
 	}
+	function get_id_from_so($so,$row = 'order_id') {
+		$this->db->where('form_number',$so);
+		$q = $this->db->get($this->table);
+		if($row != '') {
+			return (@$q->row()->$row?$q->row()->$row:'Invalid Item');
+		} else {
+			return $q->row();
+		}
+	}
 	function get_order_details($id = 0) {
 		$this->db->where('order_id',$id);
 		$q = $this->db->get($this->order_details);

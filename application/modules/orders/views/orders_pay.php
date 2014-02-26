@@ -6,8 +6,9 @@ $this->load->model('batch/batch_model');
 ?>
 <div class="row">
 	<div class="span8 offset2">
-		<a href="<?php echo base_url();?>order_pay/list_all/<?php echo $orders->order_id;?>">View All Payment Record</a> <br/>
-		<h1>Add Payment Record</h1>
+		<a class='button' href="<?php echo base_url();?>order_pay/list_all/<?php echo $orders->order_id;?>">View All Payment Record</a> <a class='button' href="<?php echo base_url();?>order_pay/multipay/<?php echo $orders->order_id;?>">Add Payment For Multiple Invoice</a>
+		<br/>
+		<br/>
 		<a href="<?php echo base_url();?>orders"><< Back</a>
 		<div class="well">
 			<form class="form-horizontal" method="post" action="<?php echo base_url().'orders/pay/'.$orders->order_id; ?>">
@@ -23,11 +24,30 @@ $this->load->model('batch/batch_model');
 					Mode of Payment: <?=$orders->payment_type;?> <br/>
 					Paid Amount: <?php echo $orders_paid;?> <br/>
 					<?php if($orders_paid < $orders->price) { ?>
-					<label class="control-label" for="">New Payment</label>
+					<br/>
+					<label class="control-label" for="">New Payment Amount*</label>
 					<div class="controls">
 						<input type="hidden" name="order_id" value="<?php echo $orders->order_id;?>" class=":required :number"/>
 						<input type="text" name="amount" class=":required :number"/>
 					</div>
+					<br/>
+					<fieldset>
+						<legend>If Payment made via Check</legend>
+						<label class="control-label" for="">Bank</label>
+						<div class="controls">
+							<input type="text" name="bank" class=""/>
+						</div>
+						<br/>
+						<label class="control-label" for="">Check #</label>
+						<div class="controls">
+							<input type="text" name="check_number" class=""/>
+						</div>
+						<br/>
+						<label class="control-label" for="">Check Full Amount</label>
+						<div class="controls">
+							<input type="text" name="check_full_amount" class=""/>
+						</div>
+					</fieldset>
 				</div>
 				<div class="control-group">
 					<div class="controls">
@@ -43,13 +63,3 @@ $this->load->model('batch/batch_model');
 		</div>
 	</div>
 </div>
-<script type="text/javascript">
-jQuery(function(){
-	$('.quantity').change(function(){
-		if(parseInt($(this).attr('rel')) < parseInt($(this).val())) {
-			$(this).val('0');
-			alert('Return count cannot be bigger than actual order!');
-		}
-	});
-});
-</script>

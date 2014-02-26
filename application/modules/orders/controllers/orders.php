@@ -313,11 +313,7 @@ class Orders extends CI_Controller{
 	}
 	function pay($order_id){
 		if(!empty($_POST)) {
-			$data = array(
-				'order_id'=>$this->input->post('order_id'),
-				'amount'=>$this->input->post('amount')
-			);
-			$this->orders_model->add_pay($data);
+			$this->orders_model->add_pay($_POST);
 			$this->session->set_flashdata('error','Payment record added!');	
 			redirect('orders');
 		} else {

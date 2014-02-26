@@ -79,7 +79,6 @@ var $order_return = 'order_return';
 			$this->db->where("date_completed",$start);
 		}
 		$this->db->join($this->order_details,$this->order_details.'.order_id = '.$this->orders.'.order_id');
-		$this->db->group_by($this->orders.'.order_id');
 		$q = $this->db->get($this->orders);
 		return @floor($q->row()->avg_qty);
 	}
@@ -93,9 +92,8 @@ var $order_return = 'order_return';
 			$this->db->where("date_completed",$start);
 		}
 		$this->db->join($this->orders,$this->order_details.'.order_id = '.$this->orders.'.order_id');
-		$this->db->group_by($this->orders.'.order_id');
 		$q = $this->db->get($this->order_details);
-		return @floor($q->row()->sum_qty);
+		return (isset($q->row()->sum_qty)?$q->row()->sum_qty:0);
 	}
 	function get_item_sum_returned($batch_id,$start,$end = false){
 		$this->db->select("sum(".$this->order_details.".quantity) as sum_qty, return_id");
@@ -107,10 +105,9 @@ var $order_return = 'order_return';
 			$this->db->where("date_cancelled",$start);
 		}
 		$this->db->join($this->orders,$this->order_details.'.order_id = '.$this->orders.'.order_id');
-		$this->db->group_by($this->orders.'.order_id');
 		$q = $this->db->get($this->order_details);
 		$data['return_id'] = (@$q->row()->return_id?$q->row()->return_id:'-');
-		$data['sum_qty'] = @floor($q->row()->sum_qty);
+		$data['sum_qty'] = (isset($q->row()->sum_qty)?$q->row()->sum_qty:0);
 		return $data;
 	}
 	/* NEAR EXPIRY, EXPIRING */
