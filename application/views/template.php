@@ -176,7 +176,7 @@ $(document).ready(function() {
 				</li>
 				<?php } ?>
 				<?php if($this->users->is_logged_in()) { ?>
-					<?php if($this->users->is_admin() || $this->users->is_accountant()) { ?>
+					<?php if($this->users->is_admin() || $this->users->is_accountant() || $this->users->is_warehouseman()) { ?>
 					<li class="<?php echo (in_array($this->uri->segment(1),$reports)?'active':''); ?>">
 						<div class="lgt"></div>
 						<a href="<?=base_url()?>reports">
