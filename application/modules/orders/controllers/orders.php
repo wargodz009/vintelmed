@@ -134,15 +134,19 @@ class Orders extends CI_Controller{
 			$this->template->load('template','orders/orders_edit',$data);
 		}
 	}
-	function view($id) {
+	function view($id,$print = false) {
 		$data['orders'] = $this->orders_model->get_single($id);
 		if(!$data['orders']) {
 			$this->session->set_flashdata('error','not a valid orders!');	
 			redirect('orders');
 		} else {
 			$data['order_details'] = $this->orders_model->get_order_details($data['orders']->order_id);
-		}
-		$this->template->load('template','orders/orders_view',$data);
+			if($print != false) {
+				$this->load->view('orders/orders_view_print',$data);
+			} else {
+				$this->template->load('template','orders/orders_view',$data);
+			}
+		}	
 	}
 	function delete($id) {
 		if(!empty($id)) {

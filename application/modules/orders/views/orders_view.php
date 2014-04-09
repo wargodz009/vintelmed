@@ -21,5 +21,9 @@ $this->load->model('user/client_model');
 			}
 			?>
 		</div>
+		<form action="<?=base_url().'orders/view/'.$orders->order_id;?>" method="post" onsubmit="window.open('<?=base_url().'orders/view/'.$orders->order_id.'/print';?>', '_blank', 'scrollbars=no,menubar=no,height=436,width=835,resizable=no,toolbar=no,status=no');return false;">
+			<input type="hidden" value='print' name="print" />
+			<input type="submit" class="button" value="PRINT"/>
+		</form>
 	</div>
 </div>

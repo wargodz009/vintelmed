@@ -1,3 +1,6 @@
+<?php  if(isset($template) && $template != 'default') { ?>
+<link rel="stylesheet" media="" href="<?=base_url().'assets/css/print.css';?>"/>
+<?php } ?>
 <?php
 $this->load->model('supplier/supplier_model');
 $this->load->model('orders/orders_model');

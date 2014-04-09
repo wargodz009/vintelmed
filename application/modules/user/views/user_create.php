@@ -64,7 +64,7 @@ $this->load->model('district/district_model');
 <script type="text/javascript">
 $(function(){
 	$('#role_id').change(function(){
-		if($(this).val()== "2" || $(this).val()== "3" || $(this).val()== "5") {
+		if($(this).val()== "2" || $(this).val()== "3" || $(this).val()== "6") {
 			$("div#div_district_id").show();
 			$("div#logins").html('');
 		} else {

@@ -61,7 +61,8 @@ class Reports extends CI_Controller{
 		$data['all_reports'] = $this->report_model->get_all($offset,$config['per_page']);
 		$this->template->load('template','reports/reports_list',$data);
 	}
-	function view($report_id) {
+	function view($report_id,$template = 'default') {
+		$data['template'] = $template;
 		//$this->output->enable_profiler(true);
 		$report = $this->report_model->get_single($report_id);
 		if($report) {
@@ -69,27 +70,41 @@ class Reports extends CI_Controller{
 			switch($report->report_type) {
 				case 'INVENTORY': 
 				$data['items'] = $this->report_model->get_inventory_items($report->report_for);
+				if($template != 'default') {
+					$this->load->view('reports/reports/inventory_report',$data); break;
+				}
 				$this->template->load('template','reports/reports/inventory_report',$data); break;
 				case 'NEAR_EXPIRY': 
 				$date1 = date("Y/m/d",strtotime($report->date_start));
 				$date2 = date("Y/m/d",strtotime($date1." + ".$this->settings->get('expire_near')." months"));
 				$data['items'] = $this->report_model->get_near_expiry_items($date1,$date2);
+				if($template != 'default') {
+					$this->load->view('reports/reports/near_expiry',$data); break;
+				}
 				$this->template->load('template','reports/reports/near_expiry',$data); break;
 				case 'SUMMARY_OF_CRITICAL_STOCKS': 
 				$date1 = date("Y/m/d",strtotime($report->date_start));
 				$data['items'] = $this->report_model->get_critical_items($date1);
+				if($template != 'default') {
+					$this->load->view('reports/reports/summary_of_critical_stocks',$data); break;
+				}
 				$this->template->load('template','reports/reports/summary_of_critical_stocks',$data); break;
 				case 'MONTHLY_RETURN_GOODS_SLIP': 
 				$date_from = date("Y/m/d",strtotime($report->date_start));
 				$date_to = date("Y/m/d",strtotime($report->date_end));
 				$data['items'] = $this->report_model->get_returned_goods($date_from,$date_to);
+				if($template != 'default') {
+					$this->load->view('reports/reports/monthly_return_goods_slip',$data); break;
+				}
 				$this->template->load('template','reports/reports/monthly_return_goods_slip',$data); break;
 				case 'SUMMARY_OF_EXPIRED_PRODUCTS': 
 				$date1 = date("Y/m/d",strtotime($report->date_start));
 				$date2 = date("Y/m/d",strtotime($report->date_end));
 				$data['items'] = $this->report_model->get_near_expiry_items($date1,$date2);
+				if($template != 'default') {
+					$this->load->view('reports/reports/summary_of_expired_products',$data); break;
+				}
 				$this->template->load('template','reports/reports/summary_of_expired_products',$data); break;
-				
 				default: $this->template->load('template','reports/reports_view',$report); break;
 			}
 		} else {

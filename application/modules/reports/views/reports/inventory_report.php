@@ -1,3 +1,6 @@
+<?php  if(isset($template) && $template != 'default') { ?>
+<link rel="stylesheet" media="" href="<?=base_url().'assets/css/print.css';?>"/>
+<?php } ?>
 VINTELMED ENTERPRISES <br>
 WEEKLY INVENTORY REPORT - <?php echo strtoupper($this->item_type_model->get_single($report->report_for,'name')); ?><br>
 <?php 
