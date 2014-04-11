@@ -1,9 +1,13 @@
 vintelmed
 =========
 
-<<<<<<< HEAD
-vintelmed
-=======
-vintelmed
->>>>>>> f2b4163d9392dab37446a9b5d91291a7b290f795
->>>>>>> new line
+TRUNCATE `item_batch`;
+TRUNCATE `item_batch_history`;
+TRUNCATE `item_types`;
+TRUNCATE `orders`;
+TRUNCATE `order_details`;
+TRUNCATE `order_files`;
+TRUNCATE `order_pay`;
+TRUNCATE `order_return`;
+TRUNCATE `reports`;
+TRUNCATE `system_logs`;

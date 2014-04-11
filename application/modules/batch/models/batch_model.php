@@ -54,12 +54,16 @@ var $suppliers = 'suppliers';
 			return false;
 		}
 	}
-	function get_batches($item_id,$all = false) {
+	function get_batches($item_id,$all = false,$only_with_stock = false) {
 		$this->db->where($this->items.'.item_id',$item_id);
 		if($all = true) {
 			$this->db->select('*,'.$this->items.'.name as item_name');
 			$this->db->join($this->items,$this->items.'.item_id = '.$this->table.'.item_id');
 			$this->db->join($this->suppliers,$this->suppliers.'.supplier_id = '.$this->table.'.supplier_id');
+		}
+		if($only_with_stock != false) {
+			$this->db->where('item_count >','sold_count',false);
+			$this->db->where('item_count !=','sold_count',false);
 		}
 		$q = $this->db->get($this->table);
 		return $q->result();

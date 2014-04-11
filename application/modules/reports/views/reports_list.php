@@ -13,7 +13,7 @@
 				<tbody>
 				<?php
 				$this->load->model('user/user_model');
-				if(isset($all_reports)) {
+				if(isset($all_reports) && !empty($all_reports)) {
 					foreach($all_reports as $k) {
 						echo '<tr>
 							<td><a target="_new" href="'.base_url().'reports/view/'.$k->report_id.'">'.$k->report_type.'</a></td>

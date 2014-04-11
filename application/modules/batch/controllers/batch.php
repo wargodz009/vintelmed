@@ -25,7 +25,7 @@ class Batch extends CI_Controller{
 	}
 	function list_all($item_id,$is_ajax = false) {
         if($this->users->is_admin() || $this->users->is_warehouseman() || $this->users->is_accountant()) {
-            $data['batch'] = $this->batch_model->get_batches($item_id,true);
+            $data['batch'] = $this->batch_model->get_batches($item_id,true,true);
 			if($is_ajax !== false) {
 				if($data['batch'])
 				echo json_encode($data['batch']);

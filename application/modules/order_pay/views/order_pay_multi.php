@@ -17,7 +17,7 @@
 						<label class="control-label" for="">Invoice #:</label>
 						<div class="controls">
 							<input class=":required" type="text" id="" value="" name="invoice_id[]">
-						</div> <br/>
+						</div>
 					</div>
 				</div>
 				<div id="more_fields">
@@ -53,7 +53,7 @@
 jQuery(function(){
 	$(".add").on( "click", function(e) {
 		e.preventDefault();
-		$("#more_fields").after($('#so_field').clone().html() + ' <a href="" class="del">[-]</a> <br/>');
+		$("#more_fields").append($('#so_field').clone().html() + ' <a href="" class="del">[-] Remove</a> <br/>');
 	});
 	$(document).on( "click",'.del', function(e) {
 		e.preventDefault();

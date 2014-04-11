@@ -6,6 +6,7 @@ class Orders extends CI_Controller{
 		$this->load->model("orders/orders_model");
 		$this->load->model("user/medrep_model");
 		$this->load->model("items/items_model");
+		$this->load->model("batch/batch_model");
 	}
 	function index($offset = 0) {
 		$this->display($offset);
@@ -229,12 +230,6 @@ class Orders extends CI_Controller{
 				'fingerprint'=>$_SERVER['REMOTE_ADDR'],
 			);
 			$this->logs->add($logs);
-			$order_details = $this->orders_model->get_details($id);
-			if(!empty($order_details)) {
-				foreach($order_details as $x) {
-					$this->batch_model->increment($x->item_batch_id,$x->quantity);
-				}
-			}
 			$this->session->set_flashdata('error','order completed!');	
 		} else {
 			$this->session->set_flashdata('error','invalid item!');	
@@ -295,6 +290,7 @@ class Orders extends CI_Controller{
 						'remarks'=>$this->input->post('remarks'),
 					);
 					$this->orders_model->add_return($data);
+					$this->batch_model->decrement($item_batch_id[$k],$quantity[$k]);
 					$this->orders_model->set_returned($id);
 				}
 				$this->session->set_flashdata('error','Orders return recorded!');	

@@ -3,6 +3,7 @@ $this->load->model('items/items_model');
 $this->load->model('user/user_model');
 $this->load->model('user/client_model');
 $this->load->model('user/medrep_model');
+$this->load->model('order_pay/order_pay_model');
 ?>
 <div class="row">
 	<div class="span12">
@@ -23,7 +24,7 @@ $this->load->model('user/medrep_model');
 						<th>Msr</th>
 						<th>Quantity</th>
 						<th>Price</th>
-						<th>Total</th>
+						<th>Paid/Total</th>
 						<th>Status</th>
 						<th>Options</th>
 						<?php if($this->users->is_admin()) { ?>
@@ -50,7 +51,7 @@ $this->load->model('user/medrep_model');
 						?></td>
 						<td><?php echo $c->quantity;?></td>
 						<td><?php echo $c->price;?></td>
-						<td><?php echo $c->price * $c->quantity;?></td>
+						<td><?php echo $this->order_pay_model->get_paid($c->order_id).'/'. $c->price * $c->quantity;?></td>
 						<td><?php echo $c->status;?></td>
 						<?php if($this->users->is_admin() || $this->users->is_accountant()) { ?>
 						<td>

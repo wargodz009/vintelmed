@@ -124,7 +124,8 @@ class Items extends CI_Controller{
 		echo urldecode($this->input->get('value'));
 	}
 	function get_price($item_id){
-		echo $this->items_model->get_single($item_id,'price_standard');
+		$price = $this->items_model->get_single($item_id,'price_standard');
+		echo ($price != 'Invalid Item'?$price:0) ;
 	}
 }
 ?>

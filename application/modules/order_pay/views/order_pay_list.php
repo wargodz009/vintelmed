@@ -22,8 +22,8 @@ $this->load->model('orders/orders_model');
 					?>
 					<tr>
 						<td><a target="_new" href="<?php echo base_url();?>orders/view/<?=$c->order_id;?>"><?php echo $this->orders_model->get_single($c->order_id,'form_number');?></a></td>
-						<td><?php echo $c->amount;?></td>
-						<td><?php echo $c->datetime;?></td>
+						<td>Php <?php echo number_format($c->amount,2);?></td>
+						<td><?php echo date(' M d, Y',strtotime($c->datetime));?></td>
 					</tr>
 					<?php
 						}

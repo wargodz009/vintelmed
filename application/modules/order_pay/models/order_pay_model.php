@@ -65,4 +65,10 @@ var $table = 'order_pay';
 			return false;
 		}
 	}
+	function get_paid($order_id){
+		$this->db->select_sum('amount');
+		$this->db->where('order_id',$order_id);
+		$Q = $this->db->get($this->table)->row();
+		return (isset($Q->amount)?$Q->amount:0);
+	}
 }
