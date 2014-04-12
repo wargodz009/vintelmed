@@ -24,6 +24,16 @@ var $suppliers = 'suppliers';
 			return $q->row();
 		}
 	}
+	function get_stock($item_id,$count_only = false) {
+		$this->db->where('item_id',$item_id);
+		$this->db->where('item_count >','sold_count',false);
+		$q = $this->db->get($this->table);
+		if($count_only === true) {
+			return $q->num_rows();
+		} else {
+			return $q->result();
+		}
+	}
 	function count_all() {
 		return $this->db->count_all($this->table);
 	}

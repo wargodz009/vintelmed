@@ -70,7 +70,7 @@ $this->load->model('items/items_model');
 				<div class="control-group">
 					<label class="control-label" for="">on Cavite Warehouse</label>
 					<div class="controls">
-						<input class="" type="checkbox" id="" value="" name="cavite_warehouse" <?=($batch->cavite_warehouse == 1?"checked":""); ?>>
+						<input class="" type="checkbox" id="" value="1" name="cavite_warehouse" <?=($batch->cavite_warehouse == 1?"checked":""); ?>>
 					</div>
 				</div>
 				<div class="control-group">

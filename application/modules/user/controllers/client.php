@@ -156,5 +156,10 @@ class Client extends CI_Controller{
 	function orders(){
 		$this->template->load('template','user/client/order_list');
 	}
+	function medreps($client_id){
+		$data['medreps'] = $this->client_model->get_medreps($client_id);
+		$data['client_id'] = $client_id;
+		$this->template->load('template','user/client/medrep_list',$data);
+	}
 }
 ?>
