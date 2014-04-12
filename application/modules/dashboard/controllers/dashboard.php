@@ -9,7 +9,8 @@ class Dashboard extends CI_Controller{
 		$this->load->model('item_type/item_type_model');
 		$this->load->model('batch/batch_model');
 	}
-	function index($filter = '',$var = ''){
+	function index($filter = '',$var = '') {
+		//$this->output->enable_profiler(true);
 		if($this->users->is_admin() === true) {
 			$this->load->model('orders/orders_model');
 			$data['pre_approval'] = $this->orders_model->get_some('gm_approve_pre','0',true,'pre');
@@ -27,7 +28,13 @@ class Dashboard extends CI_Controller{
 		} else if($this->users->is_logged_in() === true && $this->users->is_msr() === true) {
 			$this->template->load('template','dashboard/medrep');
 		} else if($this->users->is_logged_in() === true && $this->users->is_warehouseman() === true) {
-			$this->template->load('template','dashboard/warehouseman');
+			$this->load->model('orders/orders_model');
+			if($filter == 'item_type') {
+				$data['items'] = $this->report_model->get_inventory_items($var);
+			} else {
+				$data['items'] = $this->report_model->get_inventory_items();
+			}
+			$this->template->load('template','dashboard/warehouseman',$data);
 		} else if($this->users->is_logged_in() === true && $this->users->is_client() === true) {
 			$this->template->load('template','dashboard/client');
 		} else if($this->users->is_logged_in() === true && $this->users->is_hrd() === true) {

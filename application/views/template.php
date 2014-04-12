@@ -96,6 +96,9 @@ $(document).ready(function() {
 			window.location = $(this).attr('href');
 		}
 	});
+	$('input#search_button').click(function(){
+		$(this).parent('form').submit();
+	});
 });
 </script>
 </head>
@@ -124,8 +127,10 @@ $(document).ready(function() {
 			<div class="lbl">Search</div>
 			<!-- srchbx -->
 			<div class="srchbx">
-				<input name="" type="text" />
-				<input name="submit" type="button" />
+				<form action="<?=base_url();?>search/" method="post">
+				<input name="search" type="text" />
+				<input type="button" id="search_button" />
+				</form>
 				<div class="clear"></div>
 			</div>
 			<!-- / srchbx -->

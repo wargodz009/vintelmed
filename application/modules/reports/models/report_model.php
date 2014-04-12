@@ -58,13 +58,13 @@ var $order_return = 'order_return';
 		}
 	}
 	/* INVENTORY */
-	function get_inventory_items($type = 0){
+	function get_inventory_items($type = 0) {
 		$this->db->select('*,'.$this->suppliers.'.name as supplier_name,'.$this->item_types.'.name as item_type_name,'.$this->items.'.name as item_name');
-		$this->db->join($this->suppliers,$this->suppliers.'.supplier_id = '.$this->batch.'.supplier_id');
-		$this->db->join($this->items,$this->items.'.item_id = '.$this->batch.'.item_id');
-		$this->db->join($this->item_types,$this->item_types.'.item_type_id = '.$this->items.'.item_type_id');
+		$this->db->join($this->suppliers,$this->suppliers.'.supplier_id = '.$this->batch.'.supplier_id','LEFT');
+		$this->db->join($this->items,$this->items.'.item_id = '.$this->batch.'.item_id','LEFT');
+		$this->db->join($this->item_types,$this->item_types.'.item_type_id = '.$this->items.'.item_type_id','LEFT');
 		if($type != 0) {
-		$this->db->where($this->item_types.'.item_type_id',$type);
+			$this->db->where($this->item_types.'.item_type_id',$type);
 		}
 		$q = $this->db->get($this->batch);
 		return $q->result();
@@ -96,7 +96,7 @@ var $order_return = 'order_return';
 		return (isset($q->row()->sum_qty)?$q->row()->sum_qty:0);
 	}
 	function get_item_sum_returned($batch_id,$start,$end = false){
-		$this->db->select("sum(".$this->order_details.".quantity) as sum_qty, return_id");
+		$this->db->select("sum(".$this->order_details.".quantity) as sum_qty, ".$this->order_return.".orders_return_id");
 		$this->db->where($this->order_details.'.item_batch_id',$batch_id);
 		$this->db->where($this->orders.'.status','returned');
 		if($end != false) {
@@ -104,11 +104,24 @@ var $order_return = 'order_return';
 		} else {
 			$this->db->where("date_cancelled",$start);
 		}
-		$this->db->join($this->orders,$this->order_details.'.order_id = '.$this->orders.'.order_id');
+		$this->db->join($this->orders,$this->order_details.'.order_id = '.$this->orders.'.order_id','LEFT');
+		$this->db->join($this->order_return,$this->order_return.'.order_id = '.$this->orders.'.order_id','LEFT');
 		$q = $this->db->get($this->order_details);
 		$data['return_id'] = (@$q->row()->return_id?$q->row()->return_id:'-');
 		$data['sum_qty'] = (isset($q->row()->sum_qty)?$q->row()->sum_qty:0);
 		return $data;
+	}
+	function get_item_sum_new($item_id,$start,$end = false){
+		$this->db->select("sum(".$this->batch.".item_count) as sum_qty");
+		$this->db->where($this->items.'.item_id',$item_id);
+		if($end != false) {
+			$this->db->where("recieve_date BETWEEN '$start' AND '$end'");
+		} else {
+			$this->db->where("recieve_date",$start);
+		}
+		$this->db->join($this->items,$this->items.'.item_id = '.$this->batch.'.item_id');
+		$q = $this->db->get($this->batch);
+		return (isset($q->row()->sum_qty)?$q->row()->sum_qty:0);
 	}
 	/* NEAR EXPIRY, EXPIRING */
 	function get_near_expiry_items($date,$expire_date){

@@ -63,7 +63,7 @@ if(isset($post_approval)) {
             <div id="tblisthldr1" class="tblist scrl-1">
             	<table border="0" cellspacing="0" cellpadding="0">
 				  <?php 
-					if(isset($items)) {
+					if(isset($items) && !empty($items)) {
 						$ctr = 1;
 						$total_out = 0;
 						foreach($items as $k) {
@@ -92,18 +92,34 @@ if(isset($post_approval)) {
 								<td class="wd1-8"><?php echo $k->batch_id.'/ '.date('d-y',strtotime($k->expire)); ?></td>
 								<!-- in -->
 								<td class="wd1-9"><?php 
-								$returned_goods = $this->report_model->get_item_sum_returned($k->item_batch_id,$fromDate,date("Y-m-d"));
-								echo $returned_goods['sum_qty']; ?></td>
+								//echo $this->report_model->get_item_sum_new($k->item_id,$fromDate,date("Y-m-d"));
+								?>--</td>
 								<!-- cancelled rgs/dr-->
-								<td class="wd1-10"><?php echo $returned_goods['return_id']; ?></td>
+								<td class="wd1-10"><?php $returned_goods = $this->report_model->get_item_sum_returned($k->item_batch_id,$fromDate,date("Y-m-d"));
+								echo $returned_goods['sum_qty']; ?></td>
 								<!-- total out -->
-								<td class="wd1-11"><?php echo $total_out; ?></td>
+								<td class="wd1-11">--</td>
 								<!-- remarks -->
-								<td class="wd1-12"><?php echo '-'; ?></td>
+								<td class="wd1-12"><?php 
+								$item_count = $k->item_count;
+								$sold_count = $k->sold_count;
+								$remaining_count = $item_count - $sold_count;
+								$limit = $this->settings->get('critical_percent');
+								$max_limit = $item_count * ($limit/100);
+								if($remaining_count >= $max_limit) { ?>
+									<img src="<?=base_url();?>assets/images/warning-icon-green.png" alt="<?=$max_limit;?>"/>
+								<?php } else { ?>
+									<img src="<?=base_url();?>assets/images/warning-icon.png" alt="<?=$max_limit;?>"/>
+								<?php } ?>
+								</td>
 							</tr>
 							<?php
 							$ctr++;
 						}
+					} else {
+						echo '<tr>
+							<td colspan="12">No items yet!</td>
+						</tr>';
 					}
 					?>
                 </table>

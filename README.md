@@ -3,7 +3,6 @@ vintelmed
 
 TRUNCATE `item_batch`;
 TRUNCATE `item_batch_history`;
-TRUNCATE `item_types`;
 TRUNCATE `orders`;
 TRUNCATE `order_details`;
 TRUNCATE `order_files`;
