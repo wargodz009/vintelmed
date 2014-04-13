@@ -1,6 +1,7 @@
 vintelmed
 =========
 
+TRUNCATE `cruds`;
 TRUNCATE `item_batch`;
 TRUNCATE `item_batch_history`;
 TRUNCATE `orders`;

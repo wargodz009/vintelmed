@@ -29,7 +29,10 @@ $this->load->model('role/role_model');
 						echo $role->role_name;?></td>
 						<td>
 						<?php if($this->users->is_admin()) { ?>
-							<a href="<?php echo base_url();?>user/manage/<?php echo $c->user_id;?>">Manage</a> | <a href="<?php echo base_url();?>user/edit/<?php echo $c->user_id;?>">Edit</a> | <a class="confirm" rel="Are you sure you want to permanently delete <?php echo $c->username;?>?" href="<?php echo base_url();?>user/delete/<?php echo $c->user_id;?>">Delete</a> |
+							<?php if($c->role_id == 3) { ?>
+								<a href="<?php echo base_url();?>user/manage/<?php echo $c->user_id;?>">Manage</a> |
+							<?php } ?>
+							<a href="<?php echo base_url();?>user/edit/<?php echo $c->user_id;?>">Edit</a> | <a class="confirm" rel="Are you sure you want to permanently delete <?php echo $c->username;?>?" href="<?php echo base_url();?>user/delete/<?php echo $c->user_id;?>">Delete</a> |
 						<?php if($c->status == 'enabled') { ?>
 							<a href="<?php echo base_url();?>user/deactivate/<?php echo $c->user_id;?>" class="confirm" rel="Are you sure you want to deactivate <?php echo $c->username;?>?">Deactivate</a>
 						<?php } else { ?>
