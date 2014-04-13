@@ -15,6 +15,7 @@ class Dashboard extends CI_Controller{
 			$this->load->model('orders/orders_model');
 			$data['pre_approval'] = $this->orders_model->get_some('gm_approve_pre','0',true,'pre');
 			$data['post_approval'] = $this->orders_model->get_some('gm_approve_post','0',true,'post');
+			//$data['sales_update'] = $this->report_model->get_sales_update(date('Y-m-01'),date('Y-m-t'));
 			if($filter == 'item_type') {
 				$data['items'] = $this->report_model->get_inventory_items($var);
 			} else {

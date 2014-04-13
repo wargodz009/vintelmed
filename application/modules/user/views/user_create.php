@@ -53,6 +53,8 @@ $this->load->model('district/district_model');
 					<div class="controls">
 						<input class="" type="text" id="" value="" name="last_name">
 					</div> <br/>
+					<div id="quota">
+					</div> <br/>					
 					<div id="logins">
 					</div>
 				</div>
@@ -69,10 +71,16 @@ $this->load->model('district/district_model');
 $(function(){
 	$('#role_id').change(function(){
 		if($(this).val()== "2" || $(this).val()== "3") {
+			$("div#quota").html('<label class="control-label" for="">Quota</label><div class="controls"><input class="" type="text" id="" value="" name="quota"></div><br/>');
 			$("div#div_district_id").show();
 			$("div#logins").html('');
+		} else if($(this).val()== "3") {
+			$("div#div_district_id").show();
+			$("div#logins").html('');
+			$("div#quota").html('');
 		} else {
 			$("div#div_district_id").hide();
+			$("div#quota").html('');
 			$("div#logins").html('<label class="control-label" for="">username</label><div class="controls"><input class=":required" type="text" id="" value="" name="username">	</div> <br/><label class="control-label" for="">Password</label><div class="controls"><input class=":required" type="text" id="" value="" name="password"></div>');
 		}
 	});

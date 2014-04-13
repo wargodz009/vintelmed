@@ -63,6 +63,12 @@ $this->load->model('role/role_model');
 					<input class="" type="text" id="" value="<?php echo $user->area;?>" name="area">
 				</div> <br/>
 				<?php } ?>
+				<?php if($user->role_id == 3) { ?>
+				<label class="control-label" for="">Quota</label>
+				<div class="controls">
+					<input class="" type="text" id="" value="<?php echo $user->quota;?>" name="quota">
+				</div> <br/>
+				<?php } ?>
 				<div class="control-group">
 					<div class="controls">
 						<button type="submit" class="btn">UPDATE</button>

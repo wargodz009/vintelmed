@@ -9,6 +9,7 @@ var $item_types = 'item_types';
 var $orders = 'orders';
 var $order_details = 'order_details';
 var $order_return = 'order_return';
+var $order_pay = 'order_pay';
 	function get_all($offset = 0,$limit = 0) {
 	    if($offset != 0){
             $this->db->offset($offset);
@@ -152,4 +153,9 @@ var $order_return = 'order_return';
 		$q = $this->db->get($this->orders);
 		return $q->result();
 	}
-}
+	
+	/* SALES AND COLLECTION UPDATE */
+	function get_sales_update($date_start,$date_end){
+	
+	}
+} 
