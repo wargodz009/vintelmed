@@ -47,10 +47,17 @@ class User extends CI_Controller{
 					$_POST['username'] = $_POST['first_name'];
 					$_POST['password'] = $_POST['first_name'];
 				}
-				$param = array(
-					'first_name'=>$_POST['first_name'],
-					'last_name'=>$_POST['last_name'],
-				);
+				$list = array(2,3);
+				if(in_array($_POST['role_id'],$list)) {
+					$param = array(
+						'first_name'=>$_POST['first_name'],
+						'last_name'=>$_POST['last_name'],
+					); 
+				} else {
+					$param = array(
+						'username'=>$_POST['username']
+					);
+				}
 				if(! $this->user_model->exists($param)) { 
 					$id = $this->user_model->create($_POST);
 					if($id) {

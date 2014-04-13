@@ -57,6 +57,10 @@ $this->load->model('role/role_model');
 						echo form_dropdown('district_id', $types,$user->district_id,$others);
 					?>
 					</div>
+				</div><br/>
+				<label class="control-label" for="">Area</label>
+				<div class="controls">
+					<input class="" type="text" id="" value="<?php echo $user->area;?>" name="area">
 				</div> <br/>
 				<?php } ?>
 				<div class="control-group">

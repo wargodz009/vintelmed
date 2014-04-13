@@ -39,7 +39,11 @@ $this->load->model('district/district_model');
 							$types = to_select($options,'name','district_id',false);	
 							echo form_dropdown('district_id', $types,'',$others);
 						?>
-						</div>  
+						</div><br/>
+					<label class="control-label" for="">Area</label>
+					<div class="controls">
+						<input class="" type="text" id="" value="" name="area">
+					</div> <br/>
 					</div><br/>
 					<label class="control-label" for="">First name/Hospital Name</label>
 					<div class="controls">
@@ -64,7 +68,7 @@ $this->load->model('district/district_model');
 <script type="text/javascript">
 $(function(){
 	$('#role_id').change(function(){
-		if($(this).val()== "2" || $(this).val()== "3" || $(this).val()== "6") {
+		if($(this).val()== "2" || $(this).val()== "3") {
 			$("div#div_district_id").show();
 			$("div#logins").html('');
 		} else {

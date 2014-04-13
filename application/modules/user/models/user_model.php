@@ -107,7 +107,7 @@ var $msr_tbl = 'msr_clients';
 	function exists($params,$val = ''){
 		if(is_array($params)) {
 			foreach($params as $k=>$v){
-				$this->db->where($k,$v);
+				$this->db->or_where($k,$v);
 			}
 		} else {
 			$this->db->where($params,$val);
