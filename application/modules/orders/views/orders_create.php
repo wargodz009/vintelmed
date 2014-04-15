@@ -41,6 +41,12 @@ $this->load->model('user/client_model');
 						<input class="" type="text" id="price" value="" name="price">
 					</div>
 				</div> <br/>
+				<div class="control-group">
+					<label class="control-label" for="">Discount:</label>
+					<div class="controls">
+						<input type="text" id="discount" value="0" class=":number" name="discount"> %
+					</div>
+				</div> <br/>
 				Total Price: <span class="control-group" id="total_price"></span><br/><br/>
 				<div class="control-group">
 					<div class="controls">
@@ -104,7 +110,12 @@ jQuery(function(){
 		$('#'+x).text(id);
 	}
 	function compute(){
-		$('#total_price').text($('#quantity').val() * $('#price').val())
+		var total = $('#quantity').val() * $('#price').val();
+		if($('#discount').val() != 0) {
+			$('#total_price').text(total - (total * $('#discount').val() / 100) );
+		} else {
+			$('#total_price').text(total);
+		}
 	}
 	$('#items').change(function() {
 		$.ajax({
@@ -118,6 +129,9 @@ jQuery(function(){
 		compute();
 	});
 	$('#price').change(function(){
+		compute();
+	});
+	$('#discount').change(function(){
 		compute();
 	});
 });

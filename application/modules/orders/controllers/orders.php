@@ -85,6 +85,7 @@ class Orders extends CI_Controller{
 						'item_id'=>$_POST['item_id'],
 						'quantity'=>$_POST['quantity'],
 						'price'=>$_POST['price'],
+						'discount'=>$_POST['discount'],
 						'status'=>'approved'
 					);
 					$order_id = $this->orders_model->create($data);

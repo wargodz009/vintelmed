@@ -1,3 +1,10 @@
+<?php
+$this->load->model('user/user_model');
+$this->load->model('items/items_model');
+$this->load->model('orders/orders_model');
+$this->load->model('user/client_model');
+$this->load->model('batch/batch_model');
+?>
 <html>
 <head>
 <style type="text/css">
@@ -44,28 +51,32 @@
 	<div id="si">
 		<div id="top-space">&nbsp;</div>
 		<div id="name-date">
-			<div class="datetime center">January 30, 2014</div>
-			<div class="name strong">DR. EDMUND ARALAR</div>
+			<div class="datetime center"><?=date("F d, Y",strtotime($orders->datetime));?></div>
+			<div class="name strong"><?=get_name($this->client_model->get_user_id_by_client_msr_id($orders->msr_client_id));?></div>
 		</div>
 		<div id="location-si_num">
-			<div class="si_num strong center">16802</div>
-			<div class="location">KMIA Medical & Dental Supplies, #219 Malvar St., PTO. Princesa Palawan</div>
+			<div class="si_num strong center"><?=$orders->form_number;?></div>
+			<div class="location"><?=$this->user_model->get_single($this->client_model->get_user_id_by_client_msr_id($orders->msr_client_id),false,'address_number').' '.$this->user_model->get_single($this->client_model->get_user_id_by_client_msr_id($orders->msr_client_id),false,'address_street').' '.$this->user_model->get_single($this->client_model->get_user_id_by_client_msr_id($orders->msr_client_id),false,'address_municipality');?></div>
 		</div>
 		<div id="medrep">
-			<div class="medrep_name center">C1/RYAN</div>
+			<div class="medrep_name center"><?=get_name($orders->msr_id);?></div>
 		</div>
 		<div id="mid-space">&nbsp;</div>
+		<?php 
+		$all = 0;
+		foreach($order_details as $items) {
+		?>
 		<div id="items_p1">
-			<div class="description strong center">CLOTRIKAM-V</div>
+			<div class="description strong center"><?=get_item($orders->item_id,false);?></div>
 			<div class="spacer_1">&nbsp;</div>
-			<div class="lot_num">B205</div>
-			<div class="expiry">9/14</div>
-			<div class="qty">360</div>
-			<div class="price">52</div>
-			<div class="total">18,720.00</div>
+			<div class="lot_num"><?=$this->batch_model->get_single($items->item_batch_id,'lot_number');?></div>
+			<div class="expiry"><?=date("m/y",strtotime($this->batch_model->get_single($items->item_batch_id,'expire')));?></div>
+			<div class="qty"><?=$orders->quantity;?></div>
+			<div class="price"><?=$orders->price;?></div>
+			<div class="total"><?php $total = $orders->quantity * $orders->price; echo $total; $all = $all + $total; ?></div>
 		</div>
 		<div id="items_p2">
-			<div class="description center">Clotrimazole 100mg Pessary</div>
+			<div class="description center"><?=$this->items_model->get_single($orders->item_id,'description');?></div>
 			<div class="spacer_1">&nbsp;</div>
 			<div class="lot_num">&nbsp;</div>
 			<div class="expiry">&nbsp;</div>
@@ -73,6 +84,7 @@
 			<div class="price">&nbsp;</div>
 			<div class="total">&nbsp;</div>
 		</div>
+		<?php } ?>
 		<div id="items_end">
 			<div class="description">&nbsp;</div>
 			<div class="spacer_1">&nbsp;</div>
@@ -81,13 +93,13 @@
 		</div>
 		<div id="mid-space">&nbsp;</div>
 		<div id="discount">
-			<div class="discount_result">(5,616.00)</div>
-			<div class="discount_val">30%</div>
+			<div class="discount_result">(<?=$all;?>)</div>
+			<div class="discount_val">(<?=$orders->discount;?>%)</div>
 			<div class="discount_text strong">Less Dsicount</div>
 		</div>
 		<div class="small-space">&nbsp;</div>
 		<div id="total">
-			<div class="total_text strong">13,104.00</div>
+			<div class="total_text strong"><?=($all - ($all * $orders->discount / 100));?></div>
 		</div>
 	</div>
 	<div class="clear"></div>

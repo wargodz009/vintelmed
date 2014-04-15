@@ -24,7 +24,7 @@ $this->load->model('order_pay/order_pay_model');
 						<th>Msr</th>
 						<th>Quantity</th>
 						<th>Price</th>
-						<th>Paid/Total</th>
+						<th>Paid/Total (Discount)</th>
 						<th>Status</th>
 						<th>Options</th>
 						<?php if($this->users->is_admin()) { ?>
@@ -51,7 +51,9 @@ $this->load->model('order_pay/order_pay_model');
 						?></td>
 						<td><?php echo $c->quantity;?></td>
 						<td><?php echo $c->price;?></td>
-						<td><?php echo $this->order_pay_model->get_paid($c->order_id).'/'. $c->price * $c->quantity;?></td>
+						<td><?php 
+						$total = $c->price * $c->quantity;
+						echo $this->order_pay_model->get_paid($c->order_id).'/'. ( $total - ($total * ($c->discount / 100))).' (-'.$c->discount.'%)';?></td>
 						<td><?php echo $c->status;?></td>
 						<?php if($this->users->is_admin() || $this->users->is_accountant()) { ?>
 						<td>
