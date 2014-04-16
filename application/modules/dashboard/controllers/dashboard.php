@@ -17,6 +17,7 @@ class Dashboard extends MX_Controller {
 			$data['pre_approval'] = $this->orders_model->get_some('gm_approve_pre','0',true,'pre');
 			$data['post_approval'] = $this->orders_model->get_some('gm_approve_post','0',true,'post');
 			$data['sales_and_collection'] = modules::run('reports/sac/get_current');
+			$data['collection_updates'] = modules::run('reports/collection/get_current');
 			if($filter == 'item_type') {
 				$data['items'] = $this->report_model->get_inventory_items($var);
 			} else {

@@ -219,7 +219,7 @@ if(isset($post_approval)) {
 							$total_quota += $quota;
 							?>%</td>
 							<td class="wd3-13"><?=(isset($info['total_sold_items'])?$info['total_sold_items']:'');?></td>
-							<td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
+							<td class="wd3-14"><a href="#" class="lnkicn2"><img src="<?=base_url();?>assets/images/view-icon.png" width="8" height="8" /></a></td>
 						</tr>
 					</table>
 					<?php
@@ -234,7 +234,7 @@ if(isset($post_approval)) {
 							<td class="wd3-11"></td>
 							<td class="wd3-12"></td>
 							<td class="wd3-13"></td>
-							<td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
+							<td class="wd3-14"><a href="#" class="lnkicn2"><img src="<?=base_url();?>assets/images/view-icon.png" width="8" height="8" /></a></td>
 						</tr>
 					</table>
 				<?php
@@ -259,7 +259,7 @@ if(isset($post_approval)) {
             <div class="total">
             	<table width="0" border="0" cellspacing="0" cellpadding="0">
                   <tr>
-                    <td class="wd4-1">TOTAL South Area</td>
+                    <td class="wd4-1">TOTAL</td>
                     <td class="wd4-2"><?=$total_sales;?></td>
                     <td class="wd4-3"><?=$total_quota;?></td>
                     <td class="wd4-4"></td>
@@ -313,11 +313,11 @@ if(isset($post_approval)) {
             	<table border="0" cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="wd3-1">Area</td>
-                    <td class="wd3-2">MSR Name</td>
-                    <td class="wd3-3">Sales</td>
-                    <td class="wd3-4">Quota</td>
-                    <td class="wd3-5">%</td>
-                    <td class="wd3-6">End Month</td>
+                    <td class="wd3-2">Client Name</td>
+                    <td class="wd3-3">Pr/Or #</td>
+                    <td class="wd3-4">Check Date</td>
+                    <td class="wd3-5">Dated/Cash</td>
+                    <td class="wd3-6">Bank/Check #</td>
                     <td class="wd3-7">&nbsp;</td>
                   </tr>
                 </table>
@@ -328,18 +328,42 @@ if(isset($post_approval)) {
             <div class="clear"></div>
             
             <!-- tblist -->
-            <div id="tblisthldr3" class="tblist scrl-2">
-            	<table border="0" cellspacing="0" cellpadding="0">
-                  <tr>
-                    <td class="wd3-8"></td>
-                    <td class="wd3-9"></td>
-                    <td class="wd3-10"></td>
-                    <td class="wd3-11"></td>
-                    <td class="wd3-12"></td>
-                    <td class="wd3-13"></td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                </table>
+            <div id="tblisthldr3" class="tblist scrl-2 custom-width">
+				<?php 
+				if(isset($collection_updates) && !empty($collection_updates)) {
+					$total_col = 0;
+					foreach($collection_updates as $col) {
+				?>
+				<table border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td class="wd3-8"><?=$col->area;?></td>
+						<td class="wd3-9"><?=get_name($col->user_id);?></td>
+						<td class="wd3-10"><?=$col->form_number;?></td>
+						<td class="wd3-11"><?=date("d M, Y",strtotime($col->datetime));?></td>
+						<td class="wd3-12"><? echo $col->amount; $total_col += $col->amount;?></td>
+						<td class="wd3-13"><?=$col->check_number;?></td>
+						<td class="wd3-14"><a href="#" class="lnkicn2"><img src="<?=base_url();?>assets/images/view-icon.png" width="8" height="8" /></a></td>
+					</tr>
+				</table>
+				<?php
+					}
+				} else {
+				?>
+				<table border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td class="wd3-8">No updates yet!</td>
+						<td class="wd3-9"></td>
+						<td class="wd3-10"></td>
+						<td class="wd3-11"></td>
+						<td class="wd3-12"></td>
+						<td class="wd3-13"></td>
+						<td class="wd3-14"><a href="#" class="lnkicn2"><img src="<?=base_url();?>assets/images/view-icon.png" width="8" height="8" /></a></td>
+					</tr>
+				</table>
+				<?php
+				}
+				?>
+            	
                 <script type="text/javascript">
 					$(function(){
 					  $('#tblisthldr3').slimscroll({
@@ -356,13 +380,13 @@ if(isset($post_approval)) {
             
             <!-- total -->
             <div class="total">
-            	<table width="0" border="0" cellspacing="0" cellpadding="0">
+            	<table width="0" border="0" cellspacing="0" cellpadding="0" class='custom-width'>
                   <tr>
-                    <td class="wd4-1">0</td>
-                    <td class="wd4-2">0</td>
-                    <td class="wd4-3">0</td>
-                    <td class="wd4-4">0</td>
-                    <td class="wd4-5">0</td>
+                    <td class="wd4-1">TOTAL</td>
+                    <td class="wd4-2"></td>
+                    <td class="wd4-3"></td>
+                    <td class="wd4-4"></td>
+                    <td class="wd4-5"><?=$total_col;?></td>
                     <td>&nbsp;</td>
                   </tr>
                 </table>

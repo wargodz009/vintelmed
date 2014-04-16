@@ -2,6 +2,7 @@
 
 class Report_model extends CI_Model{
 var $table = 'reports';
+var $user = 'users';
 var $items = 'items';
 var $batch = 'item_batch';
 var $suppliers = 'suppliers';
@@ -160,6 +161,20 @@ var $order_pay = 'order_pay';
 		$this->db->where('msr_client_id',$msr_client_id);
 		$this->db->where("datetime BETWEEN '$year-$month-01' AND '".$end."'");
 		$q = $this->db->get($this->orders);
+		return $q->result();
+	}
+	/* SALES AND COLLECTION UPDATE */
+	function get_collections($msr_client_id = '',$month = '',$year = '',$area = 0){
+		if($month == '') 
+			$month = date('m');
+		if($year == '') 
+			$year = date('Y');
+			
+		$end =  date("Y-m-d", mktime(0,0,0,$month + 1,0,$year));
+		$this->db->where($this->order_pay.".datetime BETWEEN '$year-$month-01' AND '".$end."'");
+		$this->db->join($this->orders,$this->orders.'.order_id = '.$this->order_pay.'.order_id');
+		$this->db->join($this->user,$this->user.'.user_id = '.$this->orders.'.msr_id');
+		$q = $this->db->get($this->order_pay);
 		return $q->result();
 	}
 } 
