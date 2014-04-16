@@ -155,7 +155,11 @@ var $order_pay = 'order_pay';
 	}
 	
 	/* SALES AND COLLECTION UPDATE */
-	function get_sales_update($date_start,$date_end){
-	
+	function get_sold_items($msr_client_id,$month,$year) {
+		$end =  date("Y-m-d", mktime(0,0,0,$month + 1,0,$year));
+		$this->db->where('msr_client_id',$msr_client_id);
+		$this->db->where("datetime BETWEEN '$year-$month-01' AND '".$end."'");
+		$q = $this->db->get($this->orders);
+		return $q->result();
 	}
 } 

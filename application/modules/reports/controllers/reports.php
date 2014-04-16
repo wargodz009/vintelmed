@@ -1,6 +1,6 @@
 <?php
 
-class Reports extends CI_Controller{
+class Reports extends MX_Controller{
 	function __construct() {
 		parent::__construct();
 		$this->load->model('reports/report_model');

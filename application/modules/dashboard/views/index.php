@@ -195,17 +195,52 @@ if(isset($post_approval)) {
             
             <!-- tblist -->
             <div id="tblisthldr2" class="tblist scrl-2">
-            	<table border="0" cellspacing="0" cellpadding="0">
-                  <tr>
-                    <td class="wd3-8"></td>
-                    <td class="wd3-9"></td>
-                    <td class="wd3-10"></td>
-                    <td class="wd3-11"></td>
-                    <td class="wd3-12"></td>
-                    <td class="wd3-13"></td>
-                    <td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
-                  </tr>
-                </table>
+				<?php 
+				if(isset($sales_and_collection) && !empty($sales_and_collection)) {
+					$total_sales = 0;
+					$total_end = 0;
+					$total_quota = 0;
+					foreach($sales_and_collection as $info) {
+					?>
+					<table border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td class="wd3-8"><?=(isset($info['area'])?$info['area']:'');?></td>
+							<td class="wd3-9"><?=(isset($info['user_id'])?get_name($info['user_id']):'');?></td>
+							<td class="wd3-10"><?=(isset($info['total_sold_items'])?$info['total_sold_items']:'');?></td>
+							<td class="wd3-11"><?=(isset($info['quota'])?$info['quota']:'');?></td>
+							<td class="wd3-12"><?php
+							$total = (isset($info['total_sold_items'])?$info['total_sold_items']:0);
+							$quota = (isset($info['quota'])?$info['quota']:0);
+							$count1 = $total / $quota;
+							$count2 = $count1 * 100;
+							echo $count2;
+							$total_sales += $total;
+							$total_end += $total;
+							$total_quota += $quota;
+							?>%</td>
+							<td class="wd3-13"><?=(isset($info['total_sold_items'])?$info['total_sold_items']:'');?></td>
+							<td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
+						</tr>
+					</table>
+					<?php
+					}
+				} else {
+				?>
+					<table border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td class="wd3-8">No items yet!</td>
+							<td class="wd3-9"></td>
+							<td class="wd3-10"></td>
+							<td class="wd3-11"></td>
+							<td class="wd3-12"></td>
+							<td class="wd3-13"></td>
+							<td class="wd3-14"><a href="#" class="lnkicn2"><img src="images/view-icon.png" width="8" height="8" /></a></td>
+						</tr>
+					</table>
+				<?php
+				}
+				?>
+            	
                 <script type="text/javascript">
 					$(function(){
 					  $('#tblisthldr2').slimscroll({
@@ -225,10 +260,10 @@ if(isset($post_approval)) {
             	<table width="0" border="0" cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="wd4-1">TOTAL South Area</td>
-                    <td class="wd4-2">0</td>
-                    <td class="wd4-3">0</td>
-                    <td class="wd4-4">0</td>
-                    <td class="wd4-5">0</td>
+                    <td class="wd4-2"><?=$total_sales;?></td>
+                    <td class="wd4-3"><?=$total_quota;?></td>
+                    <td class="wd4-4"></td>
+                    <td class="wd4-5"><?=$total_end;?></td>
                     <td>&nbsp;</td>
                   </tr>
                 </table>
