@@ -1,5 +1,4 @@
 <?php
-$this->output->enable_profiler(true);
 $this->load->model('item_type/item_type_model');
 $this->load->model('batch/batch_model');
 ?>

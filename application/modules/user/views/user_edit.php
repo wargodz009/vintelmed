@@ -22,6 +22,12 @@ $this->load->model('role/role_model');
 						?>
 					</div>
 				</div> <br/>
+				<div class="control-group">
+					<label class="control-label" for="">Username</label>
+					<div class="controls">
+						<input class="" type="text" id="" value="<?php echo $user->username;?>" name="username">
+					</div>
+				</div> <br/>
 				<?php } ?>
 				<div class="control-group">
 					<label class="control-label" for="">First name</label>

@@ -26,6 +26,8 @@ class Dashboard extends MX_Controller {
 			$this->template->load('template','dashboard/index',$data);
 		} else if($this->users->is_logged_in() === true && $this->users->is_accountant() === true) {
 			$this->load->model('orders/orders_model');
+			$data['sales_and_collection'] = modules::run('reports/sac/get_current');
+			$data['collection_updates'] = modules::run('reports/collection/get_current');
 			$data['all_pending'] = $this->orders_model->get_some('status','pending');
 			$this->template->load('template','dashboard/accountant',$data);
 		} else if($this->users->is_logged_in() === true && $this->users->is_msr() === true) {

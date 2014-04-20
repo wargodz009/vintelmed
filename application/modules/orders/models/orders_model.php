@@ -64,10 +64,14 @@ var $order_pay = 'order_pay';
 			return $q->row();
 		}
 	}
-	function get_order_details($id = 0) {
+	function get_order_details($id = 0,$field = '') {
 		$this->db->where('order_id',$id);
 		$q = $this->db->get($this->order_details);
-		return $q->result();
+		if($field != '') {
+			return $q->row()->$field;
+		} else {
+			return $q->result();
+		}
 	}
 	function is_exist_order_return($id = 0) {
 		$this->db->where('order_id',$id);

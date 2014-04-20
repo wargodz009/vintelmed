@@ -1,5 +1,6 @@
 <?php
 $this->load->model('items/items_model');
+$this->load->model('orders/orders_model');
 $this->load->model('user/user_model');
 $this->load->model('user/client_model');
 $this->load->model('user/medrep_model');
@@ -49,7 +50,9 @@ $this->load->model('order_pay/order_pay_model');
 						$msr_id = $this->medrep_model->get_msr_id($client_id,$c->msr_client_id);
 						echo get_name($msr_id);
 						?></td>
-						<td><?php echo $c->quantity;?></td>
+						<td><?php $c->quantity = $this->orders_model->get_order_details($c->order_id,'quantity');
+						echo $c->quantity;
+						?></td>
 						<td><?php echo $c->price;?></td>
 						<td><?php 
 						$total = $c->price * $c->quantity;

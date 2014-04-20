@@ -261,7 +261,25 @@ $(document).ready(function() {
 			?>
 			<?= '<div id="content_start">'.$contents.'</div>'; ?>
 			<?php } else {
+				if($this->session->flashdata('error') != ''){
+					echo '<div class="ui-widget">
+						<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+							<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+							'.$this->session->flashdata('error').'</p>
+						</div>
+					</div>';
+				}
+				if($this->session->flashdata('notice') != ''){
+					echo '<div class="ui-widget">
+						<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+							<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+							'.$this->session->flashdata('notice').'</p>
+						</div>
+					</div>';
+				}
+
 				$this->session->sess_destroy();
+				
 				echo '<div id="content_start">'.$contents.'</div>';
 			} ?>
 		</div><!-- / content -->

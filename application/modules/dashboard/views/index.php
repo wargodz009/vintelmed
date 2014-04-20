@@ -260,10 +260,10 @@ if(isset($post_approval)) {
             	<table width="0" border="0" cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="wd4-1">TOTAL</td>
-                    <td class="wd4-2"><?=$total_sales;?></td>
-                    <td class="wd4-3"><?=$total_quota;?></td>
+                    <td class="wd4-2"><?=(isset($total_sales)?$this->calc->to_money($total_sales):'0');?></td>
+                    <td class="wd4-3"><?=(isset($total_sales)?$this->calc->to_money($total_quota):'0');?></td>
                     <td class="wd4-4"></td>
-                    <td class="wd4-5"><?=$total_end;?></td>
+                    <td class="wd4-5"><?=(isset($total_sales)?$this->calc->to_money($total_end):'0');?></td>
                     <td>&nbsp;</td>
                   </tr>
                 </table>
@@ -386,7 +386,7 @@ if(isset($post_approval)) {
                     <td class="wd4-2"></td>
                     <td class="wd4-3"></td>
                     <td class="wd4-4"></td>
-                    <td class="wd4-5"><?=$total_col;?></td>
+                    <td class="wd4-5"><?=(isset($total_col)?$this->calc->to_money($total_col):'0');?></td>
                     <td>&nbsp;</td>
                   </tr>
                 </table>

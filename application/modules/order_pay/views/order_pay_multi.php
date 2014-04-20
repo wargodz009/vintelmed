@@ -1,27 +1,36 @@
+<div class="page_title">Add Payment</div>
 <div class="row">
 	<div class="span8 offset2">
-		<h1>Add Payment</h1>
 		<div class="well">
 			<form class="form-horizontal" method="post" action="">
-				<a href="" class='add'>[+] Add Field</a> <br/>
+				<a href="" class='add button'>[+] Add Field</a> <br/>
 				<div class="control-group" id='so_field'>
 					<div class="fields">
-						<label class="control-label" for="">so #:</label>
-						<div class="controls">
-							<input class=":required" type="text" id="" value="" name="so_number[]">
-						</div> <br/>
-						<label class="control-label" for="">Amount:</label>
-						<div class="controls">
-							<input class=":required" type="text" id="" value="" name="solo_amount[]">
-						</div> <br/>
-						<label class="control-label" for="">Invoice #:</label>
-						<div class="controls">
-							<input class=":required" type="text" id="" value="" name="invoice_id[]">
+						<div class="row">
+							<label class="control-label" for="">so #:</label>
+							<div class="controls">
+								<input class=":required" type="text" id="" value="" name="so_number[]">
+							</div>
+						</div>
+						<div class="row">
+							<label class="control-label" for="">Amount:</label>
+							<div class="controls">
+								<input class=":required" type="text" id="" value="" name="solo_amount[]">
+							</div>
+						</div>
+						<div class="row">
+							<label class="control-label" for="">Invoice #:</label>
+							<div class="controls">
+								<input class=":required" type="text" id="" value="" name="invoice_id[]">
+							</div>
 						</div>
 					</div>
 				</div>
+				<div class="clear"></div>
 				<div id="more_fields">
 				</div> <br/>
+				<div class="clear"></div>
+				<hr/>
 				<div class="control-group">
 					<label class="control-label" for="">Bank</label>
 					<div class="controls">
@@ -53,7 +62,7 @@
 jQuery(function(){
 	$(".add").on( "click", function(e) {
 		e.preventDefault();
-		$("#more_fields").append($('#so_field').clone().html() + ' <a href="" class="del">[-] Remove</a> <br/>');
+		$("#more_fields").append($('#so_field').clone().html() + ' <span class="del"><a href="" class="button">[-] Remove</a> <div class="clear"></div></span>');
 	});
 	$(document).on( "click",'.del', function(e) {
 		e.preventDefault();

@@ -1,11 +1,9 @@
 <?php
 $this->load->model('orders/orders_model');
 ?>
+<div class="page_title"><a href="<?php echo base_url();?>orders/pay/<?=$id;?>" class="menu_button">Add new Payment</a></div>
 <div class="row">
 	<div class="span12">
-		<a href="<?php echo base_url();?>orders/pay/<?=$id;?>" class="menu_button">Add new Payment</a>
-		<br/>
-		<br/>
 		<div class="well">
 			<table class="gridtable">
 				<thead>
@@ -22,7 +20,7 @@ $this->load->model('orders/orders_model');
 					?>
 					<tr>
 						<td><a target="_new" href="<?php echo base_url();?>orders/view/<?=$c->order_id;?>"><?php echo $this->orders_model->get_single($c->order_id,'form_number');?></a></td>
-						<td>Php <?php echo number_format($c->amount,2);?></td>
+						<td><?php echo $this->calc->to_money($c->amount);?></td>
 						<td><?php echo date(' M d, Y',strtotime($c->datetime));?></td>
 					</tr>
 					<?php
