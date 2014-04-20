@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 13, 2014 at 10:05 PM
+-- Generation Time: Apr 21, 2014 at 01:43 AM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.8
 
@@ -30,16 +30,7 @@ CREATE TABLE IF NOT EXISTS `cruds` (
   `crud_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`crud_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `cruds`
---
-
-INSERT INTO `cruds` (`crud_id`, `name`) VALUES
-(1, 'awaw'),
-(2, 'awaw'),
-(3, 'wawa');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -151,15 +142,7 @@ CREATE TABLE IF NOT EXISTS `item_batch` (
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`item_batch_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `item_batch`
---
-
-INSERT INTO `item_batch` (`item_batch_id`, `item_id`, `user_id`, `supplier_id`, `batch_id`, `item_count`, `sold_count`, `recieve_date`, `expire`, `buy_price`, `sell_price`, `lot_number`, `cavite_warehouse`, `status`, `datetime`, `deleted`) VALUES
-(1, 5, 44, 1, 'b-1223x', 10000, 4111, '04/11/2014', '2017-04-28', '', '2.50', '', 1, 'recieved', '2014-04-11 12:03:53', 0),
-(2, 5, 44, 1, 'b-122xx', 5000, 3000, '04/11/2014', '2019-04-29', '', '2.9', '', 0, 'recieved', '2014-04-12 14:05:54', 0);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -207,31 +190,7 @@ CREATE TABLE IF NOT EXISTS `msr_clients` (
   `msr_id` int(255) NOT NULL,
   `client_id` int(255) NOT NULL,
   PRIMARY KEY (`msr_client_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=32 ;
-
---
--- Dumping data for table `msr_clients`
---
-
-INSERT INTO `msr_clients` (`msr_client_id`, `msr_id`, `client_id`) VALUES
-(8, 28, 35),
-(9, 42, 34),
-(10, 42, 34),
-(11, 42, 32),
-(12, 28, 30),
-(16, 28, 30),
-(20, 37, 32),
-(21, 37, 34),
-(22, 37, 35),
-(23, 37, 36),
-(24, 37, 41),
-(25, 40, 32),
-(26, 40, 34),
-(27, 38, 34),
-(28, 28, 29),
-(29, 31, 29),
-(30, 33, 29),
-(31, 37, 29);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -262,6 +221,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `item_batch_id` int(255) NOT NULL,
   `quantity` int(255) NOT NULL,
   `price` varchar(255) NOT NULL,
+  `discount` int(10) NOT NULL DEFAULT '0',
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `msr_client_id` int(255) NOT NULL,
   `status` enum('pending','declined','approved','completed','cancelled','returned') NOT NULL,
@@ -273,19 +233,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `date_cancelled` date NOT NULL,
   `return_id` varchar(255) NOT NULL,
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
-
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`order_id`, `msr_id`, `item_id`, `item_batch_id`, `quantity`, `price`, `datetime`, `msr_client_id`, `status`, `gm_approve_pre`, `gm_approve_post`, `payment_type`, `form_number`, `date_completed`, `date_cancelled`, `return_id`) VALUES
-(1, 37, 5, 0, 5000, '2', '2014-04-11 12:04:41', 20, 'returned', 1, 0, '30_days', 'so0001', '2014-04-11', '2014-04-11', ''),
-(2, 37, 5, 0, 3000, '2', '2014-04-12 14:11:40', 24, 'completed', 1, 1, '30_days', 'so0011', '2014-04-12', '0000-00-00', ''),
-(3, 28, 5, 0, 1000, '2', '2014-04-12 18:16:28', 12, 'completed', 1, 1, '30_days', 'so0001', '2014-04-12', '0000-00-00', ''),
-(4, 37, 5, 0, 1000, '2', '2014-04-12 19:07:11', 20, 'completed', 1, 1, '30_days', 'so0999', '2014-04-13', '0000-00-00', ''),
-(5, 40, 5, 0, 1111, '2', '2014-04-12 19:08:44', 26, 'completed', 1, 1, '30_days', 'so677', '2014-04-13', '0000-00-00', ''),
-(6, 28, 5, 0, 1000, '2', '2014-04-13 17:29:00', 12, 'completed', 1, 1, '30_days', 'asdas', '2014-04-13', '0000-00-00', '');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -301,19 +249,7 @@ CREATE TABLE IF NOT EXISTS `order_details` (
   `quantity` int(100) NOT NULL,
   `status` varchar(25) NOT NULL DEFAULT 'enabled',
   PRIMARY KEY (`order_details_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
-
---
--- Dumping data for table `order_details`
---
-
-INSERT INTO `order_details` (`order_details_id`, `order_id`, `item_id`, `item_batch_id`, `quantity`, `status`) VALUES
-(1, 1, 5, 1, 5000, 'enabled'),
-(2, 2, 5, 2, 3000, 'enabled'),
-(3, 3, 5, 1, 1000, 'enabled'),
-(4, 4, 5, 1, 1000, 'enabled'),
-(5, 5, 5, 1, 1111, 'enabled'),
-(6, 6, 5, 1, 1000, 'enabled');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -346,16 +282,7 @@ CREATE TABLE IF NOT EXISTS `order_pay` (
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`order_pay_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `order_pay`
---
-
-INSERT INTO `order_pay` (`order_id`, `order_pay_id`, `amount`, `invoice_id`, `bank`, `check_number`, `check_full_amount`, `datetime`, `status`) VALUES
-(2, 1, 2, '', '', '', '', '2014-04-13 19:19:40', 0),
-(3, 2, 2, '', '', '', '', '2014-04-13 19:19:58', 0),
-(4, 3, 2000, '', '', '', '', '2014-04-13 19:20:11', 0);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -373,14 +300,7 @@ CREATE TABLE IF NOT EXISTS `order_return` (
   `status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`orders_return_id`),
   KEY `orders_return_id` (`orders_return_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `order_return`
---
-
-INSERT INTO `order_return` (`orders_return_id`, `order_id`, `item_batch_id`, `return_quantity`, `remarks`, `datetime`, `status`) VALUES
-(1, 1, 1, 5000, 'expired', '2014-04-11 12:05:40', 0);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -397,15 +317,7 @@ CREATE TABLE IF NOT EXISTS `reports` (
   `date_end` varchar(100) NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`report_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `reports`
---
-
-INSERT INTO `reports` (`report_id`, `user_id`, `report_type`, `report_for`, `date_start`, `date_end`, `datetime`) VALUES
-(1, 44, 'INVENTORY', '1', '04/01/2014', '04/30/2014', '2014-04-13 16:41:29'),
-(2, 44, 'INVENTORY', '2', '04/01/2014', '04/30/2014', '2014-04-13 16:41:49');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -499,122 +411,7 @@ CREATE TABLE IF NOT EXISTS `system_logs` (
   `transaction_id` int(255) DEFAULT NULL,
   `report_id` int(255) DEFAULT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=110 ;
-
---
--- Dumping data for table `system_logs`
---
-
-INSERT INTO `system_logs` (`log_id`, `user_id`, `type`, `date`, `action`, `response`, `fingerprint`, `username`, `item_id`, `transaction_id`, `report_id`) VALUES
-(1, 43, 'login', '2014-04-11 12:03:22', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
-(2, 44, 'login', '2014-04-11 12:03:26', NULL, 'login success', '::1', 'warehouseman', NULL, NULL, NULL),
-(3, 44, 'inventory item', '2014-04-11 12:03:53', 'create', '1', '::1', NULL, NULL, NULL, NULL),
-(4, 44, 'login', '2014-04-11 12:04:06', NULL, 'logout user', '::1', 'warehouseman', NULL, NULL, NULL),
-(5, 43, 'login', '2014-04-11 12:04:09', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
-(6, 43, 'login', '2014-04-11 12:04:46', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
-(7, 1, 'login', '2014-04-11 12:04:49', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
-(8, 1, 'login', '2014-04-11 12:04:56', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
-(9, 43, 'login', '2014-04-11 12:04:59', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
-(10, 43, 'login', '2014-04-11 12:05:03', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
-(11, 44, 'login', '2014-04-11 12:05:12', NULL, 'login success', '::1', 'warehouseman', NULL, NULL, NULL),
-(12, 43, 'order', '2014-04-11 12:05:26', 'completed an order', '1', '::1', NULL, NULL, NULL, NULL),
-(13, 44, 'login', '2014-04-12 13:01:44', NULL, 'login success', '::1', 'warehouseman', NULL, NULL, NULL),
-(14, 44, 'login', '2014-04-12 13:12:12', NULL, 'logout user', '::1', 'warehouseman', NULL, NULL, NULL),
-(15, 1, 'login', '2014-04-12 13:12:16', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
-(16, 1, 'login', '2014-04-12 13:12:32', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
-(17, 44, 'login', '2014-04-12 13:12:35', NULL, 'login success', '::1', 'warehouseman', NULL, NULL, NULL),
-(18, 44, 'login', '2014-04-12 13:24:07', NULL, 'logout user', '::1', 'warehouseman', NULL, NULL, NULL),
-(19, 1, 'login', '2014-04-12 13:24:11', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
-(20, 1, 'login', '2014-04-12 13:29:56', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
-(21, 44, 'login', '2014-04-12 13:29:59', NULL, 'login success', '::1', 'warehouseman', NULL, NULL, NULL),
-(22, 44, 'inventory item', '2014-04-12 14:05:54', 'create', '2', '::1', NULL, NULL, NULL, NULL),
-(23, 44, 'login', '2014-04-12 14:10:45', NULL, 'logout user', '::1', 'warehouseman', NULL, NULL, NULL),
-(24, 43, 'login', '2014-04-12 14:10:49', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
-(25, 43, 'login', '2014-04-12 14:11:44', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
-(26, 1, 'login', '2014-04-12 14:11:47', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
-(27, 1, 'login', '2014-04-12 14:11:55', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
-(28, 43, 'login', '2014-04-12 14:11:58', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
-(29, 43, 'order', '2014-04-12 14:12:08', 'completed an order', '2', '::1', NULL, NULL, NULL, NULL),
-(30, 43, 'login', '2014-04-12 14:12:13', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
-(31, 44, 'login', '2014-04-12 14:12:16', NULL, 'login success', '::1', 'warehouseman', NULL, NULL, NULL),
-(32, 44, 'login', '2014-04-12 14:30:00', NULL, 'logout user', '::1', 'warehouseman', NULL, NULL, NULL),
-(33, 1, 'login', '2014-04-12 14:30:04', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
-(34, 1, 'setting', '2014-04-12 14:30:41', 'update', '6', '::1', NULL, NULL, NULL, NULL),
-(35, 1, 'login', '2014-04-12 14:34:53', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
-(36, 43, 'login', '2014-04-12 14:34:56', NULL, 'login success', '::1', 'accountant', NULL, NULL, NULL),
-(37, 43, 'login', '2014-04-12 14:51:45', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
-(38, 1, 'login', '2014-04-12 14:51:49', NULL, 'login success', '::1', 'admin', NULL, NULL, NULL),
-(39, 1, 'login', '2014-04-12 16:00:18', NULL, 'emergency login success', '::1', 'admin', NULL, NULL, NULL),
-(40, 1, 'login', '2014-04-12 17:57:52', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
-(41, 44, 'login', '2014-04-12 17:57:56', NULL, 'emergency login success', '::1', 'warehouseman', NULL, NULL, NULL),
-(42, 44, 'login', '2014-04-12 17:58:04', NULL, 'logout user', '::1', 'warehouseman', NULL, NULL, NULL),
-(43, 43, 'login', '2014-04-12 17:58:10', NULL, 'emergency login success', '::1', 'accountant', NULL, NULL, NULL),
-(44, 43, 'login', '2014-04-12 18:00:32', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
-(45, 44, 'login', '2014-04-12 18:00:37', NULL, 'emergency login success', '::1', 'warehouseman', NULL, NULL, NULL),
-(46, 44, 'inventory item', '2014-04-12 18:01:02', 'update', '1', '::1', NULL, NULL, NULL, NULL),
-(47, 44, 'inventory item', '2014-04-12 18:01:52', 'update', '1', '::1', NULL, NULL, NULL, NULL),
-(48, 44, 'login', '2014-04-12 18:10:02', NULL, 'logout user', '::1', 'warehouseman', NULL, NULL, NULL),
-(49, 1, 'login', '2014-04-12 18:10:07', NULL, 'emergency login success', '::1', 'admin', NULL, NULL, NULL),
-(50, 1, 'login', '2014-04-12 18:14:48', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
-(51, 1, 'login', '2014-04-12 18:14:52', NULL, 'emergency login success', '::1', 'admin', NULL, NULL, NULL),
-(52, 1, 'login', '2014-04-12 18:15:13', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
-(53, 43, 'login', '2014-04-12 18:15:17', NULL, 'emergency login success', '::1', 'accountant', NULL, NULL, NULL),
-(54, 43, 'login', '2014-04-12 18:16:31', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
-(55, 1, 'login', '2014-04-12 18:16:35', NULL, 'emergency login success', '::1', 'admin', NULL, NULL, NULL),
-(56, 1, 'login', '2014-04-12 18:18:29', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
-(57, 43, 'login', '2014-04-12 18:18:33', NULL, 'emergency login success', '::1', 'accountant', NULL, NULL, NULL),
-(58, 43, 'login', '2014-04-12 18:19:41', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
-(59, 1, 'login', '2014-04-12 18:19:46', NULL, 'emergency login success', '::1', 'admin', NULL, NULL, NULL),
-(60, 1, 'order', '2014-04-12 18:20:10', 'completed an order', '3', '::1', NULL, NULL, NULL, NULL),
-(61, 1, 'login', '2014-04-12 18:47:57', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
-(62, 43, 'login', '2014-04-12 18:48:05', NULL, 'emergency login success', '::1', 'accountant', NULL, NULL, NULL),
-(63, 43, 'login', '2014-04-12 18:48:41', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
-(64, 1, 'login', '2014-04-12 18:48:46', NULL, 'emergency login success', '::1', 'admin', NULL, NULL, NULL),
-(65, 0, 'login', '2014-04-12 19:03:41', NULL, 'login Failed - invalid username', '::1', 'accounting', NULL, NULL, NULL),
-(66, 0, 'login', '2014-04-12 19:03:46', NULL, 'login Failed - invalid username', '::1', 'accounting', NULL, NULL, NULL),
-(67, 1, 'login', '2014-04-12 19:03:57', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
-(68, 43, 'login', '2014-04-12 19:04:10', NULL, 'emergency login success', '::1', 'accountant', NULL, NULL, NULL),
-(69, 43, 'login', '2014-04-12 19:04:24', NULL, 'emergency login success', '::1', 'accountant', NULL, NULL, NULL),
-(70, 43, 'login', '2014-04-12 19:09:00', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
-(71, 1, 'login', '2014-04-13 16:39:27', NULL, 'emergency login success', '::1', 'admin', NULL, NULL, NULL),
-(72, 1, 'login', '2014-04-13 16:40:59', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
-(73, 44, 'login', '2014-04-13 16:41:04', NULL, 'emergency login success', '::1', 'warehouseman', NULL, NULL, NULL),
-(74, 44, 'generate report', '2014-04-13 16:41:29', 'create report', '1', '::1', NULL, NULL, NULL, NULL),
-(75, 44, 'generate report', '2014-04-13 16:41:49', 'create report', '2', '::1', NULL, NULL, NULL, NULL),
-(76, 44, 'login', '2014-04-13 16:44:49', NULL, 'logout user', '::1', 'warehouseman', NULL, NULL, NULL),
-(77, 43, 'login', '2014-04-13 16:44:54', NULL, 'emergency login success', '::1', 'accountant', NULL, NULL, NULL),
-(78, 43, 'login', '2014-04-13 16:53:32', NULL, 'logout user', '::1', 'accountant', NULL, NULL, NULL),
-(79, 1, 'login', '2014-04-13 16:53:38', NULL, 'emergency login success', '::1', 'admin', NULL, NULL, NULL),
-(80, 1, 'user', '2014-04-13 16:56:58', 'update', '28', '::1', NULL, NULL, NULL, NULL),
-(81, 1, 'user', '2014-04-13 16:57:56', 'update', '31', '::1', NULL, NULL, NULL, NULL),
-(82, 1, 'user', '2014-04-13 16:58:15', 'update', '33', '::1', NULL, NULL, NULL, NULL),
-(83, 1, 'user', '2014-04-13 16:58:34', 'update', '37', '::1', NULL, NULL, NULL, NULL),
-(84, 1, 'user', '2014-04-13 16:58:53', 'update', '38', '::1', NULL, NULL, NULL, NULL),
-(85, 1, 'user', '2014-04-13 16:59:10', 'update', '39', '::1', NULL, NULL, NULL, NULL),
-(86, 1, 'user', '2014-04-13 16:59:37', 'update', '40', '::1', NULL, NULL, NULL, NULL),
-(87, 1, 'user', '2014-04-13 16:59:55', 'update', '42', '::1', NULL, NULL, NULL, NULL),
-(88, 1, 'user', '2014-04-13 17:00:18', 'update', '43', '::1', NULL, NULL, NULL, NULL),
-(89, 1, 'user', '2014-04-13 17:00:59', 'update', '23', '::1', NULL, NULL, NULL, NULL),
-(90, 1, 'user', '2014-04-13 17:01:20', 'update', '24', '::1', NULL, NULL, NULL, NULL),
-(91, 1, 'user', '2014-04-13 17:01:55', 'update', '25', '::1', NULL, NULL, NULL, NULL),
-(92, 1, 'user', '2014-04-13 17:18:43', 'create', '48', '::1', NULL, NULL, NULL, NULL),
-(93, 1, 'user', '2014-04-13 17:19:24', 'delete', '48', '::1', NULL, NULL, NULL, NULL),
-(94, 1, 'inventory', '2014-04-13 17:20:52', 'create', '40', '::1', NULL, NULL, NULL, NULL),
-(95, 1, 'inventory', '2014-04-13 17:21:09', 'delete', '40', '::1', NULL, NULL, NULL, NULL),
-(96, 1, 'inventory', '2014-04-13 17:22:18', 'create', '41', '::1', NULL, NULL, NULL, NULL),
-(97, 1, 'order', '2014-04-13 17:29:08', 'completed an order', '6', '::1', NULL, NULL, NULL, NULL),
-(98, 1, 'order', '2014-04-13 17:29:10', 'completed an order', '5', '::1', NULL, NULL, NULL, NULL),
-(99, 1, 'order', '2014-04-13 17:29:12', 'completed an order', '4', '::1', NULL, NULL, NULL, NULL),
-(100, 1, 'user', '2014-04-13 17:36:24', 'update', '28', '::1', NULL, NULL, NULL, NULL),
-(101, 1, 'user', '2014-04-13 17:36:36', 'update', '31', '::1', NULL, NULL, NULL, NULL),
-(102, 1, 'user', '2014-04-13 17:36:43', 'update', '33', '::1', NULL, NULL, NULL, NULL),
-(103, 1, 'user', '2014-04-13 17:36:52', 'update', '37', '::1', NULL, NULL, NULL, NULL),
-(104, 1, 'user', '2014-04-13 17:37:01', 'update', '38', '::1', NULL, NULL, NULL, NULL),
-(105, 1, 'user', '2014-04-13 17:37:11', 'update', '40', '::1', NULL, NULL, NULL, NULL),
-(106, 1, 'user', '2014-04-13 17:37:18', 'update', '40', '::1', NULL, NULL, NULL, NULL),
-(107, 1, 'user', '2014-04-13 17:37:26', 'update', '42', '::1', NULL, NULL, NULL, NULL),
-(108, 1, 'login', '2014-04-13 18:57:06', NULL, 'logout user', '::1', 'admin', NULL, NULL, NULL),
-(109, 1, 'login', '2014-04-13 18:57:10', NULL, 'emergency login success', '::1', 'admin', NULL, NULL, NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -639,7 +436,7 @@ CREATE TABLE IF NOT EXISTS `system_setting` (
 
 INSERT INTO `system_setting` (`setting_id`, `name`, `type`, `option`, `group`, `display_name`, `value`) VALUES
 (1, 'time_open', 'time', '', 'system settings', 'Time Open', '06:00 am'),
-(2, 'time_close', 'time', '', 'system setting', 'Time Close', '11:59 pm'),
+(2, 'time_close', 'time', '', 'system setting', 'Time Close', '05:59 pm'),
 (3, 'time_zone', 'select', 'Asia/Manila,Asia/Macao,Asia/Bangkok', 'system settings', 'Time Zone', 'Asia/Manila'),
 (4, 'expire_near', 'text', '', 'items', 'Near Expire (months)', '2'),
 (5, 'empty_near', 'text', '', 'items', 'Critical limit', '300'),
@@ -698,7 +495,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`,`email`),
   UNIQUE KEY `username_2` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=45 ;
 
 --
 -- Dumping data for table `users`
@@ -706,14 +503,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `username`, `password`, `email`, `role_id`, `quota`, `district_id`, `area`, `hospital`, `hospital_address`, `outlet`, `outlet_address`, `owner`, `owner_landline`, `owner_mobile`, `recipient_firstname`, `recipient_middlename`, `recipient_lastname`, `position`, `recipient_landline`, `recipient_mobile`, `address_number`, `address_street`, `address_municipality`, `civil_status`, `residence_type`, `residence_years`, `residence_months`, `home_telephone`, `mobile_number`, `spouse_firstname`, `spouse_middlename`, `spouse_lastname`, `spouse_birthdate`, `spouse_business`, `spouse_business_address`, `spouse_telephone`, `spouse_position`, `spouse_employment_tenure_years`, `spouse_employment_tenure_months`, `status`) VALUES
 (1, 'jay-ar', 'mundala', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'jayar_mundala@yahoo.com', 1, 0, 0, '', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
-(23, 'fnac2', 'lnac2', 'southoffice', '0c1fd7bdf14dc944acdff6dc3709e0bc', 'accountant1@gmail.com', 5, 0, 1, 's2', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
-(24, 'can1', 'lncan1', 'centraloffice', '5be2bc09fde5c8d51910c09cd4d94c4f', 'lncan1@gmail.com', 5, 0, 2, 'c1', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
-(25, 'ac3fn', 'ac3ln', 'northoffice', '968357c6ddfba2922aec1c9551401284', 'ac3@gmail.com', 5, 0, 3, 'n1', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
 (26, '', '', 'stocksoffice', 'bc6049c67508d4ac07c4413f5a4e928d', '', 4, 0, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
-(27, 'Rich', 'abejuela', 'hrd', 'b9ce93b9d5dfff0fd5bc7fc464e82f7c', 'rich@email.com', 6, 0, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'single', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
+(27, 'Rich', 'abejuela', 'hrd', '4bf31e6f4b818056eaacb83dff01c9b8', 'rich@email.com', 6, 0, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'single', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
 (28, 'Dexter', 'Ballester', 'centralmsr', '832947fabba50c8946bd4aea16168258', 'dexter@gmail.com', 3, 500000, 2, 's1', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
-(29, 'Sta. Cruz Hospital', ' ', 'centralbul1', '5d71d17382aebb3bec77d348a009efc5', '', 2, 0, 2, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
-(30, 'Sta. Cruz', ' Hospital', 'centralbulacan1', '5d71d17382aebb3bec77d348a009efc5', '', 2, 0, 2, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
+(29, 'Sta. Cruz Hospital', ' ', 'centralbul1', '5d71d17382aebb3bec77d348a009efc5', 'stacruz@rmail.com', 2, 0, 2, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '123', 'somewhere street', 'some municipality', 'single', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
 (31, 'Carlos', 'Dela Cruz Jr', 'msrcarlos', '3a00d2023de1583a70f521f34fcc99f5', 'delacruz@gmail.com', 3, 500000, 2, 's2', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
 (32, 'Norman', 'Rabago', 'norman', '9ac915832a9a1c970c1564708917c3aa', '', 2, 0, 3, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
 (33, 'Gratechen', 'Llanes', 'chen', 'a1a8887793acfc199182a649e905daab', 'llandes@gmail.com', 3, 500000, 3, 'n1', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'enabled'),
