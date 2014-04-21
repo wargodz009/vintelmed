@@ -26,9 +26,11 @@ $this->load->model('orders/orders_model');
 					<span class="title">Discount:</span> <?=$orders->discount.'%';?> <br/>
 					<span class="title">Date:</span> <?=date("d M, Y",strtotime($orders->datetime));?> <br/>
 					<span class="title">Mode of Payment:</span> <?=$orders->payment_type;?> <br/>
-					<span class="title">Payable Amount:</span> <?php echo $this->calc->to_money($this->calc->total($orders->price,$orders->quantity,$orders->discount));?> <br/>
+					<span class="title">Payable Amount:</span> <?php 
+					$total = $this->calc->total($orders->price,$orders->quantity,$orders->discount);
+					echo $this->calc->to_money($total);?> <br/>
 					<span class="title">Paid Amount:</span> <?php echo $this->calc->to_money($orders_paid);?> <br/>
-					<?php if($orders_paid < $orders->price) { ?>
+					<?php if($orders_paid < $total) { ?>
 					<br/>
 					<label class="control-label" for="">New Payment Amount*</label>
 					<div class="controls">
