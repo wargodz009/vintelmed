@@ -314,8 +314,15 @@ class Orders extends CI_Controller{
 	}
 	function pay($order_id){
 		if(!empty($_POST)) {
-			$this->orders_model->add_pay($_POST);
-			$this->session->set_flashdata('error','Payment record added!');	
+			$already_paid = $this->orders_model->get_paid($order_id);
+			$total_payment = $already_paid + $this->input->post('amount');
+			if($total_payment < $this->input->post('total_amount')) {
+				unset($_POST['total_amount']);
+				$this->orders_model->add_pay($_POST);
+				$this->session->set_flashdata('error','Payment record added!');	
+			} else {
+				$this->session->set_flashdata('error','Payment exceeded the expected amount. please check again!');
+			}
 			redirect('orders');
 		} else {
 			$data['orders'] = $this->orders_model->get_single($order_id);

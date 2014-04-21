@@ -36,6 +36,7 @@ $this->load->model('orders/orders_model');
 					<div class="controls">
 						<input type="hidden" name="order_id" value="<?php echo $orders->order_id;?>" class=":required :number"/>
 						<input type="text" name="amount" class=":required :number"/>
+						<input type="hidden" name="total_amount" value="<?=$total;?>" class=""/>
 					</div>
 					<br/>
 					<fieldset>
