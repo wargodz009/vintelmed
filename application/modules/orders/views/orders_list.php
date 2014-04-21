@@ -55,6 +55,7 @@ $this->load->model('order_pay/order_pay_model');
 						?></td>
 						<td><?php echo $c->price;?></td>
 						<td><?php 
+						$c->discount = (isset($c->discount)?$c->discount:0);
 						$total = $c->price * $c->quantity;
 						echo $this->order_pay_model->get_paid($c->order_id).'/'. ( $total - ($total * ($c->discount / 100))).' (-'.$c->discount.'%)';?></td>
 						<td><?php echo $c->status;?></td>
