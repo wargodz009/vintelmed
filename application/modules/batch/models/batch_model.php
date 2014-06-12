@@ -29,7 +29,7 @@ var $suppliers = 'suppliers';
 		$this->db->where('item_count >','sold_count',false);
 		$q = $this->db->get($this->table);
 		if($count_only === true) {
-			return $q->num_rows();
+			return $q->row()->item_count;
 		} else {
 			return $q->result();
 		}
