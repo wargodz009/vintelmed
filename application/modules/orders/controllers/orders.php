@@ -4,6 +4,7 @@ class Orders extends CI_Controller{
 	function __construct() {
 		parent::__construct();
 		$this->load->model("orders/orders_model");
+		$this->load->model("order_free/order_free_model");
 		$this->load->model("user/medrep_model");
 		$this->load->model("items/items_model");
 		$this->load->model("batch/batch_model");
@@ -98,6 +99,17 @@ class Orders extends CI_Controller{
 								'quantity'=>$_POST['batch-'.$batch],
 							);
 							$this->orders_model->add($order_details);
+							$this->items_model->increase_sold_count($batch,$_POST['batch-'.$batch]);
+						}
+						if(!empty($_POST['free_id'])) {
+							foreach($_POST['free_id'] as $free) {
+								$order_free_details = array(
+									'order_id'=>$order_id,
+									'item_id'=>$free,
+									'order_free_quantity'=>$_POST['free-'.$free],
+								);
+								$this->orders_free_model->create($order_free_details);
+							}
 							$this->items_model->increase_sold_count($batch,$_POST['batch-'.$batch]);
 						}
 						$this->session->set_flashdata('error','orders saved!');	

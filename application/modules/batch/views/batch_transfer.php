@@ -11,16 +11,13 @@ $this->load->model('items/items_model');
 				<div class="control-group">
 					<label class="control-label" for="">batch name</label>
 					<div class="controls">
-						<input class=":required" type="text" id="" value="<?=$batch->batch_id; ?>" name="batch_id">
+						<input class=":required" type="text" id="" value="" name="batch_id"> Original batch name: <?=$batch->batch_id; ?>
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="">Status</label>
 					<div class="controls">
-						<select name="status" id="">
-							<option value="ordered" <?=($batch->status == 'ordered'?'selected':''); ?>>Ordered</option>
-							<option value="recieved" <?=($batch->status == 'recieved'?'selected':''); ?> >Recieved</option>
-						</select>
+						<input type="text" name='status' value="transfer"/>
 					</div>
 				</div>
 				<div class="control-group">
@@ -52,13 +49,7 @@ $this->load->model('items/items_model');
 				$item = $this->supplier_model->get_single($batch->supplier_id);
 				echo $item->name;
 				?>
-				</div><br/><br/>
-				<div class="control-group">
-					<label class="control-label" for="">recieve date</label>
-					<div class="controls">
-						<input class="datepicker_from" type="text" id="" value="<?=$batch->recieve_date; ?>" name="recieve_date" readonly>
-					</div>
-				</div>
+				</div><br/>
 				<div class="control-group" id="lot_number"></div><br/><br/>
 				<div class="control-group">
 					<label class="control-label" for="">Lot Number</label>

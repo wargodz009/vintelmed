@@ -35,12 +35,13 @@ $this->load->model('user/user_model');
 						?>
 						</td>
 						<td><?php echo '<a target="new" href="'.base_url().'supplier/view/'.$c->supplier_id.'">'.$this->supplier_model->get_single($c->supplier_id,'name').'</a>';?></td>
-						<td><?php echo $c->expire;?></td>
+						<td><?php echo system_date($c->expire);?></td>
 						<td><?php echo '<a target="_new" href="'.base_url().'user/view/'.$c->user_id.'">'.$this->user_model->get_single($c->user_id,false,'username').'</a>';?></td>
 						<td><?php echo $c->status;?></td>
 						<td>
 						<?php if($this->users->is_warehouseman()) { ?>
-						<a href="<?php echo base_url();?>batch/edit/<?php echo $c->item_batch_id;?>">Edit</a>
+						<a href="<?php echo base_url();?>batch/edit/<?php echo $c->item_batch_id;?>">Edit</a> |
+						<!--a href="<?php echo base_url();?>batch/transfer/<?php echo $c->item_batch_id;?>">Transfer</a-->
 						<?php } else if($this->users->is_admin()) { ?>
 						| <a href="<?php echo base_url();?>batch/delete/<?php echo $c->item_batch_id;?>" class="confirm" rel="Are you sure you want to delete <?php echo $c->batch_id;?>?">Delete</a>
 						<?php } else {

@@ -146,7 +146,7 @@ jQuery(function(){
 					if(data.length != 0 || data == '') {
 						$('#free_item_list').html('Stock: <br />');
 						$.each(data, function(k,v) {
-							$('#free_item_list').append('<div><input type="checkbox" name="batch_id[]" value="'+v.item_batch_id+'" onclick="return false;" onkeydown="return false;" /> '+v.item_name+' ('+v.name+') <br/> <input type="text" name="batch-'+v.item_batch_id+'" value="" placeholder="Quantity" sold="'+v.sold_count+'" count="'+v.item_count+'" class="check_empty" />('+v.sold_count+'/'+v.item_count+')</div><br/>-------------------------------------------<br/>');
+							$('#free_item_list').append('<div><input type="checkbox" name="free_id[]" value="'+v.item_batch_id+'" onclick="return false;" onkeydown="return false;" /> '+v.item_name+' ('+v.name+') <br/> <input type="text" name="free-'+v.item_batch_id+'" value="" placeholder="Quantity" sold="'+v.sold_count+'" count="'+v.item_count+'" class="check_empty" />('+v.sold_count+'/'+v.item_count+')</div><br/>-------------------------------------------<br/>');
 						});
 						$('.save_btn').attr('disabled',false);
 					}

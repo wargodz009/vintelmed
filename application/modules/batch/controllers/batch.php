@@ -110,6 +110,14 @@ class Batch extends CI_Controller{
 		}
 		$this->template->load('template','batch/batch_view',$data);
 	}
+	function transfer($id) {
+		$data['batch'] = $this->batch_model->get_single($id);
+		if(!$data['batch']) {
+			$this->session->set_flashdata('error','not a valid batch!');	
+			redirect('batch');
+		}
+		$this->template->load('template','batch/batch_transfer',$data);
+	}
 	function delete($id) {
 		if(!empty($id)) {
 			if($this->users->is_admin()) {

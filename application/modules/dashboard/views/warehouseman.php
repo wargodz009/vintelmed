@@ -34,7 +34,6 @@
 			<td class="wd1-4">Supplier</td>
 			<td class="wd1-5">Beg.<br/>Invty</td>
 			<td class="wd1-6">Ave. Usage<br/>/ Mo.</td>
-			<td class="wd1-7">Ave. Usage<br/>/ 8 Mo.</td>
 			<td class="wd1-8">Batch No. /<br/>Expiry Date</td>
 			<td class="wd1-9">In</td>
 			<td class="wd1-10">Cancel LED<br/>Dr-SI / RGS</td>
@@ -73,12 +72,8 @@
 						<td class="wd1-6"><?php 
 						$fromDate = date("Y-m-d", strtotime(date("Y-m-d")." -1 months"));
 						echo $this->report_model->get_item_average_usage($k->item_batch_id,$fromDate,date("Y-m-d")); ?></td>
-						<!-- ave. usage/ 8 months -->
-						<td class="wd1-7"><?php 
-						$fromDate = date("Y-m-d", strtotime(date("Y-m-d")." -8 months"));
-						echo $this->report_model->get_item_average_usage($k->item_batch_id,$fromDate,date("Y-m-d")); ?></td>
 						<!-- batch id / expire date -->
-						<td class="wd1-8"><?php echo $k->batch_id.'/ '.date('d-y',strtotime($k->expire)); ?></td>
+						<td class="wd1-8"><?php echo $k->batch_id.'/ '.date('d-m-y',strtotime($k->expire)); ?></td>
 						<!-- in -->
 						<td class="wd1-9"><?php 
 						//echo $this->report_model->get_item_sum_new($k->item_id,$fromDate,date("Y-m-d"));
